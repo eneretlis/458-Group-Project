@@ -114,7 +114,12 @@ Output :
         pLeftBracket
         pRightBracket
         pDotDot
-        lastSyntaxToken = pDotDot;
+        pPercent
+        pHash
+        pExclamation
+        pQuestion
+        pDollar
+        lastSyntaxToken = pDollar;
 
 Error :
         eIllegalChar = 5
@@ -215,6 +220,14 @@ Scan :
                 .pStar
             |  '#' :
                 .pHash
+            | '%':
+                .pPercent
+            | '!':
+                .pExclamation
+            | '?':
+                .pQuestion
+            | '$':
+                .pDollar
             | lNewPage:
             | lEndFile:
                 .pEndFile

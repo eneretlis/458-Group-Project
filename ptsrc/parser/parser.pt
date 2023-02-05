@@ -147,7 +147,12 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
         pLeftBracket = 44;
         pRightBracket = 45;
         pDotDot = 46;
-        lastSyntaxToken = 46;
+        pPercent = 47;
+        pHash = 48;
+        pExclamation = 49;
+        pQuestion = 50;
+        pDollar = 51;
+        lastSyntaxToken = 51;
 
         { Input/Output Tokens }
 
