@@ -213,6 +213,8 @@ Scan :
                 @Comment
             | '*':
                 .pStar
+            |  '#' :
+                .pHash
             | lNewPage:
             | lEndFile:
                 .pEndFile
