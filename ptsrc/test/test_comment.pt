@@ -1,1 +1,8 @@
-% comment
+program p (output);
+    {old1}
+    var x : integer;
+    (*old2*)
+    var y : integer;
+    %new
+    var z : integer;
+end.
