@@ -10,12 +10,12 @@
 %     It removes token separators - blanks, tabs, comments.  The
 %     scanner detects these lexical errors:  unclosed comments,
 %     unclosed literals, literals that cross a line boundary,
-%     illegal characters and integers followed by identifiers with 
+%     illegal characters and integers followed by identifiers with
 %     no separator between them.
 
-Input : 
-        lLetter 
-        firstCharClass = lLetter 
+Input :
+        lLetter
+        firstCharClass = lLetter
         lDigit
         lPlus           '+'
         lMinus          '-'
@@ -25,7 +25,7 @@ Input :
         lDot            '.'
         lComma          ','
         lSemicolon      ';'
-        lQuote
+        lQuote          '"'
         lBackslash
         lLeftAngle      '<'
         lRightAngle     '>'
@@ -40,7 +40,7 @@ Input :
         lNewLine
         lCarriageReturn
         lTab
-        lNewPage 
+        lNewPage
         lEndFile
         lPercent        '%'
         lHash           '#'
@@ -51,10 +51,10 @@ Input :
 
 Output :
         % Keyword tokens -
-        %   Tokens pDiv through pRepeat are keywords which will be 
+        %   Tokens pDiv through pRepeat are keywords which will be
         %   separated from user defined identifiers by the Screener.
         %   This Scanner treats them all as identifiers.
-        pDiv 
+        pDiv
         firstKeywordToken = pDiv
         pMod
         pOr
@@ -84,15 +84,15 @@ Output :
         % Scanner tokens -
         %   These are the tokens actually recognized by the Scanner itself.
 
-        % Compound tokens - 
+        % Compound tokens -
         %   These will be sent to the parser with a value or index.
-        pIdentifier 
+        pIdentifier
         firstCompoundInputToken = pIdentifier
         pInteger
         pStringLiteral
         lastCompoundInputToken = pStringLiteral
 
-        % Non-compound tokens - 
+        % Non-compound tokens -
         %   These tokens simply represent themselves.
         pNewLine
         pEndFile
