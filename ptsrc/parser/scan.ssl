@@ -42,7 +42,12 @@ Input :
         lTab
         lNewPage 
         lEndFile
-        lastCharClass = lEndFile;
+        lPercent        '%'
+        lHash           '#'
+        lExclamation    '!'
+        lQuestion       '?'
+        lDollar         '$'
+        lastCharClass = lDollar;
 
 Output :
         % Keyword tokens -
@@ -54,26 +59,27 @@ Output :
         pMod
         pOr
         pAnd
-        pNot
         pThen
         pElse
         pOf
         pEnd
-        pUntil
         pDo
         pArray
         pFile
-        pProgram
-        pConst
         pVar
         pType
-        pProcedure
-        pBegin
         pIf
         pCase
         pWhile
-        pRepeat
-        lastKeywordToken = pRepeat
+        pUsing
+        pVal
+        pDef
+        pBreak
+        pWhen
+        pModule
+        pUnless
+        pElsif
+        lastKeywordToken = pElsif
 
         % Scanner tokens -
         %   These are the tokens actually recognized by the Scanner itself.
@@ -93,7 +99,6 @@ Output :
         pPlus
         pMinus
         pStar
-        pColonEquals
         pDot
         pComma
         pSemicolon
@@ -147,12 +152,7 @@ Scan :
             | ';':
                 .pSemicolon
             | '(':
-                [
-                    | '*':
-                        @AlternateComment
-                    | *:
-                        .pLeftParen
-                ]
+                .pLeftParen
             | ')':
                 .pRightParen
             | '[':
@@ -164,7 +164,7 @@ Scan :
             | ':':
                 [
                     | '=':
-                        .pColonEquals
+                        .pEquals
                     | *:
                         .pColon
                 ]
@@ -209,7 +209,7 @@ Scan :
                     | *:
                         .pGreater
                 ]
-            | '{':
+            | '%':
                 @Comment
             | '*':
                 .pStar
@@ -278,10 +278,9 @@ Comment :
         % Discard the contents of a comment
 
         {[
-            | '}':
-                >
             | lNewLine:
                 .pNewLine
+                >
             | lEndFile:         % comment must be closed before EOF
                 #eCommentEOF
                 .pEndFile
@@ -290,22 +289,5 @@ Comment :
                 ?
         ]};
 
-AlternateComment :
-        {[
-            | '*':
-                [
-                    | ')':
-                        >
-                    | *:
-                ]
-            | lNewLine:
-                .pNewLine
-            | lEndFile:
-                #eCommentEOF
-                .pEndFile
-                >
-            | *:
-                ?
-        ]};
 
 end
