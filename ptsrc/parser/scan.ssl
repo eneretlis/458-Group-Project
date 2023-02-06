@@ -185,8 +185,8 @@ Scan :
                     | '=':
                         .pDoubleEquals
                     | '*':
-                        ?
-                        #eIllegalChar
+                        .pEquals
+                        >
                 ]
             | '+':
                 .pPlus
