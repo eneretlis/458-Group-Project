@@ -47,7 +47,7 @@ Input :
         lExclamation    '!'
         lQuestion       '?'
         lDollar         '$'
-        lDoubleEquals 
+        lDoubleEquals
         lastCharClass = lDoubleEquals;
 
 Output :
@@ -168,9 +168,6 @@ Scan :
                 .pRightBracket
             | ',':
                 .pComma
-            | '#' :
-                .pHash
-
             | ':':
                 [
                     | '=':
@@ -226,6 +223,8 @@ Scan :
                 ]
             | '%':
                 @Comment
+            | '#' :
+                .pHash
             | '*':
                 .pStar
             | '!':
