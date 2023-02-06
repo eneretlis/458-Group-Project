@@ -1,0 +1,7 @@
+Purpose: Ensure that string literals are defined by double quotes and that the content inside the quotes is read as a .pStringLiteral.
+Expected Output: Upon a double quote, save values until the next double quote is reached, and emit a pStringLiteral token 
+Actual Output (success):
+.pStringLiteral
+  % Output token text 'string'
+ .pNewLine
+ .pEndFile
