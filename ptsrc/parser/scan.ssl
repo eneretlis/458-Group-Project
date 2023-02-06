@@ -47,7 +47,8 @@ Input :
         lExclamation    '!'
         lQuestion       '?'
         lDollar         '$'
-        lastCharClass = lDollar;
+        lDoubleEquals 
+        lastCharClass = lDoubleEquals;
 
 Output :
         % Keyword tokens -
@@ -119,7 +120,8 @@ Output :
         pExclamation
         pQuestion
         pDollar
-        lastSyntaxToken = pDollar;
+        pDoubleEquals
+        lastSyntaxToken = pDoubleEquals;
 
 Error :
         eIllegalChar = 5
@@ -187,7 +189,12 @@ Scan :
                     | *:
                 ]
             | '=':
-                .pEquals
+                [
+                    | '=':
+                        .pDoubleEquals
+                    | '*':
+                        .pEquals
+                ]
             | '+':
                 .pPlus
             | lQuote:
