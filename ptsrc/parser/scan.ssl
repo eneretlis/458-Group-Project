@@ -169,12 +169,7 @@ Scan :
             | ',':
                 .pComma
             | ':':
-                [
-                    | '=':
-                        .pEquals
-                    | *:
-                        .pColon
-                ]
+                .pColon
             | lDigit:
                 oBufferSave
                 @Integer
