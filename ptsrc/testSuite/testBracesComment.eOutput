@@ -1,0 +1,5 @@
+  .pIdentifier
+  % Output token text 'comment'
+ #eIllegalChar
+ .pNewLine
+ .pEndFile

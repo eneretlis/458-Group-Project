@@ -1,0 +1,10 @@
+Purpose: Confirm that the old PT Pascal commenting using { } is no longer supported by Quby.
+Expected Output: The scanner should emit an eIllegalChar token for the braces since they are no longer a part of the Quby language. 
+The output token “comment” should be saved by the buffer as it is not ignored since it is not properly commented out.
+Actual Output (success):
+ #eIllegalChar
+  .pIdentifier
+  % Output token text 'comment'
+ #eIllegalChar
+ .pNewLine
+ .pEndFile

@@ -1,0 +1,11 @@
+Purpose: Confirm that the old PT Pascal commenting using (* *) is no longer supported by Quby.
+Expected Output: The output token text “comment” should be saved to the buffer since it is not properly commented out. The scanner should recognized the * and ( ) and emit the respective tokens.
+Actual Output (success):
+ .pLeftParen
+ .pStar
+  .pIdentifier
+  % Output token text 'comment'
+ .pStar
+ .pRightParen
+ .pNewLine
+ .pEndFile
