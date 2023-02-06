@@ -184,8 +184,12 @@ Scan :
                 [
                     | '=':
                         .pDoubleEquals
+                    | lNewLine, lNewPage:
+                        .pEquals
+                        >
                     | '*':
                         .pEquals
+                        >
                 ]
             | '+':
                 .pPlus
