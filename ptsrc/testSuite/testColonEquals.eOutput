@@ -1,0 +1,7 @@
+line 787: subscript out of range
+ .pColon
+ .pEquals
+% value emitted 36
+
+Line 321 of ssltrace.t: String passed to "strint" is not in correct format.
+.pIdentifier

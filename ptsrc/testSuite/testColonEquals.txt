@@ -1,0 +1,11 @@
+Purpose: Confirm that the scanner no longer accepts := 
+Expected Output: Scanner recognizes the colon and equals separately without emitting a pColonEquals token.
+Actual Output (fail):
+line 787: subscript out of range
+ .pColon
+ .pEquals
+% value emitted 36
+
+Line 321 of ssltrace.t: String passed to "strint" is not in correct format.
+.pIdentifier
+Notes: The scanner is recognizing the pColon and pEquals but an error is occurring in our code. Will fix in next advisory session.
