@@ -186,6 +186,7 @@ Scan :
                         .pDoubleEquals
                     | '*':
                         ?
+                        #eIllegalChar
                 ]
             | '+':
                 .pPlus
