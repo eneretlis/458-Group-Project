@@ -166,6 +166,9 @@ Scan :
                 .pRightBracket
             | ',':
                 .pComma
+            | '#' :
+                .pHash
+
             | ':':
                 [
                     | '=':
@@ -218,10 +221,6 @@ Scan :
                 @Comment
             | '*':
                 .pStar
-            | '#' :
-                .pHash
-            | '%':
-                .pPercent
             | '!':
                 .pExclamation
             | '?':
