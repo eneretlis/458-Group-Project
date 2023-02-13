@@ -223,12 +223,12 @@ Scan :
             | '*':
                 .pStar
             | '!':
-              [
-                  | '=':
-                      .pNotEqual
-                  | *:
-                      .pExclamation
-              ]
+                [
+                    | '=':
+                        .pNotEqual
+                    | *:
+                        .pExclamation
+                ]
             | '?':
                 .pQuestion
             | '$':
