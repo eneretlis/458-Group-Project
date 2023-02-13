@@ -47,8 +47,7 @@ Input :
         lExclamation    '!'
         lQuestion       '?'
         lDollar         '$'
-        lDoubleEquals
-        lastCharClass = lDoubleEquals;
+        lastCharClass = lDollar;
 
 Output :
         % Keyword tokens -
