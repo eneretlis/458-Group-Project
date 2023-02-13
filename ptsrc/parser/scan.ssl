@@ -183,7 +183,7 @@ Scan :
                 [
                     | '=':
                         .pDoubleEquals
-                    | '*':
+                    | *:
                         .pEquals
                 ]
             | '+':
