@@ -184,7 +184,7 @@ Scan :
                     | '=':
                         .pDoubleEquals
                     | *:
-                        .pEquals
+                        .pExclamation
                 ]
             | '+':
                 .pPlus
