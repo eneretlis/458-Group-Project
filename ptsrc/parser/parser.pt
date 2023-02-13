@@ -3,14 +3,14 @@
    Date:  30 Jun 1980
           (Revised v5.1 - 8 Feb 2021)
 
-   Author:  Alan Rosselet      
+   Author:  Alan Rosselet
 
    Abstract:
-     The scanner-parser pass of the PT compiler consists of two modules, 
+     The scanner-parser pass of the PT compiler consists of two modules,
      a scanner-screener and a parser, which interact as coroutines.
 
-     Both modules are table driven by separately specified S/SL programs.  
-     The routines of this program implement the primitive operations and 
+     Both modules are table driven by separately specified S/SL programs.
+     The routines of this program implement the primitive operations and
      semantic operations invoked by those S/SL programs.
 
   Input Files:
@@ -23,11 +23,11 @@
             t2 - trace parser execution
             l - suppress generation of run-time source coordinate information
             DD - (D is a decimal digit) the first DD characters
-                 of identifiers in the user program are 
+                 of identifiers in the user program are
                  significant (DD >= 09 and DD <= 31).
 
    Output Files:
-       parseStream:  Parsed token stream (in postfix) 
+       parseStream:  Parsed token stream (in postfix)
                          for input to the semantic analysis pass.
        output:       Diagnostic messages.
 }
@@ -88,7 +88,12 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
         lTab = 24;
         lNewPage = 25;
         lEndFile = 26;
-        lastCharClass = 26;
+        lPercent = 27;
+        lHash = 28;
+        lExclamation = 29;
+        lQuestion = 30;
+        lDollar = 31;
+        lastCharClass = 31;
 
         { Output Tokens }
         pDiv = 0;
@@ -96,37 +101,37 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
         pMod = 1;
         pOr = 2;
         pAnd = 3;
-        pNot = 4;
-        pThen = 5;
-        pElse = 6;
-        pOf = 7;
-        pEnd = 8;
-        pUntil = 9;
-        pDo = 10;
-        pArray = 11;
-        pFile = 12;
-        pProgram = 13;
-        pConst = 14;
-        pVar = 15;
-        pType = 16;
-        pProcedure = 17;
-        pBegin = 18;
-        pIf = 19;
-        pCase = 20;
-        pWhile = 21;
-        pRepeat = 22;
-        lastKeywordToken = 22;
-        pIdentifier = 23;
-        firstCompoundInputToken = 23;
-        pInteger = 24;
-        pStringLiteral = 25;
-        lastCompoundInputToken = 25;
-        pNewLine = 26;
-        pEndFile = 27;
-        pPlus = 28;
-        pMinus = 29;
-        pStar = 30;
-        pColonEquals = 31;
+        pThen = 4;
+        pElse = 5;
+        pOf = 6;
+        pEnd = 7;
+        pDo = 8;
+        pArray = 9;
+        pFile = 10;
+        pVar = 11;
+        pType = 12;
+        pIf = 13;
+        pCase = 14;
+        pWhile = 15;
+        pUsing = 16;
+        pVal = 17;
+        pDef = 18;
+        pBreak = 19;
+        pWhen = 20;
+        pModule = 21;
+        pUnless = 22;
+        pElsif = 23;
+        lastKeywordToken = 23;
+        pIdentifier = 24;
+        firstCompoundInputToken = 24;
+        pInteger = 25;
+        pStringLiteral = 26;
+        lastCompoundInputToken = 26;
+        pNewLine = 27;
+        pEndFile = 28;
+        pPlus = 29;
+        pMinus = 30;
+        pStar = 31;
         pDot = 32;
         pComma = 33;
         pSemicolon = 34;
@@ -142,7 +147,13 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
         pLeftBracket = 44;
         pRightBracket = 45;
         pDotDot = 46;
-        lastSyntaxToken = 46;
+        pPercent = 47;
+        pHash = 48;
+        pExclamation = 49;
+        pQuestion = 50;
+        pDollar = 51;
+        pDoubleEquals = 52;
+        lastSyntaxToken = 52;
 
         { Input/Output Tokens }
 
@@ -362,8 +373,8 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
         fChoiceRuleFailed = 1;
         lastFailureCode = 1;
 
-        { Each assertion in the program is tagged with a unique identifying value - 
-          this makes it easy to find assertion failure conditions by searching for 
+        { Each assertion in the program is tagged with a unique identifying value -
+          this makes it easy to find assertion failure conditions by searching for
           'assertNN' below when assertion NN fails. }
         assert1 = 1;
         assert2 = 2;
@@ -409,7 +420,7 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
         { misc. }
         tab = '	';
         blank = ' ';
-        quote = '''';
+        quote = '""';
         null = 0;
 
         { Phase identification values - for use by common routines }
@@ -443,8 +454,8 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
         { The S/SL Rule Call Stack:
           The Rule Call Stack implements Syntax/Semantic Language rule call and return.
           Each time an oCall operation is executed, the table return address is pushed onto the
-          Rule Call Stack.  When an oReturn is executed, the return address is popped from 
-          the stack.  An oReturn executed when the Rule Call Stack is empty terminates 
+          Rule Call Stack.  When an oReturn is executed, the return address is popped from
+          the stack.  An oReturn executed when the Rule Call Stack is empty terminates
           table execution.  The scanner call stack and table pointer are global so the
           scanner can operate as a coroutine with the parser. }
         scanCallStackTop: 0 .. scanCallStackSize;
@@ -455,8 +466,8 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
           set false at normal end of processing and upon encountering an unrecoverable error. }
         scanning: Boolean;
 
-        { Buffer which temporarily stores the text for compound tokens identifier, 
-          integer and literal after their acceptance.  The text of literal string tokens 
+        { Buffer which temporarily stores the text for compound tokens identifier,
+          integer and literal after their acceptance.  The text of literal string tokens
           is passed from the scanner to the parser via this variable. }
         textBuffer: array [1 .. textBufferSize] of char;
         tokenTextLength: 0 .. textBufferSize;
@@ -481,7 +492,7 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
         identTextIndex: array [IdentTableReference] of IdentTextReference;
         { Number of characters in the ident }
         identLength: array [IdentTableReference] of char;        { chr(length) }
-        { The value used to distinguish identifier tokens is the current number of identifiers 
+        { The value used to distinguish identifier tokens is the current number of identifiers
           (standard and user defined) that have been entered in the ident table. Keywords have
           negative values in this field. }
         identTokenValue: array [IdentTableReference] of integer;
@@ -490,7 +501,7 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
         { Number of initialized standard ident table entries }
         numberStdIdentifiers: 0 .. maxStdIdentifiers;
 
-        { An ident table index which is computed as a function of the character representation 
+        { An ident table index which is computed as a function of the character representation
           of an identifer. }
         hashValue: IdentTableReference;
 
@@ -507,18 +518,18 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
         { Operation being executed by the Parser S/SL table walker }
         parserOperation: integer;
 
-        { Parser table walker termination control. Initially true; set false at normal end 
+        { Parser table walker termination control. Initially true; set false at normal end
           of processing and upon encountering an unrecoverable error. }
         parsing: Boolean;
 
-        { Communication channel between the Scanner and Parser.  
+        { Communication channel between the Scanner and Parser.
           Compound tokens have associated values :  identifier - ident table index,
-          integer - value.  The text and length of identifiers and literals is passed 
+          integer - value.  The text and length of identifiers and literals is passed
           via textBuffer and tokenTextLength. }
         parseInputToken: SyntaxToken;
         parseTokenValue: integer;
 
-        { Parser's private copy of compound token components.  
+        { Parser's private copy of compound token components.
           These values are accessed by the semantic operations of the parser. }
         compoundToken: SyntaxToken;        { identifier, integer or literal }
         compoundTokenValue: integer;
@@ -533,7 +544,7 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
         scanonly: Boolean;      { default is false }
         scantracing: Boolean;   { default is false }
         parsetracing: Boolean;  { default is false }
-        { Number of characters to be used to distinguish user-defined identifiers;  
+        { Number of characters to be used to distinguish user-defined identifiers;
           the default value is maxIdentifierLength. }
         significantIdentTextSize: minSignificantChars .. maxIdentifierLength;
 
@@ -556,9 +567,9 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
         carriagereturn: char;
 
         { UNIX argument file identifiers, for gpc compatibility }
-        {== 
+        {==
         NstdIdentifiers, NscanSsl, NparseSsl, Nsource, NparseStream, Noptions:
-            array [1 .. 50 ] of char; 
+            array [1 .. 50 ] of char;
         ==}
 
 
@@ -575,7 +586,7 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
                             write ('scanTableSize too small (increase in parser.pt)');
                         assert3:
                             write ('parseTableSize too small (increase in parser.pt)');
-                        assert4, assert5, assert6, assert7, assert8, assert9, assert10, assert11, 
+                        assert4, assert5, assert6, assert7, assert8, assert9, assert10, assert11,
                         assert12, assert13, assert14, assert15, assert16, assert17:
                             write ('internal error in parser.pt (report to maintainer)');
                     end;
@@ -698,7 +709,7 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
 
         begin
             if identTokenValue[identReference] <= 0 then
-                { We are comparing to a keyword, so the entire identifier is significant 
+                { We are comparing to a keyword, so the entire identifier is significant
                   in the comparison }
                 charsToCompare := tokenTextLength
             else
@@ -725,25 +736,25 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
         { Enter the character representation of the last identifier accepted
           into the text table and set the text table pointer and ident length
           fields of the argument ident table entry. }
-        var 
+        var
             i: integer;
             charsToEnter: 1 .. maxIdentifierLength;
 
         begin
             numberOfIdents := numberOfIdents + 1;
             identTextIndex[identReference] := identTextEnd + 1;
-            { The value used to distinguish identifier tokens is the current number of 
-              identifiers (standard and user defined) that have been entered in the ident table. 
+            { The value used to distinguish identifier tokens is the current number of
+              identifiers (standard and user defined) that have been entered in the ident table.
               Keywords are distinguished from other identifiers by their negative values. }
-            identTokenValue[identReference] := 
+            identTokenValue[identReference] :=
                         numberOfIdents - lastKeywordToken - 1;
 
             if identTokenValue[identReference] <= 0 then
-                { A keyword is being entered; enter its full ident regardless of the number 
+                { A keyword is being entered; enter its full ident regardless of the number
                   of significant characters requested by the user through the options file. }
                 charsToEnter := tokenTextLength
             else
-                { Enter only as many characters as were requested in options for 
+                { Enter only as many characters as were requested in options for
                   user-defined identifiers.         }
                 charsToEnter := significantChars;
 
@@ -760,7 +771,7 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
 
 
     procedure IdentLookup;
-        { Lookup the last accepted ident in the ident table using a hash function.  
+        { Lookup the last accepted ident in the ident table using a hash function.
           If the ident is not in the table enter it.             }
         const
             firstCharBitShift = 128;
@@ -769,7 +780,7 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
             found: Boolean;
 
         begin
-            { Hashing of all identifiers, user-defined and keywords, must use only the number 
+            { Hashing of all identifiers, user-defined and keywords, must use only the number
               of significant characters specified in options.  IdentCompare handles the case
               of keywords which happen to exceed the significance limit.}
             hashValue := ((ord(textBuffer[1]) * firstCharBitShift)
@@ -790,7 +801,7 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
                     begin
                         IdentCompare(hashValue, found);
                         if not found then
-                            { The secondary hash must also use the number of significant 
+                            { The secondary hash must also use the number of significant
                               characters in the identifier. }
                             hashValue := (hashValue + significantChars)
                                     mod identTableSize + 1
@@ -801,7 +812,7 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
 
 
     procedure AcceptScanToken;
-        { Read the next character from the source program text (if any remain) 
+        { Read the next character from the source program text (if any remain)
           and determine the lexical token class to which it belongs. }
         var acceptedScanToken:CharClass;
         begin
@@ -835,8 +846,8 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
 
 
     procedure Initialize;
-        { Set up the charClassMap, initialize the scanner and parser S/SL tables, 
-          insert keywords and predeclared identifiers in the ident table 
+        { Set up the charClassMap, initialize the scanner and parser S/SL tables,
+          insert keywords and predeclared identifiers in the ident table
           and set any requested options. }
         var
             i: integer;
@@ -872,10 +883,10 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
                     i := i + 1
                 end;
 
-            { N.B. The following code assumes that decimal digit characters 
-              (this remark applies also to upper and lower case alphabetic characters) 
-              are consecutive in the collating sequence.  If this is not a valid assumption 
-              for the character set at hand, then the code must be modified to classify 
+            { N.B. The following code assumes that decimal digit characters
+              (this remark applies also to upper and lower case alphabetic characters)
+              are consecutive in the collating sequence.  If this is not a valid assumption
+              for the character set at hand, then the code must be modified to classify
               only the appropriate characters as members of the digit (letter) class. }
             Assert((ord('9') - ord('0') = 9), assert14);
             i := ord('0');
@@ -900,7 +911,7 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
 
             charClassMap[ord(tab)] := lTab;
             charClassMap[ord(blank)] := lBlank;
-            charClassMap[ord(quote)] := lQuote;
+            charClassMap[ord('"')] := lQuote;
             charClassMap[ord(backslash)] := lBackslash;
             charClassMap[ord(carriagereturn)] := lCarriageReturn;
             charClassMap[ord('(')] := lLeftParen;
@@ -919,6 +930,12 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
             charClassMap[ord(']')] := lRightBracket;
             charClassMap[ord('{')] := lLeftBrace;
             charClassMap[ord('}')] := lRightBrace;
+            charClassMap[ord('#')] := lHash;
+            charClassMap[ord('!')] := lExclamation;
+            charClassMap[ord('$')] := lDollar;
+            charClassMap[ord('%')] := lPercent;
+            charClassMap[ord('?')] := lQuestion;
+
 
             { Initialize the scan ssl table }
             reset(scanSsl {==, NscanSsl ==} );
@@ -987,10 +1004,10 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
                     i := i + 1
                 end;
 
-            { The standard identifiers file contains the text of all keywords and 
-              predeclared identifiers.  Each identifier is followed by a newline marker.  
+            { The standard identifiers file contains the text of all keywords and
+              predeclared identifiers.  Each identifier is followed by a newline marker.
               Keywords are assumed to precede predeclared identifiers and the order of
-              the keywords in the file must match the order in the parser's keyword 
+              the keywords in the file must match the order in the parser's keyword
               token list in parser.ssl . }
             reset(stdIdentifiers {==, NstdIdentifiers  ==});
             numberOfIdents := 0;
@@ -1041,7 +1058,7 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
 
 
     procedure ScreenIdentifier;
-        { Enforce limits on the number of significant characters in identifiers, 
+        { Enforce limits on the number of significant characters in identifiers,
           enter identifiers into the ident table and distinguish keywords from other identifiers. }
         var
             i: integer;
@@ -1053,14 +1070,14 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
                     tokenTextLength := maxIdentifierLength
                 end;
 
-            { Mark the number of significant characters in the text buffer for use in IdentLookup, 
+            { Mark the number of significant characters in the text buffer for use in IdentLookup,
               IdentEnter and IdentCompare. }
             if tokenTextLength > significantIdentTextSize then
                 significantChars := significantIdentTextSize
             else
                 significantChars := tokenTextLength;
 
-            { Convert all identifiers letters to lower case 
+            { Convert all identifiers letters to lower case
               since upper and lower case are considered equivalent. }
             i := 0;
             while i < tokenTextLength do
@@ -1083,7 +1100,7 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
 
 
     procedure ScreenInteger;
-        { Set the value of an integer token, truncating if it exceeds the maximum 
+        { Set the value of an integer token, truncating if it exceeds the maximum
           implementation values. }
         var
             digit: 0 .. 9;
@@ -1149,11 +1166,11 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
 
     procedure ScanSSLChoice(choiceTag: integer;
                             var choiceTagMatched: Boolean);
-        { This procedure performs both input and semantic choices.  
-          It sequentially tests each alternative value against the tag value, 
-          and when a match is found, performs a branch to the corresponding alternative path.  
+        { This procedure performs both input and semantic choices.
+          It sequentially tests each alternative value against the tag value,
+          and when a match is found, performs a branch to the corresponding alternative path.
           If none of the alternative values matches the tag value, sslTable interpretation
-          proceeds to the operation immediately following the list of alternatives 
+          proceeds to the operation immediately following the list of alternatives
           (normally the otherwise path).  The flag choiceTagMatched is set to true
           if a match is found and false otherwise.                }
         var
@@ -1204,9 +1221,9 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
 
 
     procedure Scanner;
-        { The scanner removes token separators from the source program text 
-          (blanks, newlines, tabs, comments) and breaks the program up into syntax tokens.  
-          The scanner operates as a coroutine with the parser.  Each time it is activated, 
+        { The scanner removes token separators from the source program text
+          (blanks, newlines, tabs, comments) and breaks the program up into syntax tokens.
+          The scanner operates as a coroutine with the parser.  Each time it is activated,
           it scans a single token before passing control back to the parser. }
         var
             operation: integer;
@@ -1313,7 +1330,7 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
 
 
                     { Semantic Operations of the Buffer Mechanism }
-                    
+
                     oBufferSave:
                         { Save the last accepted character in
                           a text buffer for later reference. }
@@ -1323,7 +1340,7 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
                                 textBuffer[tokenTextLength] := lastInputChar
                             end
                         else
-                            { Set a flag rather than calling Error 
+                            { Set a flag rather than calling Error
                               to avoid a string of consecutive messages. }
                             textBufferOverflow := true;
 
@@ -1338,10 +1355,10 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
 
 
     procedure ScannerScreener;
-        { Invoke the scanner to find the next syntax token in the source program.  
-          The token returned is left in parseInputToken.  The value of a compound token 
-          is left in parseTokenValue and the characters comprising a literal string 
-          are left in textBuffer.  Resolve identifiers and keywords, and enforce limits 
+        { Invoke the scanner to find the next syntax token in the source program.
+          The token returned is left in parseInputToken.  The value of a compound token
+          is left in parseTokenValue and the characters comprising a literal string
+          are left in textBuffer.  Resolve identifiers and keywords, and enforce limits
           on identifier lengths and integer values.                      }
 
         var
@@ -1436,7 +1453,7 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
                 end;
 
             { Emit the value associated with a compound token.
-              N.B. this code assumes that the compound token being emitted 
+              N.B. this code assumes that the compound token being emitted
               was the last compound token accepted. }
             if (emittedToken = sIdentifier) or (emittedToken = sInteger) then
                 write(parseStream, compoundTokenValue)
@@ -1456,7 +1473,7 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
 
 
     procedure AcceptSyntaxToken;
-        { This procedure provides the interface to the ScannerScreener;  
+        { This procedure provides the interface to the ScannerScreener;
           it is responsible for handling all input including line number indicators and
           the values and text associated with input tokens. }
         var
@@ -1544,29 +1561,29 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
 
 
     procedure SslSyntaxError;
-        { This procedure handles syntax errors in the input to the Parser pass; 
+        { This procedure handles syntax errors in the input to the Parser pass;
           for Semantic passes this procedure will simply assert false since a syntax error in
           input would indicate an error in the previous pass. }
 
         { Syntax error recovery:
-          When a mismatch occurs between the the next input token and the syntax table, 
+          When a mismatch occurs between the the next input token and the syntax table,
           the following recovery is employed. }
 
-        { If the expected token is pNewLine then if there has been no previous syntax error 
+        { If the expected token is pNewLine then if there has been no previous syntax error
           on the line, ignore the error.  (A missing logical new line is not a real error.) }
 
-        { If the expected token is pNewLine or pSemicolon and a syntax error has already been 
-          detected on the current logical line (flagged by parseInputToken = pSyntaxError), 
+        { If the expected token is pNewLine or pSemicolon and a syntax error has already been
+          detected on the current logical line (flagged by parseInputToken = pSyntaxError),
           then flush the input until a new line or end of file is found. }
 
-        { Otherwise, if this is the first syntax error detected on the line 
-          (flagged by parseInputToken <> pSyntaxError), then if the input token is pEndFile 
-          then emit the ePrematureEOF error code and terminate execution.  
-          Otherwise, emit the eSyntaxError error code and set the parseInputToken to pSyntaxError 
+        { Otherwise, if this is the first syntax error detected on the line
+          (flagged by parseInputToken <> pSyntaxError), then if the input token is pEndFile
+          then emit the ePrematureEOF error code and terminate execution.
+          Otherwise, emit the eSyntaxError error code and set the parseInputToken to pSyntaxError
           to prevent further input until the expected input is pSemicolon or pNewLine. }
 
         { If the expected token is not pSemicolon nor pNewLine and a syntax error has already been
-          detected on the current line (flagged by parseInputToken = pSyntaxError), 
+          detected on the current line (flagged by parseInputToken = pSyntaxError),
           then do nothing and continue as if the expected token had been matched. }
 
         begin
@@ -1610,7 +1627,7 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
                         lineNumber := nextLineNumber;
                     end;
 
-            { If the expected input token is a compound 
+            { If the expected input token is a compound
              token, generate a dummy one.                }
             if (parseTable[parseTablePointer] >= firstCompoundInputToken) and
                    (parseTable[parseTablePointer] <= lastCompoundInputToken) then
@@ -1634,14 +1651,14 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
 
     procedure Parser;
         { The parser checks that the source program is syntactically legal,
-          flagging syntax errors and repairing them. The parser passes control to the Scanner 
-          (the Scanner and Parser are coroutines) whenever it requires a new token.  
+          flagging syntax errors and repairing them. The parser passes control to the Scanner
+          (the Scanner and Parser are coroutines) whenever it requires a new token.
           It emits a stream representing the parsed program in postfix form to the semantic pass. }
         const
             parseCallStackSize = 63;
         var
             { Parameterized And Choice Semantic Operation Values:
-              These are used to hold the decoded parameter value to a parameterized 
+              These are used to hold the decoded parameter value to a parameterized
               semantic operation and the result value returned by a choice semantic operation
               or rule respectively. }
             parameterValue: integer;

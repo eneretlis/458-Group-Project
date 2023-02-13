@@ -1,0 +1,5 @@
+Purpose: Ensure that the correct token is emitted when the # character is scanned
+Expected Output: The scanner recognizes the hash character and the pHash token is emitted 
+Actual Output: 
+ .pHash
+ .pEndFile
