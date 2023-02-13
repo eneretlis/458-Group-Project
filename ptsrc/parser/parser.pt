@@ -93,8 +93,7 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
         lExclamation = 29;
         lQuestion = 30;
         lDollar = 31;
-        lDoubleEquals = 32;
-        lastCharClass = 32;
+        lastCharClass = 31;
 
         { Output Tokens }
         pDiv = 0;
