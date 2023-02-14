@@ -1,5 +1,0 @@
-Purpose: Ensure that the correct token is emitted when the val keyword is scanned
-Expected Output: The scanner recognizes the identifier and emits a pIdentifier token which is screened to pVal
-Actual Output(success):
-  .pIdentifier (screened to pVal)
- .pEndFile

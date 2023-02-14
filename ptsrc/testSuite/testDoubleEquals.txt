@@ -1,5 +1,0 @@
-Purpose: Ensure that the correct token is emitted when a double equals is scanned
-Expected Output: The scanner recognizes the double equals and emits a pDoubleEquals token
-Actual Output (success):
- .pDoubleEquals
- .pEndFile

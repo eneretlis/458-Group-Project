@@ -1,5 +1,0 @@
-Purpose: Ensure that characters following a % are not saved until a new line is reached, the compiler should ignore comments as they are not relevant to the functionality of the program.
-Expected Output: oBufferSave ignores letters and digits and signs following a percent sign until a new line is reached, indicating the comment is over 
-Actual Output (success):
-  .pNewLine
- .pEndFile
