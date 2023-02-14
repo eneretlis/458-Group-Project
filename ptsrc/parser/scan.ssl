@@ -79,7 +79,8 @@ Output :
         pModule
         pUnless
         pElsif
-        lastKeywordToken = pElsif
+        pReturn
+        lastKeywordToken = pReturn
 
         % Scanner tokens -
         %   These are the tokens actually recognized by the Scanner itself.
@@ -114,12 +115,13 @@ Output :
         pLeftBracket
         pRightBracket
         pDotDot
-        pPercent
+        pLeftBrace 
+        pRightBrace 
         pHash
-        pExclamation
         pQuestion
         pDollar
         pDoubleEquals
+        pNot
         lastSyntaxToken = pDoubleEquals;
 
 Error :
@@ -201,6 +203,8 @@ Scan :
                 ]
             | '<':
                 [
+                    | '>':
+                        .pNotEqual
                     | '=':
                         .pLessEqual
                     | *:
@@ -224,8 +228,12 @@ Scan :
                     | '=':
                         .pNotEqual
                     | *:
-                        .pExclamation
+                        .pNot
                 ]
+            | '{':
+                .pLeftBrace
+            | '}':
+                .pRightBrace
             | '?':
                 .pQuestion
             | '$':
