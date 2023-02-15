@@ -171,7 +171,6 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
         { S/SL Rule Table Addresses } {
         Scan = 0;
         Identifier = 212;
-        AlternateComment = 325;
         Integer = 229;
         StringLiteral = 244;
         Comment = 296;
