@@ -146,7 +146,8 @@ Output :
         sSubstring
         sLength
         sIndex
-        lastSemanticToken = sIndex;
+        sElsif
+        lastSemanticToken = sElsif;
 
 
 rules
