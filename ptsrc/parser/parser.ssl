@@ -234,11 +234,11 @@ UnsignedIntegerConstant :
 TypeDefinitions :
         % Accept one or more named type definitions.
         pIdentifier  .sIdentifier
-        '='  @TypeBody  
+        ':'  @TypeBody  
         {[
             | pIdentifier:
                 .sIdentifier
-                '='  @TypeBody 
+                ':'  @TypeBody 
             | *:
                 >
         ]};
