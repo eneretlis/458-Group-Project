@@ -10,7 +10,7 @@
 %     and emits a postfix stream of tokens to the semantic analyzer
 %     module.  The parser detects and repairs syntax errors so that the
 %     token stream emitted to the semantic analyzer is syntactically
-%     legal (except for the special case of declaration phase errors - 
+%     legal (except for the special case of declaration phase errors -
 %     see the comment in the Block routine below).
 
 Input :
@@ -48,15 +48,15 @@ Input :
         % Scanner tokens -
         %   These are the tokens actually recognized by the Scanner itself.
 
-        % Compound tokens - 
+        % Compound tokens -
         %   These will be sent to the parser with a value or index.
-        pIdentifier 
+        pIdentifier
         firstCompoundInputToken = pIdentifier
         pInteger
         pStringLiteral
         lastCompoundInputToken = pStringLiteral
 
-        % Non-compound tokens - 
+        % Non-compound tokens -
         %   These tokens simply represent themselves.
         pNewLine
         pEndFile
@@ -68,7 +68,7 @@ Input :
         pSemicolon              ';'
         pColon                  ':'
         pEquals                 '='
-        pNotEqual               '<>'
+        pNotEqual               '!='
         pLess                   '<'
         pLessEqual              '<='
         pGreaterEqual           '>='
@@ -84,11 +84,11 @@ Input :
         pQuestion
         pDollar
         pDoubleEquals
-        pNot
+        pNot                    '!'
         lastSyntaxToken = pNot;
 
 Output :
-        sIdentifier 
+        sIdentifier
         firstSemanticToken = sIdentifier
         firstCompoundSemanticToken = sIdentifier
         sInteger
@@ -152,7 +152,7 @@ Output :
 rules
 
 Program :
-        'program'  .sProgram
+        'using'  .sProgram
         % program name
         pIdentifier
         % program parameters
@@ -175,7 +175,7 @@ Block :
         % We allow arbitrary intermixing of these instead to preserve
         % programmer sanity.
         {[
-            | 'const':
+            | 'val':
                 .sConst
                 @ConstantDefinitions
             | 'type':
@@ -184,7 +184,7 @@ Block :
             | 'var':
                 .sVar
                 @VariableDeclarations
-            | 'procedure':
+            | 'def':
                 .sProcedure
                 % procedure name
                 pIdentifier  .sIdentifier
@@ -193,17 +193,16 @@ Block :
             | *:
                 >
         ]}
-        'begin'
         @BeginStmt;
 
 ConstantDefinitions :
         % Accept one or more named constant definitions
         pIdentifier  .sIdentifier
-        '=' @ConstantValue
+        '=' @ConstantValue ';'
         {[
             | pIdentifier:
                 .sIdentifier
-                '=' @ConstantValue
+                '=' @ConstantValue ';'
             | *:
                 >
         ]};
@@ -234,11 +233,11 @@ UnsignedIntegerConstant :
 TypeDefinitions :
         % Accept one or more named type definitions.
         pIdentifier  .sIdentifier
-        ':'  @TypeBody  
+        '='  @TypeBody  ';'
         {[
             | pIdentifier:
                 .sIdentifier
-                ':'  @TypeBody 
+                '='  @TypeBody  ';'
             | *:
                 >
         ]};
@@ -288,11 +287,11 @@ OptionallySignedIntegerConstant :
 VariableDeclarations :
         % Accept one or more variable declarations.
         pIdentifier  .sIdentifier
-        ':'  @TypeBody 
+        ':'  @TypeBody  ';'
         {[
             | pIdentifier:
                 .sIdentifier
-                ':'  @TypeBody 
+                ':'  @TypeBody  ';'
             | *:
                 >
         ]};
@@ -329,15 +328,15 @@ Statement :
         [
             | pIdentifier:
                 @AssignmentOrCallStmt
-            | 'begin':
-                @BeginStmt
+            %| 'begin':
+            %    @BeginStmt
             | 'if':
                 @IfStmt
             | 'while':
                 @WhileStmt
             | 'case':
                 @CaseStmt
-            | 'repeat':
+            | 'do':
                 @RepeatStmt
             | *:
                 .sNullStmt
@@ -345,7 +344,7 @@ Statement :
 
 AssignmentOrCallStmt :
         [
-            | ':=':
+            | '=':
                 .sAssignmentStmt
                 .sIdentifier    % identifier accepted in the Statement rule
                 @Expression
@@ -356,7 +355,7 @@ AssignmentOrCallStmt :
                 .sSubscript
                 @Expression
                 .sExpnEnd
-                ']'  ':='
+                ']'  '='
                 @Expression
                 .sExpnEnd
             | *:
@@ -462,14 +461,17 @@ WhileStmt :
         @Statement;
 
 RepeatStmt :
-        .sRepeatStmt
+        .sDoStmt
         {
             @Statement
             [
                 | ';':
-                | 'until':
-                    .sRepeatEnd
-                    >
+                | 'break':
+                    [
+                        | 'if':
+                            .sExpnEnd
+                            >
+                    ]
             ]
         }
         @Expression
@@ -480,7 +482,7 @@ Expression :
         [
             | '=':
                 @SimpleExpression  .sEq
-            | '<>':
+            | '!=':
                 @SimpleExpression  .sNE
             | '<':
                 @SimpleExpression  .sLT
@@ -537,7 +539,7 @@ Factor :
                 .sInteger
             | '(':
                 @Expression  ')'
-            | 'not':
+            | '!':
                 @Factor
                 .sNot
             | pStringLiteral:
