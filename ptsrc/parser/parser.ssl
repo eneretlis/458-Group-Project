@@ -287,14 +287,16 @@ OptionallySignedIntegerConstant :
 VariableDeclarations :
         % Accept one or more variable declarations.
         pIdentifier  .sIdentifier
-        ':'  @TypeBody
         {[
-            | pIdentifier:
+            |',':
+                pIdentifier
+                .sVar
                 .sIdentifier
-                ':'  @TypeBody
-            | *:
+            |*:
                 >
-        ]};
+        ]}
+        ':'  @TypeBody
+        ;
 
 ProcedureHeading :
         % Accept zero or more procedure formal parameter declarations.
