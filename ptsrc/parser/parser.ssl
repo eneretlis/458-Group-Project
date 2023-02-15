@@ -494,6 +494,8 @@ Expression :
                 @SimpleExpression  .sGT
             | '>=':
                 @SimpleExpression  .sGE
+            | '==':
+                @SimpleExpression .sEq
             | *:
         ];
 
