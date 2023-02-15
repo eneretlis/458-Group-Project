@@ -83,7 +83,7 @@ Input :
         pHash
         pQuestion
         pDollar
-        pDoubleEquals
+        pDoubleEquals           '=='
         pNot                    '!'
         lastSyntaxToken = pNot;
 
