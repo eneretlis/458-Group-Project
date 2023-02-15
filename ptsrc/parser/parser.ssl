@@ -121,8 +121,8 @@ Output :
         sThen
         sElse
         sWhileStmt
-        sRepeatStmt
-        sRepeatEnd
+        sPublic
+        sModule
         sEq
         sNE
         sLT
@@ -141,7 +141,12 @@ Output :
         sNot
         sNewLine
         sEndOfFile
-        lastSemanticToken = sEndOfFile;
+        sDoStmt
+        sBreakIf
+        sSubstring
+        sLength
+        sIndex
+        lastSemanticToken = sIndex;
 
 
 rules

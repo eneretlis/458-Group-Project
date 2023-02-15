@@ -288,8 +288,8 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
         sThen = 26;
         sElse = 27;
         sWhileStmt = 28;
-        sRepeatStmt = 29;
-        sRepeatEnd = 30;
+        sPublic = 29;
+        sModule = 30;
         sEq = 31;
         sNE = 32;
         sLT = 33;
@@ -308,7 +308,12 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
         sNot = 46;
         sNewLine = 47;
         sEndOfFile = 48;
-        lastSemanticToken = 48;
+        sDoStmt = 49;
+        sBreakIf = 50;
+        sSubstring = 51;
+        sLength = 52;
+        sIndex = 53;
+        lastSemanticToken = 53;
 
         { Input/Output Tokens }
 
