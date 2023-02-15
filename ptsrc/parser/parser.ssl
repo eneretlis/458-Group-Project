@@ -412,12 +412,20 @@ IfStmt :
         .sExpnEnd
         'then'  .sThen
         @Statement
-        [
+        {[
             | 'else':
                 .sElse
                 @Statement
+                >
+            | 'elsif':
+                .sElsif
+                @Expression
+                .sExpnEnd
+                'then' .sThen
+                @Statement
             | *:
-        ];
+                >
+        ]};
 UnlessStmt :
         .sIfStmt
         @Expression
