@@ -417,7 +417,19 @@ IfStmt :
                 @Statement
             | *:
         ];
-
+UnlessStmt :
+        .sIfStmt
+        @Expression
+        .sNot
+        .sExpnEnd
+        'then'  .sThen
+        @Statement
+        [
+            | 'else':
+                .sElse
+                @Statement
+            | *:
+        ];
 CaseStmt :
         .sCaseStmt
         @Expression
