@@ -1,2 +1,2 @@
-using output
-DeclarationsAndStatements
+val c = 27
+var v : string
