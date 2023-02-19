@@ -175,6 +175,7 @@ Block :
         % appear only in the order consts, types, vars, procedures.
         % We allow arbitrary intermixing of these instead to preserve
         % programmer sanity.
+        .sBegin
         {[
             | 'val':
                 .sConst
@@ -191,9 +192,20 @@ Block :
                 pIdentifier  .sIdentifier
                 @ProcedureHeading
                 @Block  ';'
+            | pIdentifier:
+                @AssignmentOrCallStmt
+            | 'if':
+                @IfStmt
+            | 'while':
+                @WhileStmt
+            | 'case':
+                @CaseStmt
+            | 'do':
+                @RepeatStmt
             | *:
                 >
         ]}
+        .sEnd
         @BeginStmt;
 
 ConstantDefinitions :
