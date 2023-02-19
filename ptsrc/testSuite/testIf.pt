@@ -1,24 +1,5 @@
-.pIdentifier (screened to pIf)
-  .pIdentifier
-  % Output token text 'x'
- .pDoubleEquals
-  .pIdentifier
-  % Output token text 'y'
-  .pIdentifier (screened to pThen)
- .pNewLine
-  .pIdentifier
-  % Output token text 'z'
- .pEquals
-  .pIdentifier
-  % Output token text 'w'
- .pNewLine
-  .pIdentifier (screened to pElse)
- .pNewLine
-  .pIdentifier
-  % Output token text 'z'
- .pEquals
-  .pInteger
-  % Output token text '1'
- .pNewLine
-  .pIdentifier (screened to pEnd)
- .pEndFile
+if x == y then 
+    z = w
+else
+    z = 1
+end
