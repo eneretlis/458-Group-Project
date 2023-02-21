@@ -22,26 +22,28 @@ Input :
         pMod                    'mod'
         pOr                     'or'
         pAnd                    'and'
-        pNot                    'not'
         pThen                   'then'
         pElse                   'else'
         pOf                     'of'
         pEnd                    'end'
-        pUntil                  'until'
         pDo                     'do'
         pArray                  'array'
         pFile                   'file'
-        pProgram                'program'
-        pConst                  'const'
         pVar                    'var'
         pType                   'type'
-        pProcedure              'procedure'
-        pBegin                  'begin'
         pIf                     'if'
         pCase                   'case'
         pWhile                  'while'
-        pRepeat                 'repeat'
-        lastKeywordToken = pRepeat 
+        pUsing                  'using'
+        pVal                    'val'
+        pDef                    'def'
+        pUnless                 'unless'
+        pElsif                  'elsif'
+        pBreak                  'break'
+        pWhen                   'when'
+        pModule                 'module'
+        pReturn                 'return'
+        lastKeywordToken = pReturn 
 
         % Scanner tokens -
         %   These are the tokens actually recognized by the Scanner itself.
@@ -77,7 +79,14 @@ Input :
         pLeftBracket            '['
         pRightBracket           ']'
         pDotDot                 '..'
-        lastSyntaxToken = pDotDot;
+        pLeftBrace              '{'
+        pRightBrace             '}'
+        pDoubleEquals           '=='
+        pNot                    '!'
+        pQuestion               '?'
+        pDollar                 '$'
+        pHash                   '#'
+        lastSyntaxToken = pHash;
 
 Output :
         sIdentifier 
@@ -113,8 +122,6 @@ Output :
         sThen
         sElse
         sWhileStmt
-        sRepeatStmt
-        sRepeatEnd
         sEq
         sNE
         sLT
@@ -133,7 +140,14 @@ Output :
         sNot
         sNewLine
         sEndOfFile
-        lastSemanticToken = sEndOfFile;
+        sPublic
+        sModule
+        sDoStmt
+        sBreakIf
+        sSubstring
+        sLength
+        sIndex
+        lastSemanticToken = sIndex;
 
 
 rules
