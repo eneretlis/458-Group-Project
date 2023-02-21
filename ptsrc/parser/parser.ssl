@@ -153,9 +153,9 @@ Output :
 rules
 
 Program :
-        'program'  .sProgram
+        'using'  .sProgram
         % program name
-        pIdentifier
+        
         % program parameters
         '('
         {
@@ -168,34 +168,52 @@ Program :
         }
         ')'
         .sParmEnd
-        ';'  @Block  '.';
+        ';' @Block;
 
 Block :
         % Strictly speaking, standard Pascal requires that declarations
         % appear only in the order consts, types, vars, procedures.
         % We allow arbitrary intermixing of these instead to preserve
         % programmer sanity.
+        .sBegin
         {[
-            | 'const':
+            | 'val':
                 .sConst
                 @ConstantDefinitions
-            | 'type':
-                .sType
-                @TypeDefinitions
             | 'var':
                 .sVar
                 @VariableDeclarations
-            | 'procedure':
+            | 'def':
                 .sProcedure
                 % procedure name
                 pIdentifier  .sIdentifier
                 @ProcedureHeading
-                @Block  ';'
+                @Block  
+                'end'
+            | pIdentifier:
+                @AssignmentOrCallStmt
+            | 'begin':
+                @BeginStmt
+            | 'if':
+                @IfStmt
+                'end'
+            | 'choose':
+                @CaseStmt
+                'end'
+            | 'repeat':
+                [
+                    | 'while':
+                        @WhileStmt
+                    'end'
+                    |*:
+                        @RepeatStmt
+                ]
+            | ';':
+                .sNullStmt
             | *:
                 >
         ]}
-        'begin'
-        @BeginStmt;
+        .sEnd;
 
 ConstantDefinitions :
         % Accept one or more named constant definitions
@@ -325,24 +343,6 @@ ProcedureHeading :
         ]
         ';'
         .sParmEnd;
-
-Statement :
-        [
-            | pIdentifier:
-                @AssignmentOrCallStmt
-            | 'begin':
-                @BeginStmt
-            | 'if':
-                @IfStmt
-            | 'while':
-                @WhileStmt
-            | 'case':
-                @CaseStmt
-            | 'repeat':
-                @RepeatStmt
-            | *:
-                .sNullStmt
-        ];
 
 AssignmentOrCallStmt :
         [
