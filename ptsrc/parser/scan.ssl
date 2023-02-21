@@ -25,7 +25,7 @@ Input :
         lDot            '.'
         lComma          ','
         lSemicolon      ';'
-        lQuote          '"'
+        lQuote          
         lBackslash
         lLeftAngle      '<'
         lRightAngle     '>'
@@ -77,9 +77,8 @@ Output :
         pBreak
         pWhen
         pModule
-        pUnless
-        pElsif
-        lastKeywordToken = pElsif
+        pReturn
+        lastKeywordToken = pReturn
 
         % Scanner tokens -
         %   These are the tokens actually recognized by the Scanner itself.
@@ -114,13 +113,14 @@ Output :
         pLeftBracket
         pRightBracket
         pDotDot
-        pPercent
-        pHash
-        pExclamation
+        pLeftBrace
+        pRightBrace
+        pDoubleEquals
+        pNot
         pQuestion
         pDollar
-        pDoubleEquals
-        lastSyntaxToken = pDoubleEquals;
+        pHash
+        lastSyntaxToken = pHash;
 
 Error :
         eIllegalChar = 5
@@ -201,6 +201,8 @@ Scan :
                 ]
             | '<':
                 [
+                    | '>':
+                        .pNotEqual
                     | '=':
                         .pLessEqual
                     | *:
@@ -215,25 +217,30 @@ Scan :
                 ]
             | '%':
                 @Comment
-            | '#' :
-                .pHash
             | '*':
                 .pStar
+            | lNewPage:
+            | lEndFile:
+                .pEndFile
+                >
+            %% ADDED
+            | '?':
+            .pQuestion
+            | '$':
+            .pDollar
+            | '#':
+            .pHash
+            | '{':
+            .pLeftBrace
+            | '}':
+            .pRightBrace
             | '!':
                 [
                     | '=':
                         .pNotEqual
                     | *:
-                        .pExclamation
+                        .pNot
                 ]
-            | '?':
-                .pQuestion
-            | '$':
-                .pDollar
-            | lNewPage:
-            | lEndFile:
-                .pEndFile
-                >
             | *:
                 ?
                 #eIllegalChar
@@ -298,8 +305,7 @@ Comment :
             | lNewLine:
                 .pNewLine
                 >
-            | lEndFile:         % comment must be closed before EOF
-                #eCommentEOF
+            | lEndFile:       
                 .pEndFile
                 >
             | *:        % comment may contain any other character
