@@ -44,6 +44,7 @@ Input :
         pWhen                   'when'
         pModule                 'module'
         pReturn                 'return'
+        pNot                    'not'
         lastKeywordToken = pReturn 
 
         % Scanner tokens -
