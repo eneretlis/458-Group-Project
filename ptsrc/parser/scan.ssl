@@ -25,7 +25,7 @@ Input :
         lDot            '.'
         lComma          ','
         lSemicolon      ';'
-        lQuote          
+        lQuote
         lBackslash
         lLeftAngle      '<'
         lRightAngle     '>'
@@ -74,6 +74,8 @@ Output :
         pUsing
         pVal
         pDef
+        pUnless    
+        pElsif
         pBreak
         pWhen
         pModule
