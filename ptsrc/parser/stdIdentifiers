@@ -19,7 +19,8 @@ file
 var
 type
 if
-case
+choose
+repeat
 while
 using
 val
@@ -30,6 +31,7 @@ break
 when
 module
 return
+not
 
 % End of keywords
 

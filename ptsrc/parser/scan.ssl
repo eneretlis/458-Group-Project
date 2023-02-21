@@ -69,7 +69,7 @@ Output :
         pVar
         pType
         pIf
-        pCase
+        pChoose
         pWhile
         pUsing
         pVal
@@ -80,7 +80,8 @@ Output :
         pWhen
         pModule
         pReturn
-        lastKeywordToken = pReturn
+        pNot
+        lastKeywordToken = pNot
 
         % Scanner tokens -
         %   These are the tokens actually recognized by the Scanner itself.
@@ -118,7 +119,6 @@ Output :
         pLeftBrace
         pRightBrace
         pDoubleEquals
-        pNot
         pQuestion
         pDollar
         pHash
