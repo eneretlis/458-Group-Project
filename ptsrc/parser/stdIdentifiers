@@ -24,11 +24,12 @@ while
 using
 val
 def
+unless
+elsif
 break
 when
 module
-unless
-elsif
+return
 
 % End of keywords
 
