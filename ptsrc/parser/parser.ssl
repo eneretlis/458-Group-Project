@@ -32,7 +32,8 @@ Input :
         pVar                    'var'
         pType                   'type'
         pIf                     'if'
-        pCase                   'case'
+        pChoose                 'choose'
+        pRepeat                 'repeat'
         pWhile                  'while'
         pUsing                  'using'
         pVal                    'val'
@@ -122,6 +123,8 @@ Output :
         sThen
         sElse
         sWhileStmt
+        sRepeatStmt
+        sRepeatEnd
         sEq
         sNE
         sLT
@@ -189,24 +192,23 @@ Block :
                 pIdentifier  .sIdentifier
                 @ProcedureHeading
                 @Block  
-                'end'
+                'end' ';'
             | pIdentifier:
                 @AssignmentOrCallStmt
-            | 'begin':
-                @BeginStmt
             | 'if':
                 @IfStmt
-                'end'
+                'end' ';'
             | 'choose':
                 @CaseStmt
-                'end'
+                'end' ';'
             | 'repeat':
                 [
                     | 'while':
                         @WhileStmt
-                    'end'
+                        'end' ';'
                     |*:
                         @RepeatStmt
+                        ';'
                 ]
             | ';':
                 .sNullStmt
@@ -393,18 +395,6 @@ CallStmt :
         ]
         .sParmEnd;
 
-BeginStmt :
-        .sBegin
-        {
-            @Statement
-            [
-                | ';':
-                | 'end':
-                    .sEnd
-                    >
-            ]
-        };
-
 IfStmt :
         .sIfStmt
         @Expression
@@ -468,7 +458,7 @@ RepeatStmt :
             @Statement
             [
                 | ';':
-                | 'until':
+                | 'while':
                     .sRepeatEnd
                     >
             ]
