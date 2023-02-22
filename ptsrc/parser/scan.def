@@ -114,13 +114,13 @@
 
         { S/SL Rule Table Addresses } {
         Scan = 0;
-        Identifier = 203;
-        Integer = 220;
-        StringLiteral = 235;
-        Comment = 287;
+        Identifier = 248;
+        Integer = 265;
+        StringLiteral = 280;
+        Comment = 332;
         }
 
         { S/SL Table Parameters }
-        sslTblSize = 312;
+        sslTblSize = 357;
         minSslTableValue = -32767;
         maxSslTableValue = 32767;
