@@ -176,6 +176,31 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
         Integer = 220;
         StringLiteral = 235;
         Comment = 287;
+        Program = 0;
+        Block = 34;
+        ConstantDefinitions = 86;
+        TypeDefinitions = 176;
+        VariableDeclarations = 287;
+        ProcedureHeading = 317;
+        BeginStmt = 491;
+        ConstantValue = 116;
+        UnsignedIntegerConstant = 156;
+        TypeBody = 206;
+        SimpleType = 238;
+        OptionallySignedIntegerConstant = 267;
+        Statement = 365;
+        AssignmentOrCallStmt = 407;
+        IfStmt = 517;
+        WhileStmt = 604;
+        CaseStmt = 541;
+        RepeatStmt = 615;
+        Expression = 645;
+        CallStmt = 447;
+        CaseAlternative = 584;
+        SimpleExpression = 699;
+        Term = 752;
+        Factor = 796;
+        IdentifierExtension = 854;
         }
 
         { S/SL Table Parameters }
