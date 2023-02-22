@@ -347,8 +347,8 @@ Statement :
         [
             | pIdentifier:
                 @AssignmentOrCallStmt
-            %| 'begin':
-            %    @BeginStmt
+            | 'begin':
+                @BeginStmt
             | 'if':
                 @IfStmt
             | 'while':
