@@ -204,8 +204,8 @@ Block :
                 @RepeatStmt
             | 'unless':
                 @UnlessStmt
-            | 'elsif'
-                @IfStmt
+            %| 'elsif'
+            %    @IfStmt
             | *:
                 >
         ]}
