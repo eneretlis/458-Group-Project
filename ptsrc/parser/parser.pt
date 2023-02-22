@@ -172,14 +172,14 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
 
         { S/SL Rule Table Addresses } {
         Scan = 0;
-        Identifier = 248;
-        Integer = 265;
-        StringLiteral = 280;
-        Comment = 332;
+        Identifier = 203;
+        Integer = 220;
+        StringLiteral = 235;
+        Comment = 287;
         }
 
         { S/SL Table Parameters }
-        sslTblSize = 353;
+        sslTblSize = 312;
         minSslTableValue = -32767;
         maxSslTableValue = 32767;
 
