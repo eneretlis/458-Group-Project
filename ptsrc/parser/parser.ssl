@@ -168,7 +168,7 @@ Program :
         }
         ')'
         .sParmEnd
-        ';'  @Block  '.';
+        ';' .sProgram  @Block  '.';
 
 Block :
         % Strictly speaking, standard Pascal requires that declarations
