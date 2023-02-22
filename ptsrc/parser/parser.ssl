@@ -194,8 +194,8 @@ Block :
                 @Block  ';'
             | pIdentifier:
                 @AssignmentOrCallStmt
-            | 'if':
-                @IfStmt
+            %| 'if':
+            %    @IfStmt
             | 'while':
                 @WhileStmt
             | 'case':
