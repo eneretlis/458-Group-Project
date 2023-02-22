@@ -81,7 +81,7 @@ Output :
         pModule
         pReturn
         pNot
-        lastKeywordToken = pNot
+        lastKeywordToken = pNot;
 
         % Scanner tokens -
         %   These are the tokens actually recognized by the Scanner itself.
