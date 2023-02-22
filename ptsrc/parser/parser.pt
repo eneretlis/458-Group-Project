@@ -202,7 +202,6 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
         pElse = 5;
         pOf = 6;
         pEnd = 7;
-        pUntil = 8;
         pDo = 9;
         pArray = 10;
         pFile = 11;
