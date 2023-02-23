@@ -33,8 +33,6 @@ Input :
         lRightParen     ')'
         lLeftBracket    '['
         lRightBracket   ']'
-        lLeftBrace      '{'
-        lRightBrace     '}'
         lBlank
         lIllegal
         lNewLine
@@ -117,8 +115,6 @@ Output :
         pLeftBracket
         pRightBracket
         pDotDot
-        pLeftBrace
-        pRightBrace
         pDoubleEquals
         pQuestion
         pDollar
@@ -226,17 +222,16 @@ Scan :
             | lEndFile:
                 .pEndFile
                 >
-            %% ADDED
             | '?':
-            .pQuestion
+                .pQuestion
             | '$':
-            .pDollar
+                .pDollar
             | '#':
-            .pHash
+                .pHash
             | '{':
-            .pLeftBrace
+                .pLeftBrace
             | '}':
-            .pRightBrace
+                .pRightBrace
             | '!':
                 [
                     | '=':
