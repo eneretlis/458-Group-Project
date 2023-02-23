@@ -1,0 +1,3 @@
+val c = 27
+var v : string
+type t : integer
