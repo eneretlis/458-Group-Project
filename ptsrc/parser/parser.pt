@@ -1539,7 +1539,7 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
                             nextLineNumber := 0;
 
                         { Pass line markers to the next pass }
-                        EmitOutputToken();
+                        EmitOutputToken(sNewLine);
                     end;
             until parseInputToken <> pNewLine;
 
