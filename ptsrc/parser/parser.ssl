@@ -180,12 +180,15 @@ Block :
             | 'val':
                 .sConst
                 @ConstantDefinitions
+                ';'
             | 'type':
                 .sType
                 @TypeDefinitions
+                ';'
             | 'var':
                 .sVar
                 @VariableDeclarations
+                ';'
             | 'def':
                 .sProcedure
                 % procedure name
@@ -226,10 +229,8 @@ ConstantValue :
         [
             | pInteger:
                 .sInteger
-                ';'
             | pIdentifier:
                 .sIdentifier
-                ';'
             | '-':
                 @UnsignedIntegerConstant
                 .sNegate
@@ -256,7 +257,6 @@ ValueOrQuby :
         [
             | pIdentifier:
                 .sIdentifier
-                ';'
         ];
 
 OptionallySignedIntegerConstant :
