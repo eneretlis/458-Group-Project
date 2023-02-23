@@ -33,6 +33,8 @@ Input :
         lRightParen     ')'
         lLeftBracket    '['
         lRightBracket   ']'
+        lRightBrace     '{'
+        lLeftBrace      '}'
         lBlank
         lIllegal
         lNewLine
