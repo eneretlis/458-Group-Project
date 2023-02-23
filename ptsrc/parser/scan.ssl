@@ -114,6 +114,8 @@ Output :
         pRightParen
         pLeftBracket
         pRightBracket
+        pLeftBrace
+        pRightBrace
         pDotDot
         pDoubleEquals
         pQuestion

@@ -79,6 +79,8 @@ Input :
         pRightParen             ')'
         pLeftBracket            '['
         pRightBracket           ']'
+        pLeftBrace              '{'
+        pRightBrace             '}'
         pDotDot                 '..'
         pDoubleEquals           '=='
         pQuestion               '?'
