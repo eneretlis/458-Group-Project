@@ -168,7 +168,7 @@ Program :
             ]
         }
         .sParmEnd
-        ';' @Block;
+        @Block;
 
 Block :
         % Strictly speaking, standard Pascal requires that declarations
@@ -180,15 +180,12 @@ Block :
             | 'val':
                 .sConst
                 @ConstantDefinitions
-                ';'
             | 'type':
                 .sType
                 @TypeDefinitions
-                ';'
             | 'var':
                 .sVar
                 @VariableDeclarations
-                ';'
             | 'def':
                 .sProcedure
                 % procedure name
