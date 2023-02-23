@@ -220,14 +220,16 @@ Block :
 ConstantDefinitions :
         % Accept one named constant definitions
         pIdentifier  .sIdentifier
-        '=' @ConstantValue;
+        '=' @ConstantValue ;
 
 ConstantValue :
         [
             | pInteger:
                 .sInteger
+                ';'
             | pIdentifier:
                 .sIdentifier
+                ';'
             | '-':
                 @UnsignedIntegerConstant
                 .sNegate
@@ -254,6 +256,7 @@ ValueOrQuby :
         [
             | pIdentifier:
                 .sIdentifier
+                ';'
         ];
 
 OptionallySignedIntegerConstant :
