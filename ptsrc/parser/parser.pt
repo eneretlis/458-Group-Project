@@ -79,8 +79,8 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
         lRightParen = 15;
         lLeftBracket = 16;
         lRightBracket = 17;
-        lLeftBrace = 18;
-        lRightBrace = 19;
+        lRightBrace = 18;
+        lLeftBrace = 19;
         lBlank = 20;
         lIllegal = 21;
         lNewLine = 22;
@@ -149,9 +149,9 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
         pRightParen = 46;
         pLeftBracket = 47;
         pRightBracket = 48;
-        pDotDot = 49;
-        pLeftBrace = 50;
-        pRightBrace = 51;
+        pLeftBrace = 49;
+        pRightBrace = 50;
+        pDotDot = 51;
         pDoubleEquals = 52;
         pQuestion = 53;
         pDollar = 54;
@@ -205,46 +205,56 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
         pDo = 8;
         pArray = 9;
         pFile = 10;
-        pProgram = 11;
-        pConst = 12;
-        pVar = 13;
-        pType = 14;
-        pProcedure = 15;
-        pBegin = 16;
-        pIf = 17;
-        pCase = 18;
-        pWhile = 19;
-        pRepeat = 20;
-        pNot = 21;
-        lastKeywordToken = 21;
-        pIdentifier = 22;
-        firstCompoundInputToken = 22;
-        pInteger = 23;
-        pStringLiteral = 24;
-        lastCompoundInputToken = 24;
-        pNewLine = 25;
-        pEndFile = 26;
-        pPlus = 27;
-        pMinus = 28;
-        pStar = 29;
-        pColonEquals = 30;
-        pDot = 31;
-        pComma = 32;
-        pSemicolon = 33;
-        pColon = 34;
-        pEquals = 35;
-        pNotEqual = 36;
-        pLess = 37;
-        pLessEqual = 38;
-        pGreaterEqual = 39;
-        pGreater = 40;
-        pLeftParen = 41;
-        pRightParen = 42;
-        pLeftBracket = 43;
-        pRightBracket = 44;
-        pDotDot = 45;
-        lastSyntaxToken = 45;
-        }
+        pVar = 11;
+        pType = 12;
+        pIf = 13;
+        pChoose = 14;
+        pRepeat = 15;
+        pWhile = 16;
+        pUsing = 17;
+        pVal = 18;
+        pDef = 19;
+        pUnless = 20;
+        pElsif = 21;
+        pBreak = 22;
+        pWhen = 23;
+        pModule = 24;
+        pReturn = 25;
+        pNot = 26;
+        lastKeywordToken = 26;
+        pIdentifier = 27;
+        firstCompoundInputToken = 27;
+        pInteger = 28;
+        pStringLiteral = 29;
+        lastCompoundInputToken = 29;
+        pNewLine = 30;
+        pEndFile = 31;
+        pPlus = 32;
+        pMinus = 33;
+        pStar = 34;
+        pDot = 35;
+        pComma = 36;
+        pSemicolon = 37;
+        pColon = 38;
+        pEquals = 39;
+        pNotEqual = 40;
+        pLess = 41;
+        pLessEqual = 42;
+        pGreaterEqual = 43;
+        pGreater = 44;
+        pLeftParen = 45;
+        pRightParen = 46;
+        pLeftBracket = 47;
+        pRightBracket = 48;
+        pLeftBrace = 49;
+        pRightBrace = 50;
+        pDotDot = 51;
+        pDoubleEquals = 52;
+        pQuestion = 53;
+        pDollar = 54;
+        pHash = 55;
+        lastSyntaxToken = 55;
+    }
 
         { Output Tokens }
         sIdentifier = 0;
@@ -316,38 +326,35 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
 
         { S/SL Rule Table Addresses } {
         Program = 0;
-        Block = 34;
-        ConstantDefinitions = 124;
-        TypeDefinitions = 210;
-        VariableDeclarations = 317;
-        ProcedureHeading = 343;
-        AssignmentOrCallStmt = 427;
-        WhileStmt = 672;
-        CaseStmt = 609;
-        RepeatStmt = 683;
-        UnlessStmt = 583;
-        IfStmt = 537;
-        BeginStmt = 511;
-        ConstantValue = 150;
-        UnsignedIntegerConstant = 190;
-        TypeBody = 236;
-        SimpleType = 268;
-        OptionallySignedIntegerConstant = 297;
-        Statement = 391;
-        Expression = 724;
-        CallStmt = 467;
-        CaseAlternative = 652;
-        SimpleExpression = 786;
-        Term = 839;
-        Factor = 883;
-        IdentifierExtension = 941;
+        Block = 30;
+        ConstantDefinitions = 129;
+        VariableDeclarations = 330;
+        ProcedureHeading = 360;
+        AssignmentOrCallStmt = 408;
+        IfStmt = 492;
+        CaseStmt = 516;
+        WhileStmt = 579;
+        RepeatStmt = 590;
+        ConstantValue = 159;
+        UnsignedIntegerConstant = 199;
+        TypeDefinitions = 219;
+        TypeBody = 249;
+        SimpleType = 281;
+        OptionallySignedIntegerConstant = 310;
+        Expression = 620;
+        CallStmt = 448;
+        CaseAlternative = 559;
+        SimpleExpression = 674;
+        Term = 727;
+        Factor = 771;
+        IdentifierExtension = 829;
         }
 
         { S/SL Table Parameters } {
-        sslTblSize = 971;
+        sslTblSize = 859;
         minSslTableValue = -32767;
         maxSslTableValue = 32767;
-        }
+    }
 
 { ===== End of contents of parser.def }
 
@@ -1532,7 +1539,7 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
                             nextLineNumber := 0;
 
                         { Pass line markers to the next pass }
-                        EmitOutputToken(sNewLine);
+                        EmitOutputToken();
                     end;
             until parseInputToken <> pNewLine;
 
