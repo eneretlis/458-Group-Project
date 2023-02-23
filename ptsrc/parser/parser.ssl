@@ -157,9 +157,8 @@ rules
 Program :
         'using'  .sProgram
         % program name
-        
+
         % program parameters
-        '('
         {
             pIdentifier  .sIdentifier
             [
@@ -168,7 +167,6 @@ Program :
                     >
             ]
         }
-        ')'
         .sParmEnd
         ';' @Block;
 
