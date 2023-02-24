@@ -31,7 +31,6 @@ break
 when
 module
 return
-not
 
 % End of keywords
 

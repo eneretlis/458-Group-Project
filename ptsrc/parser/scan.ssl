@@ -81,8 +81,7 @@ Output :
         pWhen
         pModule
         pReturn
-        pNot
-        lastKeywordToken = pNot
+        lastKeywordToken = pReturn
 
         % Scanner tokens -
         %   These are the tokens actually recognized by the Scanner itself.
@@ -123,7 +122,8 @@ Output :
         pQuestion
         pDollar
         pHash
-        lastSyntaxToken = pHash;
+        pNot
+        lastSyntaxToken = pNot;
 
 Error :
         eIllegalChar = 5

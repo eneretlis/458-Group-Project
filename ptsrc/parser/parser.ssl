@@ -44,7 +44,6 @@ Input :
         pWhen                   'when'
         pModule                 'module'
         pReturn                 'return'
-        pNot                    'not'
         lastKeywordToken = pNot 
 
         % Scanner tokens -
@@ -70,7 +69,7 @@ Input :
         pSemicolon              ';'
         pColon                  ':'
         pEquals                 '='
-        pNotEqual               '<>'
+        pNotEqual               '!='
         pLess                   '<'
         pLessEqual              '<='
         pGreaterEqual           '>='
@@ -86,7 +85,8 @@ Input :
         pQuestion               '?'
         pDollar                 '$'
         pHash                   '#'
-        lastSyntaxToken = pHash;
+        pNot                    '!'
+        lastSyntaxToken = pNot;
 
 Output :
         sIdentifier 
