@@ -198,6 +198,7 @@ Block :
                 @AssignmentOrCallStmt
             | 'if':
                 @IfStmt
+                'end'
             | 'choose':
                 @CaseStmt
                 'end'
@@ -437,7 +438,7 @@ Expression :
         [
             | '=':
                 @SimpleExpression  .sEq
-            | '<>':
+            | '!=':
                 @SimpleExpression  .sNE
             | '<':
                 @SimpleExpression  .sLT
@@ -447,9 +448,10 @@ Expression :
                 @SimpleExpression  .sGT
             | '>=':
                 @SimpleExpression  .sGE
+            | '==':
+                @SimpleExpression .sEq
             | *:
         ];
-
 SimpleExpression :
         [
             | '+':
