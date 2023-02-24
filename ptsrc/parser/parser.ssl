@@ -192,26 +192,22 @@ Block :
                 pIdentifier  .sIdentifier
                 @ProcedureHeading
                 @Block  
-                'end' ';'
+                'end'
             | pIdentifier:
                 @AssignmentOrCallStmt
             | 'if':
                 @IfStmt
-                'end' ';'
             | 'choose':
                 @CaseStmt
-                'end' ';'
+                'end'
             | 'repeat':
                 [
                     | 'while':
                         @WhileStmt
-                        'end' ';'
+                        'end'
                     |*:
                         @RepeatStmt
-                        ';'
                 ]
-            | ';':
-                .sNullStmt
             | *:
                 >
         ]}
@@ -362,12 +358,20 @@ IfStmt :
         .sExpnEnd
         'then'  .sThen
         @Block
-        [
+        {[
             | 'else':
                 .sElse
                 @Block
+                >
+            | 'elsif':
+                .sElsif
+                @Expression
+                .sExpnEnd
+                'then' .sThen
+                @Block
             | *:
-        ];
+                >
+        ]};
 
 CaseStmt :
         .sCaseStmt
