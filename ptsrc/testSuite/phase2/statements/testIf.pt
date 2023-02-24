@@ -1,3 +1,4 @@
+using output
 if x == y then 
     z = w
 else

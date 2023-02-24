@@ -32,7 +32,7 @@ Input :
         pVar                    'var'
         pType                   'type'
         pIf                     'if'
-        pChoose                 'choose'
+        pCase                   'case'
         pRepeat                 'repeat'
         pWhile                  'while'
         pUsing                  'using'
@@ -199,8 +199,10 @@ Block :
             | 'if':
                 @IfStmt
                 'end'
-            | 'choose':
+            | 'case':
                 @CaseStmt
+            | 'unless':
+                @UnlessStmt
                 'end'
             | 'repeat':
                 [
@@ -374,6 +376,20 @@ IfStmt :
             | *:
                 >
         ]};
+
+UnlessStmt :
+        .sIfStmt
+        @Expression
+        .sNot
+        .sExpnEnd
+        'then'  .sThen
+        @Block
+        [
+            | 'else':
+                .sElse
+                @Block
+            | *:
+        ];
 
 CaseStmt :
         .sCaseStmt
