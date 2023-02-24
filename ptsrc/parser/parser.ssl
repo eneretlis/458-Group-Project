@@ -44,7 +44,7 @@ Input :
         pWhen                   'when'
         pModule                 'module'
         pReturn                 'return'
-        lastKeywordToken = pNot 
+        lastKeywordToken = pReturn 
 
         % Scanner tokens -
         %   These are the tokens actually recognized by the Scanner itself.
@@ -496,7 +496,7 @@ Factor :
                 .sInteger
             | '(':
                 @Expression  ')'
-            | 'not':
+            | '!':
                 @Factor
                 .sNot
             | pStringLiteral:
