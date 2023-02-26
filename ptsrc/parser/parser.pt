@@ -336,7 +336,8 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
         IfStmt = 385;
         CaseStmt = 431;
         WhileStmt = 494;
-        RepeatStmt = 505;
+        DefStmt = 505;
+        ModuleStmt = 600;
         ConstantValue = 124;
         UnsignedIntegerConstant = 164;
         ValueOrQuby = 193;
