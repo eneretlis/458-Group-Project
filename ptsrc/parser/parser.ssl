@@ -442,12 +442,12 @@ DefStmt :
                 pIdentifier  .sIdentifier
         ]
         @ProcedureHeading
-        @Block
+        @Block;
 
-ModuleStmt:
+ModuleStmt :
         .sModule
         pIdentifier .sIdentifier
-        @Block
+        @Block;
 
 
 Expression :
