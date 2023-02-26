@@ -122,6 +122,7 @@ Output :
         sThen
         sElse
         sElsif
+        sDo
         sWhileStmt
         sRepeatStmt
         sRepeatEnd
@@ -179,20 +180,16 @@ Block :
         .sBegin
         {[
             | 'val':
-                .sConst
                 @ConstantDefinitions
             | 'type':
-                .sType
                 @TypeDefinitions
             | 'var':
-                .sVar
                 @VariableDeclarations
             | 'def':
-                .sProcedure
-                % procedure name
-                pIdentifier  .sIdentifier
-                @ProcedureHeading
-                @Block  
+                @DefStmt  
+                'end'
+            | 'module'
+                @ModuleStmt
                 'end'
             | pIdentifier:
                 @AssignmentOrCallStmt
@@ -204,14 +201,9 @@ Block :
             | 'unless':
                 @UnlessStmt
                 'end'
-            | 'repeat':
-                [
-                    | 'while':
-                        @WhileStmt
-                        'end'
-                    |*:
-                        @RepeatStmt
-                ]
+            | 'do':
+                @DoStmt
+                'end'
             | *:
                 >
         ]}
@@ -219,6 +211,7 @@ Block :
 
 ConstantDefinitions :
         % Accept one named constant definitions
+        .sConst
         pIdentifier  .sIdentifier
         '=' @ConstantValue ;
 
@@ -247,6 +240,7 @@ UnsignedIntegerConstant :
 
 TypeDefinitions :
         % Accept one or more named type definitions.
+        .sType
         pIdentifier  .sIdentifier
         ':'  @ValueOrQuby;
 
@@ -269,6 +263,7 @@ OptionallySignedIntegerConstant :
 
 VariableDeclarations :
         % Accept one or more variable declarations.
+        .sVar
         pIdentifier  .sIdentifier
         {[
             | ',':
@@ -296,7 +291,7 @@ ProcedureHeading :
                     % type identifier
                     pIdentifier  .sIdentifier
                     [
-                        | ';':
+                        | ',':
                         | *:
                             >
                     ]
@@ -304,7 +299,6 @@ ProcedureHeading :
                 ')'
             | *:
         ]
-        ';'
         .sParmEnd;
 
 AssignmentOrCallStmt :
@@ -402,8 +396,9 @@ CaseStmt :
                 >
         ]}
         [
-            'else'
-            .sElse @Block
+            | 'else':
+                .sElse @Block
+            | *:
         ]
         'end'
         .sCaseEnd;
@@ -430,19 +425,30 @@ WhileStmt :
         'do'
         @Block;
 
-RepeatStmt :
-        .sRepeatStmt
-        {
-            @Block
-            [
-                | ';':
-                | 'while':
-                    .sRepeatEnd
-                    >
-            ]
-        }
+DoStmt :
+        @Block
+        'break' 'if' .sBreakIf 
         @Expression
-        .sExpnEnd;
+        .sExpnEnd
+        @Block;
+
+DefStmt :
+        .sProcedure
+        % procedure name
+        [
+            | '*':
+                pIdentifier  .sIdentifier .sPublic
+            | *:
+                pIdentifier  .sIdentifier
+        ]
+        @ProcedureHeading
+        @Block
+
+ModuleStmt:
+        .sModule
+        pIdentifier .sIdentifier
+        @Block
+
 
 Expression :
         @SimpleExpression

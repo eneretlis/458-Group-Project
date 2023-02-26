@@ -1,0 +1,4 @@
+using output
+Module M
+	x = y
+end
