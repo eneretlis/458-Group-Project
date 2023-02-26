@@ -188,7 +188,7 @@ Block :
             | 'def':
                 @DefStmt  
                 'end'
-            | 'module'
+            | 'module':
                 @ModuleStmt
                 'end'
             | pIdentifier:
