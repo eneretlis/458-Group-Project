@@ -514,7 +514,7 @@ HigherFactor:
            @Factor
            {[
                 | '$':
-                    @Factor '..' @Factor
+                    @Factor '..' @Factor .sSubstring
                 | *:
                     >
            ]};
