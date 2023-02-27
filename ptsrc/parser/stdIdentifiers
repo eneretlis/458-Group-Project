@@ -19,7 +19,7 @@ file
 var
 type
 if
-choose
+case
 repeat
 while
 using
