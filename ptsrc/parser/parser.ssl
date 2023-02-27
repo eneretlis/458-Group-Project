@@ -425,7 +425,7 @@ WhileStmt :
         .sExpnEnd
         'do'
         @Block
-        'end;
+        'end';
 
 DoStmt :
         .sDoStmt
