@@ -1,0 +1,19 @@
+Purpose: Ensure that modules are correctly parsed.
+Expected Output: The parser should emit sModule at the beginning of the module, and then sIdentifier and sBegin. At the end of the module, the parser should emit sEnd.
+Actual Output (success):
+ .sProgram
+ % .sNewLine
+ .sIdentifier
+ .sParmEnd
+  .sBegin
+   .sModule
+   % .sNewLine
+   .sIdentifier
+    .sBegin
+     .sAssignmentStmt
+     .sIdentifier
+         % .sNewLine
+         .sIdentifier
+     .sExpnEnd
+    .sEnd
+  .sEnd

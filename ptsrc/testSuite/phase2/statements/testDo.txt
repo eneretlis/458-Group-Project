@@ -1,0 +1,29 @@
+Purpose: Test that do statements are parsed correctly.
+Expected Output: sDo sBegin DeclarationsAndStatements1 sEnd sBreakIf sIdentifier sExpnEnd sBegin DeclarationsAndStatements2 sEnd
+Actual Output (success):
+ .sProgram
+ % .sNewLine
+ .sIdentifier
+ .sParmEnd
+  .sBegin
+  % .sNewLine
+   .sDoStmt
+    .sBegin
+     .sAssignmentStmt
+     .sIdentifier
+          % .sNewLine
+          .sIdentifier
+     .sExpnEnd
+    .sEnd
+   .sBreakIf
+        % .sNewLine
+        .sIdentifier
+   .sExpnEnd
+    .sBegin
+     .sAssignmentStmt
+     .sIdentifier
+          % .sNewLine
+          .sIdentifier
+     .sExpnEnd
+    .sEnd
+  .sEnd
