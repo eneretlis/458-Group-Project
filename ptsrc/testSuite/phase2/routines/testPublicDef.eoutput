@@ -1,0 +1,12 @@
+.sProgram
+ % .sNewLine
+ .sIdentifier
+ .sParmEnd
+  .sBegin
+   .sProcedure
+   .sIdentifier
+   .sPublic
+    .sParmEnd
+    .sBegin
+    .sEnd
+  .sEnd

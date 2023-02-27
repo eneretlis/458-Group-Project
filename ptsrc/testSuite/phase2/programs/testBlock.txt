@@ -1,0 +1,13 @@
+Purpose: To test that the parsing of programs is working correctly using the Block rule.
+Expected Output: The parser should yield, at the beginning, sProgram, sIdentifier, sParmEnd, and sBegin. At the end, the parser should yield sEnd.
+Actual Output (success):
+ .sProgram
+ % .sNewLine
+ .sIdentifier
+ .sParmEnd
+  .sBegin
+   .sAssignmentStmt
+   .sIdentifier
+        .sIdentifier
+   .sExpnEnd
+  .sEnd

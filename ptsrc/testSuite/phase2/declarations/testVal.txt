@@ -1,0 +1,20 @@
+Purpose: Ensure that constant definitions, type definitions, and variable declarations are correctly parsed.
+Expected Output: For the constant definition, the parser should emit sConst, sIdentifier, and sInteger. For the variable declaration, the parser should emit sVar, sIdentifier, and sIdentifier again. For the type definition, the parser should emit sType, sIdentifier, and sIdentifier again.
+Actual Output (success):
+ .sProgram
+ % .sNewLine
+ .sIdentifier
+ .sParmEnd
+  .sBegin
+   .sConst
+   .sIdentifier
+    % .sNewLine
+    .sInteger
+   .sVar
+   .sIdentifier
+    % .sNewLine
+    .sIdentifier
+   .sType
+   .sIdentifier
+    .sIdentifier
+  .sEnd
