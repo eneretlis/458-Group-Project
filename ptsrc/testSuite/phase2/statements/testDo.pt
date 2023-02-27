@@ -1,6 +1,6 @@
 using output
 do
-	x = y
-	break if true
-	x = w
+    x = y
+    break if true
+    x = w
 end

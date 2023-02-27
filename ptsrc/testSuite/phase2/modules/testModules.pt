@@ -1,4 +1,4 @@
 using output
 Module M
-	x = y
+    x = y
 end
