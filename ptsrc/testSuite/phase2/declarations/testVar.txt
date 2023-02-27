@@ -1,0 +1,17 @@
+Purpose: To test that the parsing of the declaration of more than one identifier in a single Quby var declaration is correct.
+Expected Output:
+sVar sIdentifier sVar sIdentifier sVar sIdentifier sIdentifier
+Actual Output:
+  .sProgram
+ % .sNewLine
+ .sIdentifier
+ .sParmEnd
+  .sBegin
+   .sVar
+   .sIdentifier
+   .sVar
+   .sIdentifier
+   .sVar
+   .sIdentifier
+    .sIdentifier
+  .sEnd
