@@ -186,24 +186,23 @@ Block :
             | 'var':
                 @VariableDeclarations
             | 'def':
-                @DefStmt  
-                'end'
+                @DefStmt
             | 'module':
                 @ModuleStmt
-                'end'
             | pIdentifier:
                 @AssignmentOrCallStmt
             | 'if':
                 @IfStmt
-                'end'
             | 'case':
                 @CaseStmt
             | 'unless':
                 @UnlessStmt
-                'end'
             | 'do':
                 @DoStmt
-                'end'
+            | 'while':
+                @WhileStmt
+            | ';':
+                .sNullStmt
             | *:
                 >
         ]}
@@ -276,8 +275,10 @@ VariableDeclarations :
 
 ProcedureHeading :
         % Accept zero or more procedure formal parameter declarations.
+        '('
         [
-            | '(':
+            | ')':
+            | *:
                 {
                     % formal parameter identifier
                     [
@@ -297,7 +298,6 @@ ProcedureHeading :
                     ]
                 }
                 ')'
-            | *:
         ]
         .sParmEnd;
 
@@ -383,7 +383,8 @@ UnlessStmt :
                 .sElse
                 @Block
             | *:
-        ];
+        ]
+        'end';
 
 CaseStmt :
         .sCaseStmt
@@ -423,14 +424,17 @@ WhileStmt :
         @Expression
         .sExpnEnd
         'do'
-        @Block;
+        @Block
+        'end;
 
 DoStmt :
+        .sDoStmt
         @Block
         'break' 'if' .sBreakIf 
         @Expression
         .sExpnEnd
-        @Block;
+        @Block
+        'end';
 
 DefStmt :
         .sProcedure
@@ -442,19 +446,19 @@ DefStmt :
                 pIdentifier  .sIdentifier
         ]
         @ProcedureHeading
-        @Block;
+        @Block
+        'end';
 
 ModuleStmt :
         .sModule
         pIdentifier .sIdentifier
-        @Block;
+        @Block
+        'end';
 
 
 Expression :
         @SimpleExpression
         [
-            | '=':
-                @SimpleExpression  .sEq
             | '!=':
                 @SimpleExpression  .sNE
             | '<':
@@ -490,19 +494,30 @@ SimpleExpression :
         ]};
 
 Term :
-        @Factor
+        @HigherFactor
         {[
             | '*':
-                @Factor  .sMultiply
+                @HigherFactor  .sMultiply
             | 'div':
-                @Factor  .sDivide
+                @HigherFactor  .sDivide
             | 'mod':
-                @Factor  .sModulus
+                @HigherFactor  .sModulus
             | 'and':
-                .sInfixAnd  @Factor  .sAnd
+                .sInfixAnd  @HigherFactor  .sAnd
+            |'?':
+                @HigherFactor .sIndex
             | *:
                 >
         ]};
+
+HigherFactor:
+           @Factor
+           {[
+                | '$':
+                    @Factor '..' @Factor
+                | *:
+                    >
+           ]};
 
 Factor :
         [
@@ -516,6 +531,9 @@ Factor :
             | '!':
                 @Factor
                 .sNot
+            | '#':
+                @Factor
+                .sLength
             | pStringLiteral:
                 .sStringLiteral
             | 'file':
