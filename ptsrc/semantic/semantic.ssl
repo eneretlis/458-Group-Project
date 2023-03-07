@@ -319,6 +319,12 @@ mechanism SymbolTable :
         % Return true if any external names (program parameters)
         % have not yet been declared.
 
+    oSymbolTblStripScope
+        %new, not done yet
+
+    oSymbolTblMergeScope
+        %new, not done yet
+
 
 % Symbol Stack types and mechanism
 
