@@ -109,21 +109,21 @@ Output :
         tVarParm
         tFetchAddress
         tFetchInteger
-        tFetchChar
+        tFetchString
         tFetchBoolean
         tAssignBegin
         tAssignAddress
         tAssignInteger
-        tAssignChar
+        tAssignString
         tAssignBoolean
         tStoreAddress
         tStoreInteger
-        tStoreChar
+        tStoreString
         tStoreBoolean
         tSubscriptBegin
         tSubscriptAddress
         tSubscriptInteger
-        tSubscriptChar
+        tSubscriptString
         tSubscriptBoolean
         tArrayDescriptor
         tFileDescriptor
@@ -147,7 +147,7 @@ Output :
         tLiteralAddress
         firstCompoundTcode = tLiteralAddress
         tLiteralInteger
-        tLiteralChar
+        tLiteralString
         tLiteralBoolean
         tSkipString
         tStringData
