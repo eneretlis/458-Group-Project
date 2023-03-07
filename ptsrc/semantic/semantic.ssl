@@ -48,6 +48,8 @@ Input :
         sIfStmt
         sThen
         sElse
+        sElsif
+        sDo
         sWhileStmt
         sRepeatStmt
         sRepeatEnd
@@ -69,7 +71,14 @@ Input :
         sNot
         sNewLine
         sEndOfFile
-        lastSemanticToken = sEndOfFile;
+        sPublic
+        sModule
+        sDoStmt
+        sBreakIf
+        sSubstring
+        sLength
+        sIndex
+        lastSemanticToken = sIndex;
 
 Output :        
         % T-code tokens - must match input tokens in coder.ssl exactly!
