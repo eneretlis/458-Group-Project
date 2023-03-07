@@ -131,7 +131,10 @@ Output :
         tIfBegin
         tIfEnd
         tCaseBegin
-        tWhileBegin
+        %remove while add do
+        %tWhileBegin
+        tDoBegin
+        tDoBreakIf
         tRepeatBegin
         tRepeatControl
         tCallBegin
@@ -142,6 +145,13 @@ Output :
         tTrapBegin
         tWriteEnd
         tReadEnd
+        %Adding new tcode here
+        tConcatenate
+        tSubstring
+        tLength
+        tIndex
+        tStringEnd
+
 
         % Compound T-codes - T-code operations that take an operand
         tLiteralAddress
@@ -157,8 +167,15 @@ Output :
         tCaseSelect
         tCaseMerge
         tCaseEnd
-        tWhileTest
-        tWhileEnd
+        tCaseElse
+
+        %remove while operations
+        %tWhileTest
+        %tWhileEnd
+        %add do loop operations
+        tDoTest
+        tDoEnd
+
         tRepeatTest
         tSkipProc
         tCallEnd
@@ -2093,7 +2110,7 @@ VariableOperand :
             | tpInteger, tpSubrange, tpFile:
                 .tFetchInteger          % replace address with value
             | tpChar:
-                .tFetchChar
+                .tFetchString
             | tpBoolean:
                 .tFetchBoolean
             % The caller is responsible for detecting illegal situations
@@ -2290,7 +2307,7 @@ AssignProcedure :
                                 oValuePush(one)
                                 oEmitValue
                                 oValuePop
-                                .tSubscriptChar
+                                .tSubscriptString
                                 .tVarParm
                             | *:
                                 #eFileNameReqd
