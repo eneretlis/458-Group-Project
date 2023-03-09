@@ -817,7 +817,7 @@ Block :
         sEnd;
 
 ConstantDefinitions :           % Process named constant definitions
-        {[
+        [
             | sIdentifier:
                 oSymbolStkPushLocalIdentifier
                 [ oSymbolStkChooseKind
@@ -839,7 +839,7 @@ ConstantDefinitions :           % Process named constant definitions
                 oSymbolStkPop
             | *:
                 >
-        ]};
+        ];
 
 ConstantValue :         % push the value and type of the constant value
         [
@@ -885,7 +885,7 @@ ConstantValue :         % push the value and type of the constant value
         ];
 
 TypeDefinitions :       % process named type definitions
-        {[
+        [
             | sIdentifier:
                 oSymbolStkPushLocalIdentifier
                 [ oSymbolStkChooseKind
@@ -909,7 +909,7 @@ TypeDefinitions :       % process named type definitions
                 oSymbolStkPop
             | *:
                 >
-        ]};
+        ];
 
 TypeBody :
         % Accept a type specification and push a Type Stack entry for it.
