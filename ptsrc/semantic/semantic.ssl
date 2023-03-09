@@ -788,7 +788,7 @@ ProgramParameter :
 Block :
         % The parser has flagged phase errors, but has emitted out-of-phase
         % definitions with the intent of providing better error repair.
-
+        sBegin
         {[
             | sProcedure:
                 @ProcedureDefinition
@@ -798,11 +798,23 @@ Block :
                 @TypeDefinitions
             | sVar:
                 @VariableDeclarations
+             | sAssignmentStmt:
+                @AssignmentStmt
+            | sCallStmt:
+                @CallStmt
+            | sIfStmt:
+                @IfStmt
+            | sWhileStmt:
+                @WhileStmt
+            | sCaseStmt:
+                @CaseStmt
+            | sRepeatStmt:
+                @RepeatStmt
+            | sNullStmt:
             | *:
                 >
         ]}
-        sBegin
-        @BeginStmt;
+        sEnd;
 
 ConstantDefinitions :           % Process named constant definitions
         {[
@@ -1342,23 +1354,11 @@ ProcedurePrologue :
         oCountPop;
 
 Statement :
-        [
-            | sAssignmentStmt:
-                @AssignmentStmt
-            | sCallStmt:
-                @CallStmt
-            | sBegin:
-                @BeginStmt
-            | sIfStmt:
-                @IfStmt
-            | sWhileStmt:
-                @WhileStmt
-            | sCaseStmt:
-                @CaseStmt
-            | sRepeatStmt:
-                @RepeatStmt
-            | sNullStmt:
-        ];
+        % Push a new scope
+        oSymbolTblPushScope
+        @Block
+        % Pop the scope
+        oSymbolTblPopScope;
 
 AssignmentStmt :
         sIdentifier  oSymbolStkPushIdentifier
