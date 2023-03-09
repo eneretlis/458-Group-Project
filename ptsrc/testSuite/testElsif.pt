@@ -1,0 +1,7 @@
+using output
+if x == 1 then
+    y = 2
+elsif z == 2 then
+else
+    y = 4
+end
