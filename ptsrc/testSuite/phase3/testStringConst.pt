@@ -1,4 +1,2 @@
-program Foo (output);
-begin
-val str = "str"
-end.
+using output
+x = "Hi there"
