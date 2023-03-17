@@ -7,7 +7,7 @@
 %
 %  Abstract
 %      The semantic analyzer gathers information about names and stores
-%      that information in its symbol and type tables.  It enforces the 
+%      that information in its symbol and type tables.  It enforces the
 %      context sensitive syntax of PT such as declaration before use.
 %      It performs type compatibility checking in expressions, assignment
 %      statements, call statements etc.  It assigns runtime addresses to
@@ -16,7 +16,7 @@
 
 Input :
         % Semantic tokens - must match output tokens in parser.ssl exactly!
-        sIdentifier 
+        sIdentifier
         firstSemanticToken = sIdentifier
         firstCompoundSemanticToken = sIdentifier
         sInteger
@@ -80,11 +80,11 @@ Input :
         sIndex
         lastSemanticToken = sIndex;
 
-Output :        
+Output :
         % T-code tokens - must match input tokens in coder.ssl exactly!
 
         % Non-compound T-codes - T-code operations take no operands
-        tMultiply 
+        tMultiply
         firstTcode = tMultiply
         tDivide
         tModulus
@@ -171,7 +171,7 @@ Output :
         lastTcode = tEndOfFile;
 
 Error :
-        eDuplicateName 
+        eDuplicateName
         firstErrorCode = eDuplicateName
         eMultiplyDefined
         eUndefinedIdentifier
@@ -220,7 +220,8 @@ type Integer :
 
         % These two sizes are machine dependent
         byteSize = 1
-        wordSize = 4;
+        wordSize = 4
+        stringSize = 1024;
 
 type Boolean :
         no
@@ -228,7 +229,7 @@ type Boolean :
 
 type PredeclaredId :
         % The predeclared identifiers of PT Pascal.
-        % This list must be in the exact same order as the 
+        % This list must be in the exact same order as the
         % corresponding predeclared identifiers in the stdIdentifiers file.
 
         firstPredeclaredId = 1
@@ -294,7 +295,7 @@ mechanism SymbolTable :
         % Remove all local entries from the symbol and type tables.
 
     oSymbolTblPreserveParameters
-        % Restore procedure parameter entries to the symbol table 
+        % Restore procedure parameter entries to the symbol table
         % after popping the scope.
 
     oSymbolTblLookupExternal >> Boolean;
@@ -414,7 +415,7 @@ mechanism TypeTable :
     % for the component type (used for array and file types).
 
     oTypeTblEnter
-        % Make a new type table entry with the attributes of the 
+        % Make a new type table entry with the attributes of the
         % top type stack entry.
 
     oTypeTblUpdate;
@@ -451,7 +452,7 @@ mechanism TypeStack :
         % Push a type stack entry and set its kind to the parameter value.
 
     oTypeStkPushSymbol
-        % Push an entry and set its attributes from the type table 
+        % Push an entry and set its attributes from the type table
         % entry referenced by the top symbol stack entry.
 
     oTypeStkPushComponent
@@ -574,7 +575,7 @@ mechanism Allocate :
         % pointer on a word boundary.
 
     oAllocateVariable
-        % Allocate a variable of the type on top of the type stack 
+        % Allocate a variable of the type on top of the type stack
 
     oAllocateVarParameter
         % Allocate space to hold an address.
@@ -754,20 +755,20 @@ ProgramParameter :
                         % Standard files (input and output) appearing in
                         % the program header are automatically declared.
                         oSymbolStkSetKind(syVariable)
-                        oTypeStkPush(tpFile)            
+                        oTypeStkPush(tpFile)
                         oTypeStkLinkToStandardType(stdText)
                         oSymbolStkEnterTypeReference
                         % set up a file descriptor for the allocate mechanism
                         oValuePush(one) % Standard input file descriptor is 1
                     | stdOutput:
                         oSymbolStkSetKind(syVariable)
-                        oTypeStkPush(tpFile)            
+                        oTypeStkPush(tpFile)
                         oTypeStkLinkToStandardType(stdText)
                         oSymbolStkEnterTypeReference
                         oValuePush(two) % Standard output file descriptor is 2
                     | *:        % a non-standard file
                         oSymbolStkSetKind(syExternal)   % pending declaration
-                        oTypeStkPush(tpFile)            
+                        oTypeStkPush(tpFile)
                         oValuePushCount
                         % Increment the descriptor value for
                         % user declared files.
@@ -867,7 +868,7 @@ ConstantValue :         % push the value and type of the constant value
                         ]
                     | *:
                 ]
-                oSymbolStkPop   
+                oSymbolStkPop
             | sStringLiteral:
                 @StringLiteral  % pushes type and value, enters address
         ];
@@ -901,7 +902,7 @@ TypeDefinitions :       % process named type definitions
 
 TypeBody :
         % Accept a type specification and push a Type Stack entry for it.
-        % Enter it and any new index or component subtypes into the Type Table as necessary. 
+        % Enter it and any new index or component subtypes into the Type Table as necessary.
         [
             | sArray:
                 oTypeStkPush(tpArray)
@@ -910,7 +911,7 @@ TypeBody :
             | sFile:
                 oTypeStkPush(tpFile)
                 @ComponentType
-            | *:                
+            | *:
                 @SimpleType     % pushes type
         ]
         % If it's a new type, enter it in the Type Table
@@ -968,13 +969,13 @@ SimpleType :
         [
             | sIdentifier:
                 oSymbolStkPushIdentifier
-                [ 
+                [
                     | sRange:                   % subrange specification
                         [ oSymbolStkChooseKind
-                            | syConstant:       
+                            | syConstant:
                                 oTypeStkPushSymbol
                                 [ oTypeStkChooseKind
-                                    | tpInteger:        
+                                    | tpInteger:
                                         oValuePushSymbol
                                     | *:
                                         #eIntegerConstReqd
@@ -998,7 +999,7 @@ SimpleType :
                         oTypeStkEnterBounds
                         oValuePop
                         oValuePop
-                    | *:        
+                    | *:
                         % type identifier
                         [ oSymbolStkChooseKind
                             | syType:
@@ -1103,12 +1104,12 @@ VariableDeclarations :
         ]};
 
 EnterVariableAttributes :
-        % Enter the type on top of the Type Stack as the type of 
+        % Enter the type on top of the Type Stack as the type of
         % the new variable on top of the symbol stack
 
         % Check if this is the declaration of an external file parameter
         [ oSymbolStkChooseKind
-            | syExternal:       
+            | syExternal:
                 % An external file parameter to the program
                 [ oTypeStkChooseKind
                     | tpFile:
@@ -1121,7 +1122,7 @@ EnterVariableAttributes :
                         #eExternalDeclare       % Ignore this declaration
                 ]
 
-            | *:                
+            | *:
                 % A new variable or redeclaration in this scope
                 oSymbolStkSetKind(syVariable)
                 [ oTypeStkChooseKind
@@ -1137,9 +1138,9 @@ EnterVariableAttributes :
                 oSymbolStkEnterTypeReference
                 oSymbolTblEnter
         ];
- 
+
 AllocateVar :
-        % The symbol and type stack entries for the variable 
+        % The symbol and type stack entries for the variable
         % to be allocated are on top of the stacks
 
         [ oSymbolStkChooseKind
@@ -1387,7 +1388,7 @@ EmitAssign:
                 .tAssignChar
             | tpBoolean:
                 .tAssignBoolean
-            | *:                
+            | *:
         ];
 
 EmitStore:
@@ -1398,7 +1399,7 @@ EmitStore:
                 .tStoreChar
             | tpBoolean:
                 .tStoreBoolean
-            | *:                
+            | *:
         ];
 
 BeginStmt :
@@ -1513,7 +1514,7 @@ ActualParameters :
 VarActual :
         % An actual variable parameter should be a variable.
         % Compare actual and formal parameter objects for
-        % equal type names.  Check for the special case of a 
+        % equal type names.  Check for the special case of a
         % packed array component which is illegal.
 
         [
@@ -1745,9 +1746,9 @@ Operand :
         ];
 
 StringLiteral :
-        % Process a string literal, which can either represent 
+        % Process a string literal, which can either represent
         % a single character or a packed array of characters.
-        % Pushes the type and value. 
+        % Pushes the type and value.
         % The value of a packed array is its address.
 
         oValuePushStringLength
@@ -1930,7 +1931,7 @@ CompareOperandAndResultTypes :
 CompareRelationalOperandTypes :
         % Verify that the types of the two operands are assignment
         % compatible and that they are valid ordered relational expression
-        % operand types (char, integer or subrange).  
+        % operand types (char, integer or subrange).
         % Pop the operand symbol and type stack entries and push result
         % symbol and type stack entries.
 
@@ -1961,7 +1962,7 @@ CompareRelationalOperandTypes :
 CompareEqualityOperandTypes :
         % Verify that the types of the two operands are assignment
         % compatible and that they are valid equality expression
-        % operand types (char, boolean, integer or subrange).  
+        % operand types (char, boolean, integer or subrange).
         % Pop the operand symbol and type stack entries and push result
         % symbol and type stack entries.
 
@@ -2233,7 +2234,7 @@ OpenProcedure :
             | sIdentifier:      % file variable
                 oSymbolStkPushIdentifier
                 @FileVariable
-                % There should be only one actual parameter 
+                % There should be only one actual parameter
                 [
                     | sParmEnd:
                     | *:
@@ -2280,7 +2281,7 @@ AssignProcedure :
                                 oValuePushTypeStkLowerBound
                                 [ oValueChoose
                                     | one:
-                                    | *:        
+                                    | *:
                                         #eFileNameReqd
                                 ]
                                 oValuePop
@@ -2299,7 +2300,7 @@ AssignProcedure :
                         .tParmEnd
                         % need the length of the file name as well
                         [ oTypeStkChooseKind
-                            | tpString, tpArray:   
+                            | tpString, tpArray:
                                 .tLiteralInteger
                                 oValuePushTypeStkUpperBound
                                 oEmitValue
@@ -2497,7 +2498,7 @@ WriteText :
                         oValuePush(ten)
                     | tpString:
                         oValuePushTypeStkUpperBound     % actual length of string
-                    | *:        
+                    | *:
                         % error flagged below
                         oValuePush(zero)
                 ]
@@ -2513,10 +2514,10 @@ WriteText :
             | tpInteger, tpSubrange:
                 .tTrap
                 oEmitTrapKind(trWriteInteger)
-            | tpString: 
+            | tpString:
                 .tTrap
                 oEmitTrapKind(trWriteString)
-            | tpArray:                  % must be a char array 
+            | tpArray:                  % must be a char array
                 oTypeStkPushComponent
                 [ oTypeStkChooseKind
                     | tpChar:
@@ -2612,7 +2613,7 @@ WritelnProcedure :
             | sIdentifier:
                 oSymbolStkPushIdentifier
                 @TextFileVariable
-                % There should be only one actual parameter 
+                % There should be only one actual parameter
                 [
                     | sParmEnd:
                     | *:
@@ -2864,7 +2865,7 @@ ReadlnProcedure :
             | sIdentifier:
                 oSymbolStkPushIdentifier
                 @TextFileVariable
-                % There should be only one actual parameter 
+                % There should be only one actual parameter
                 [
                     | sParmEnd:
                     | *:
@@ -2901,7 +2902,7 @@ FileVariable :
         ]
         oTypeStkPop;
 
-TextFileVariable : 
+TextFileVariable :
         @Variable
         [ oTypeStkChooseKind
             | tpFile:
