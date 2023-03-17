@@ -1756,12 +1756,12 @@ StringLiteral :
             | zero:
                 #eNullString
                 oTypeStkPush(tpChar)
-                oTypeStkLinkToStandardType(stdChar)
+                oTypeStkLinkToStandardType(stdString)
                 oValuePop
                 oValuePush(zero)
             | one:
                 oTypeStkPush(tpChar)
-                oTypeStkLinkToStandardType(stdChar)
+                oTypeStkLinkToStandardType(stdString)
                 oValuePop
                 oValuePushChar
             | *:
@@ -2986,7 +2986,7 @@ SymbolStkPushDefaultCharConstant :
         oSymbolStkEnterValue
         oValuePop
         oTypeStkPush(tpChar)
-        oTypeStkLinkToStandardType(stdChar)
+        oTypeStkLinkToStandardType(stdString)
         oSymbolStkEnterTypeReference
         oTypeStkPop;
 
