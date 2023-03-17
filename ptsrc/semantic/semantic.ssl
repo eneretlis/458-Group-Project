@@ -142,6 +142,11 @@ Output :
         tTrapBegin
         tWriteEnd
         tReadEnd
+        tConcatenate
+        tSubstring
+        tLength
+        tIndex
+        tStringEqual
 
         % Compound T-codes - T-code operations that take an operand
         tLiteralAddress
