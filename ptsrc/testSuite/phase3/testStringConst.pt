@@ -1,5 +1,2 @@
 using output
-val littleString = "Hello Mom"
-
-var littleString : string;
 littleString = "Hello Mom";
