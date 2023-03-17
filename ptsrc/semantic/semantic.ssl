@@ -2512,6 +2512,7 @@ WriteText :
             | tpArray:                  % must be a char array
                 oTypeStkPushComponent
                 [ oTypeStkChooseKind
+                    | tpString:
                     | *:
                         #eWriteExpn
                 ]
