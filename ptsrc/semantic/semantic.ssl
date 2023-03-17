@@ -151,7 +151,6 @@ Output :
         tLiteralBoolean
         tSkipString
         tStringData
-        tLiteralString
         tIfThen
         tIfMerge
         tCaseSelect
@@ -532,10 +531,9 @@ type TrapKind :
         trWriteln = 6
         trWriteString = 7
         trWriteInteger = 8
-        trWriteString = 9
-        trReadInteger = 10
-        trReadString = 11
-        trAssign = 12;
+        trReadInteger = 9
+        trReadString = 10
+        trAssign = 11;
 
 mechanism Emit :
     % Emit writes to the output "t-code" stream (the code area),
