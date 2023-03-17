@@ -149,7 +149,6 @@ Output :
         tLiteralInteger
         tLiteralString
         tLiteralBoolean
-        tSkipString
         tStringData
         tIfThen
         tIfMerge
@@ -1770,7 +1769,6 @@ StringLiteral :
             | *:
                 % branch around the literal string since
                 % it is stored in the code area
-                .tSkipString
                 oFixPushForwardBranch
                 oEmitNullAddress
                 .tStringData
