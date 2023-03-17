@@ -1017,7 +1017,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
             { char }
             symbolTblKind[pidString] := syType;
             symbolTblTypeTblLink[pidChar] := pidString;
-            typeTblKind[pidString := tpString;
+            typeTblKind[pidString] := tpString;
             standardCharTypeRef := pidString;
 
             { Boolean }
