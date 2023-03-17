@@ -1905,12 +1905,6 @@ CompareAndSwapTypes :
                     | *:
                         #eTypeMismatch
                 ]
-            | tpString:
-                oTypeStkSwap
-                [ oTypeStkChooseKind
-                    | *:
-                        #eTypeMismatch
-                ]
             | tpFile:
                 oTypeStkSwap
                 [ oTypeStkChooseKind
