@@ -2509,6 +2509,22 @@ WriteText :
             | tpString:
                 .tTrap
                 oEmitTrapKind(trWriteString)
+            | tpArray:                  % must be a char array
+                oTypeStkPushComponent
+                [ oTypeStkChooseKind
+                    | *:
+                        #eWriteExpn
+                ]
+                oTypeStkPop             % component type
+                oValuePushTypeStkLowerBound
+                [ oValueChoose
+                    | one:
+                    | *:                % strings have lower bound one
+                        #eWriteExpn
+                ]
+                oValuePop
+                .tTrap
+                oEmitTrapKind(trWriteString)
             | *:
                 #eWriteExpn
         ]
