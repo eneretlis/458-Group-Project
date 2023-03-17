@@ -1,3 +1,4 @@
-using output
-val str = "Hello Mom"
-end
+program Foo (output);
+begin
+val str = "str"
+end.
