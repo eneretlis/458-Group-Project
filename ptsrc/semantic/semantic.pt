@@ -1015,10 +1015,10 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
             standardIntegerTypeRef := pidInteger;
 
             { char }
-            symbolTblKind[pidChar] := syType;
-            symbolTblTypeTblLink[pidChar] := pidChar;
-            typeTblKind[pidChar] := tpString;
-            standardCharTypeRef := pidChar;
+            symbolTblKind[pidString] := syType;
+            symbolTblTypeTblLink[pidChar] := pidString;
+            typeTblKind[pidString := tpString;
+            standardCharTypeRef := pidString;
 
             { Boolean }
             symbolTblKind[pidBoolean] := syType;
