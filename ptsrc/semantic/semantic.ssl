@@ -315,6 +315,8 @@ type SymbolKind :
         syVariable
         syVarParameter
         syProcedure
+        syModule
+        syPublicProcedure
         syFunction
         syExternal
         syExpression
