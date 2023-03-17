@@ -1,3 +1,2 @@
 using output
-begin
-end.
+const s = "foo";
