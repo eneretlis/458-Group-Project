@@ -809,7 +809,7 @@ Block :
             | sCaseStmt:
                 @CaseStmt
             | sRepeatStmt:
-                @RepeatStmt
+                @DoStmt
             | sNullStmt:
             | *:
                 >
@@ -1602,19 +1602,6 @@ DoStmt :
         oFixPopTargetAddress
         oFixPopForwardBranch;
 
-RepeatStmt :
-        .tRepeatBegin
-        oFixPushTargetAddress           % top-of-loop branch target
-        {[
-            | sRepeatEnd:
-                >
-            | *:
-                @Statement
-        ]}
-        .tRepeatControl
-        @BooleanControlExpression
-        .tRepeatTest
-        oFixPopTargetAddress;
 
 CaseStmt :
         .tCaseBegin
