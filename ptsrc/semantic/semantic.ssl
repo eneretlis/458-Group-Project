@@ -132,8 +132,6 @@ Output :
         tIfEnd
         tCaseBegin
         tWhileBegin
-        tRepeatBegin
-        tRepeatControl
         tCallBegin
         tParmEnd
         tProcedureEnd
@@ -142,6 +140,7 @@ Output :
         tTrapBegin
         tWriteEnd
         tReadEnd
+        tDoBegin
 
         % Compound T-codes - T-code operations that take an operand
         tLiteralAddress
@@ -159,12 +158,15 @@ Output :
         tCaseEnd
         tWhileTest
         tWhileEnd
-        tRepeatTest
+        tDoTest
         tSkipProc
         tCallEnd
         tLineNumber
         tTrap
-        lastCompoundTcode = tTrap
+        tDoEnd
+        tDoTest
+        tDoBreakIf
+        lastCompoundTcode = tDoBreakIf
 
         % End of file marker T-code
         tEndOfFile
