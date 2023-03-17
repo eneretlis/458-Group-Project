@@ -1,2 +1,5 @@
 using output
-const s = "foo";
+val littleString = "Hello Mom"
+
+var littleString : string
+littleString = "Hello Mom";
