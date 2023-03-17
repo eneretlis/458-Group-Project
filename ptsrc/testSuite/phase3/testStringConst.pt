@@ -1,2 +1,3 @@
-using output
-x = "Hi there"
+program Foo (output);
+begin
+end.
