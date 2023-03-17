@@ -934,7 +934,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
           initialize the semantic data structures, open the input and output streams,
           and read the options file. }
         var
-            c: string;
+            c: char;
 
         begin
             { UNIX argument file identifiers, for gpc compatibility }
