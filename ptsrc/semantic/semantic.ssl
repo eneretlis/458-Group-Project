@@ -2503,9 +2503,6 @@ WriteText :
         ]
         .tParmEnd
         [ oTypeStkChooseKind
-            | tpString:
-                .tTrap
-                oEmitTrapKind(trWriteChar)
             | tpInteger, tpSubrange:
                 .tTrap
                 oEmitTrapKind(trWriteInteger)
