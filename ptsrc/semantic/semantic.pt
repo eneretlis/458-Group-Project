@@ -1016,7 +1016,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
 
             { char }
             symbolTblKind[pidString] := syType;
-            symbolTblTypeTblLink[pidChar] := pidString;
+            symbolTblTypeTblLink[pidString] := pidString;
             typeTblKind[pidString] := tpString;
             standardCharTypeRef := pidString;
 
@@ -1165,8 +1165,8 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                     write('integer type expression required');
                 eBooleanExpnReqd:
                     write('Boolean type expression required');
-                eCharExpnReqd:
-                    write('char type expression required');
+                eStringExpnReqd:
+                    write('str type expression required');
                 eArrayVarReqd:
                     write('array variable required');
                 eVariableReqd:
@@ -2279,7 +2279,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                             ValueStackPush(compoundTokenValue);
                         end;
 
-                    oValuePushChar:
+                    oValuePushString:
                         { Push the value of the last string token to be accepted }
                         begin
                             Assert((compoundToken = sStringLiteral), assert37);
