@@ -1908,7 +1908,6 @@ CompareAndSwapTypes :
             | tpString:
                 oTypeStkSwap
                 [ oTypeStkChooseKind
-                    | tpString:
                     | *:
                         #eTypeMismatch
                 ]
@@ -2078,9 +2077,9 @@ ConstantOperand :
             | tpInteger, tpSubrange:
                 .tLiteralInteger
                 oEmitValue
-            | tpString:
-                .tLiteralChar
-                oEmitValue
+            %| tpString:
+            %    .tLiteralChar
+            %    oEmitValue
             | tpBoolean:
                 .tLiteralBoolean
                 oEmitValue
