@@ -433,7 +433,7 @@ mechanism TypeTable :
 
 type TypeKind :
         tpInteger
-        tpChar
+        tpString
         tpBoolean
         tpSubrange
         tpArray
