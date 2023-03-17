@@ -789,7 +789,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
 
         { Predefined type table entries }
         standardIntegerTypeRef: TypeTblReference;
-        standardCharTypeRef:    TypeTblReference;
+        standardStringTypeRef:    TypeTblReference;
         standardBooleanTypeRef: TypeTblReference;
         standardTextTypeRef:    TypeTblReference;
 
@@ -934,7 +934,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
           initialize the semantic data structures, open the input and output streams,
           and read the options file. }
         var
-            c: char;
+            c: string;
 
         begin
             { UNIX argument file identifiers, for gpc compatibility }
@@ -1018,11 +1018,11 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
               similarly for char, Boolean and text. }
             standardIntegerTypeRef := pidInteger;
 
-            { char }
+            { string }
             symbolTblKind[pidString] := syType;
             symbolTblTypeTblLink[pidString] := pidString;
             typeTblKind[pidString] := tpString;
-            standardCharTypeRef := pidString;
+            standardStringTypeRef := pidString;
 
             { Boolean }
             symbolTblKind[pidBoolean] := syType;
@@ -1034,7 +1034,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
             symbolTblKind[pidText] := syType;
             symbolTblTypeTblLink[pidText] := pidText;
             typeTblKind[pidText] := tpFile;
-            typeTblComponentLink[pidText] := standardCharTypeRef;
+            typeTblComponentLink[pidText] := standardStringTypeRef;
             standardTextTypeRef := pidText;
 
             { true (1) }
@@ -2045,7 +2045,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                                 stdInteger:
                                     typeStkTypeTblRef[typeStkTop] := standardIntegerTypeRef;
                                 stdString:
-                                    typeStkTypeTblRef[typeStkTop] := standardCharTypeRef;
+                                    typeStkTypeTblRef[typeStkTop] := standardStringTypeRef;
                                 stdBoolean:
                                     typeStkTypeTblRef[typeStkTop] := standardBooleanTypeRef;
                                 stdText:
