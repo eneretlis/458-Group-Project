@@ -1161,7 +1161,7 @@ AllocateVar :
                         oAllocateAlignOnWord
                         oSymbolStkEnterDataAddress
                         oAllocateVariable
-                    | tpChar, tpBoolean:
+                    | tpString, tpBoolean:
                         oSymbolStkEnterDataAddress
                         oAllocateVariable
                     | tpArray:
@@ -1390,7 +1390,7 @@ EmitAssign:
         [ oTypeStkChooseKind
             | tpInteger, tpSubrange, tpFile:
                 .tAssignInteger
-            | tpChar:
+            | tpString:
                 .tAssignChar
             | tpBoolean:
                 .tAssignBoolean
@@ -1401,7 +1401,7 @@ EmitStore:
         [ oTypeStkChooseKind
             | tpInteger, tpSubrange, tpFile:
                 .tStoreInteger
-            | tpChar:
+            | tpString:
                 .tStoreChar
             | tpBoolean:
                 .tStoreBoolean
@@ -1737,7 +1737,7 @@ Operand :
                 oSymbolStkPush(syExpression)
                 @StringLiteral  % pushes type and value
                 [ oTypeStkChooseKind
-                    | tpChar:
+                    | tpString:
                         .tLiteralChar
                         oEmitValue
                     | *:
