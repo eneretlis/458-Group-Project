@@ -1018,7 +1018,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
             { char }
             symbolTblKind[pidChar] := syType;
             symbolTblTypeTblLink[pidChar] := pidChar;
-            typeTblKind[pidChar] := tpChar;
+            typeTblKind[pidChar] := tpString;
             standardCharTypeRef := pidChar;
 
             { Boolean }
@@ -2041,7 +2041,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                             case parameterValue of
                                 stdInteger:
                                     typeStkTypeTblRef[typeStkTop] := standardIntegerTypeRef;
-                                stdChar:
+                                stdString:
                                     typeStkTypeTblRef[typeStkTop] := standardCharTypeRef;
                                 stdBoolean:
                                     typeStkTypeTblRef[typeStkTop] := standardBooleanTypeRef;
@@ -2352,7 +2352,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                         case typeStkKind[typeStkTop] of
                             tpInteger, tpSubrange:
                                 dataAreaEnd := dataAreaEnd + wordSize;
-                            tpChar, tpBoolean:
+                            tpString, tpBoolean:
                                 dataAreaEnd := dataAreaEnd + byteSize;
                             tpArray:
                                 begin
