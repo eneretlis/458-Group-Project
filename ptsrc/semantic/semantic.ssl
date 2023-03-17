@@ -2077,9 +2077,6 @@ ConstantOperand :
             | tpInteger, tpSubrange:
                 .tLiteralInteger
                 oEmitValue
-            %| tpString:
-            %    .tLiteralChar
-            %    oEmitValue
             | tpBoolean:
                 .tLiteralBoolean
                 oEmitValue
