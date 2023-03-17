@@ -1092,7 +1092,7 @@ SubrangeUpperBound :
         ];
 
 VariableDeclarations :
-        {[
+        [
             | sIdentifier:
                 oSymbolStkPushLocalIdentifier
 
@@ -1104,6 +1104,21 @@ VariableDeclarations :
                         % The new definition will obscure the old one
                 ]
 
+                {[
+                    | sIdentifier:
+                        oSymbolStkPushLocalIdentifier
+
+                        % Check not previously defined
+                        [ oSymbolStkChooseKind
+                            | syUndefined, syExternal:
+                            | *:
+                                #eMultiplyDefined
+                                % The new definition will obscure the old one
+                        ]
+                    |* : 
+                        >
+                ]}
+
                 % Accepts a type specification and pushes its type to the Type Stack.
                 % Creates type table entries for the type and any new subtypes as necessary.
                 @TypeBody
@@ -1112,7 +1127,7 @@ VariableDeclarations :
                 oSymbolStkPop
             | *:
                 >
-        ]};
+        ];
 
 EnterVariableAttributes :
         % Enter the type on top of the Type Stack as the type of 
