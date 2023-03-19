@@ -1812,16 +1812,16 @@ BinaryOperator :
         [
             | sAdd:
                 [
-                | tpInteger:
-                    .tAdd
-                    oTypeStkPush(tpInteger) % result type
-                    @CompareOperandAndResultTypes
-                | tpString:
-                    .tConcatenate
-                    oTypeStkPush(tpString) % result type
-                    @CompareOperandAndResultTypes
-                | *:
-                    >>
+                    | sInteger:
+                        .tAdd
+                        oTypeStkPush(tpInteger) % result type
+                        @CompareOperandAndResultTypes
+                    | sStringLiteral:
+                        .tConcatenate
+                        oTypeStkPush(tpString) % result type
+                        @CompareOperandAndResultTypes
+                    | *:
+                        >>
                 ]
             | sSubtract:
                 .tSubtract
