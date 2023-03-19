@@ -1869,6 +1869,10 @@ BinaryOperator :
                 .tModulus
                 oTypeStkPush(tpInteger)
                 @CompareOperandAndResultTypes
+            | sIndex:
+                .tIndex
+                oTypeStkPush(tpInteger)
+                @CompareOperandAndResultTypes
             | *:
                 >>
         ]
