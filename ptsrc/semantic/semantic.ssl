@@ -1759,7 +1759,7 @@ StringLiteral :
         oValuePushString
         oTypeStkLinkToStandardType(stdString)
         oEmitString
-        oValuePop
+        oValuePop;
 
 
 UnaryOperator :
@@ -1863,7 +1863,7 @@ TernaryOperator:
         [
             | sSubstring:
                 .tSubstring
-        ]
+        ];
 
 CompareAndSwapTypes :
         % Compare the top two type stack entries for assignment
