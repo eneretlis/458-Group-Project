@@ -533,10 +533,10 @@ type TrapKind :
         trReadln = 4
         trWrite = 5
         trWriteln = 6
-        trWriteString = 7
+        trWriteString = 109
         trWriteInteger = 8
         trReadInteger = 9
-        trReadString = 10
+        trReadString = 108
         trAssign = 11;
 
 mechanism Emit :
