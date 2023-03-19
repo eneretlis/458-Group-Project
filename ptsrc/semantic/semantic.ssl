@@ -1774,6 +1774,7 @@ StringLiteral :
             | *:
                 % branch around the literal string since
                 % it is stored in the code area
+                .tLiteralString
                 oFixPushForwardBranch
                 oEmitNullAddress
                 .tStringData
@@ -1802,6 +1803,11 @@ UnaryOperator :
             | sNot:
                 .tNot
                 oTypeStkPush(tpBoolean) % result type
+                @CompareAndSwapTypes
+                oTypeStkPop
+            | sLength:
+                .tLength
+                oTypeStkPush(tpInteger) % result type
                 @CompareAndSwapTypes
                 oTypeStkPop
             | *:
