@@ -1736,7 +1736,10 @@ Operand :
                 oEmitValue
                 oValuePop
             | sStringLiteral:
+                oValuePushString
                 oSymbolStkPush(syExpression)
+                oTypeStkPush(tpString)
+                oTypeStkLinkToStandardType(stdString)
                 @StringLiteral  % pushes type and value
 
             | sFile:
@@ -1756,8 +1759,6 @@ StringLiteral :
         oEmitValue
         oValuePop
 
-        oValuePushString
-        oTypeStkLinkToStandardType(stdString)
         oEmitString
         oValuePop;
 
