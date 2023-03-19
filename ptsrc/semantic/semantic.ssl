@@ -1802,7 +1802,7 @@ BinaryOperator :
                         oTypeStkPush(tpString) % result type
                         @CompareOperandAndResultTypes
                     | *:
-                        >
+                        >>
                 ]
             | sSubtract:
                 .tSubtract
@@ -1827,7 +1827,7 @@ BinaryOperator :
                     | tpString:
                         .tStringEqual
                     | *:
-                        >
+                        >>
                 ]
                 @CompareEqualityOperandTypes
             | sNE:
