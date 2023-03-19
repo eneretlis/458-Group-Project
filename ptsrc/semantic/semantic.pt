@@ -1792,7 +1792,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                             lexicLevelStackTop := lexicLevelStackTop - 1;
                         end;
 
-                    oSymbolStripScope:
+                    oSymbolTblStripScope:
                         { Pop the lexic level stack, remove local entries from the type table,
                           remove local entries but leave parameter entries on the symbol stack.
                           But do not decrement lexical levels nor change symbolTblTop, typeTableTop. }
