@@ -10,7 +10,7 @@
 %     and emits a postfix stream of tokens to the semantic analyzer
 %     module.  The parser detects and repairs syntax errors so that the
 %     token stream emitted to the semantic analyzer is syntactically
-%     legal (except for the special case of declaration phase errors - 
+%     legal (except for the special case of declaration phase errors -
 %     see the comment in the Block routine below).
 
 Input :
@@ -44,20 +44,20 @@ Input :
         pWhen                   'when'
         pModule                 'module'
         pReturn                 'return'
-        lastKeywordToken = pReturn 
+        lastKeywordToken = pReturn
 
         % Scanner tokens -
         %   These are the tokens actually recognized by the Scanner itself.
 
-        % Compound tokens - 
+        % Compound tokens -
         %   These will be sent to the parser with a value or index.
-        pIdentifier 
+        pIdentifier
         firstCompoundInputToken = pIdentifier
         pInteger
         pStringLiteral
         lastCompoundInputToken = pStringLiteral
 
-        % Non-compound tokens - 
+        % Non-compound tokens -
         %   These tokens simply represent themselves.
         pNewLine
         pEndFile
@@ -89,7 +89,7 @@ Input :
         lastSyntaxToken = pNot;
 
 Output :
-        sIdentifier 
+        sIdentifier
         firstSemanticToken = sIdentifier
         firstCompoundSemanticToken = sIdentifier
         sInteger
@@ -149,9 +149,11 @@ Output :
         sDoStmt
         sBreakIf
         sSubstring
+        sConcatenate
         sLength
         sIndex
-        lastSemanticToken = sIndex;
+        sStringEqual
+        lastSemanticToken = sStringEqual;
 
 
 rules
@@ -430,7 +432,7 @@ WhileStmt :
 DoStmt :
         .sDoStmt
         @Block
-        'break' 'if' .sBreakIf 
+        'break' 'if' .sBreakIf
         @Expression
         .sExpnEnd
         @Block
