@@ -149,11 +149,9 @@ Output :
         sDoStmt
         sBreakIf
         sSubstring
-        sConcatenate
         sLength
         sIndex
-        sStringEqual
-        lastSemanticToken = sStringEqual;
+        lastSemanticToken = sIndex;
 
 
 rules

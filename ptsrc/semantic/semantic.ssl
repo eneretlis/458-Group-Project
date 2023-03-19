@@ -76,11 +76,9 @@ Input :
         sDoStmt
         sBreakIf
         sSubstring
-        sConcatenate
         sLength
         sIndex
-        sStringEqual
-        lastSemanticToken = sStringEqual;
+        lastSemanticToken = sIndex;
 
 Output :
         % T-code tokens - must match input tokens in coder.ssl exactly!
