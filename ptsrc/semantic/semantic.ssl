@@ -1792,17 +1792,17 @@ BinaryOperator :
         % but that would probably be less efficient on average.
         [
             | sAdd:
-                [
-                    | sInteger:
+                [ oTypeStkChooseKind
+                    | tpInteger:
                         .tAdd
                         oTypeStkPush(tpInteger) % result type
                         @CompareOperandAndResultTypes
-                    | sStringLiteral:
+                    | tpString:
                         .tConcatenate
                         oTypeStkPush(tpString) % result type
                         @CompareOperandAndResultTypes
                     | *:
-                        >>
+                        >
                 ]
             | sSubtract:
                 .tSubtract
@@ -1821,7 +1821,14 @@ BinaryOperator :
                 oTypeStkPush(tpBoolean)
                 @CompareOperandAndResultTypes
             | sEq:
-                .tEQ
+                [ oTypeStkChooseKind
+                    | tpInteger:
+                        .tEQ
+                    | tpString:
+                        .tStringEqual
+                    | *:
+                        >
+                ]
                 @CompareEqualityOperandTypes
             | sNE:
                 .tNE
