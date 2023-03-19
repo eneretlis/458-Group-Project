@@ -76,9 +76,11 @@ Input :
         sDoStmt
         sBreakIf
         sSubstring
+        sConcatenate
         sLength
         sIndex
-        lastSemanticToken = sIndex;
+        sStringEqual
+        lastSemanticToken = sStringEqual;
 
 Output :
         % T-code tokens - must match input tokens in coder.ssl exactly!
@@ -1760,11 +1762,6 @@ StringLiteral :
                 oTypeStkLinkToStandardType(stdString)
                 oValuePop
                 oValuePush(zero)
-            | one:
-                oTypeStkPush(tpString)
-                oTypeStkLinkToStandardType(stdString)
-                oValuePop
-                oValuePushString
             | *:
                 % branch around the literal string since
                 % it is stored in the code area
