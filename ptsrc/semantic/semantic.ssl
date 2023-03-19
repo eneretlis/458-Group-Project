@@ -1737,14 +1737,8 @@ Operand :
             | sStringLiteral:
                 oSymbolStkPush(syExpression)
                 @StringLiteral  % pushes type and value
-                [ oTypeStkChooseKind
-                    | tpString:
-                        .tLiteralString
-                        oEmitValue
-                    | *:
-                        .tLiteralString
-                        oEmitValue
-                ]
+                .tLiteralString
+                oEmitValue
                 oValuePop
             | sFile:
                 @Expression
