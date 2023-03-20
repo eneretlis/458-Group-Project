@@ -1383,24 +1383,12 @@ ProcedurePrologue :
         oCountPop;
 
 Statement :
-        [
-            | sAssignmentStmt:
-                @AssignmentStmt
-            | sCallStmt:
-                @CallStmt
-            | sBegin:
-                @BeginStmt
-            | sIfStmt:
-                @IfStmt
-            | sWhileStmt:
-                @WhileStmt
-            | sCaseStmt:
-                @CaseStmt
-            | sRepeatStmt:
-                @RepeatStmt
-            | sNullStmt:
-        ];
-
+% Push a new scope
+        oSymbolTblPushScope
+        @Block
+        % Pop the scope
+        oSymbolTblPopScope;
+        
 AssignmentStmt :
         sIdentifier  oSymbolStkPushIdentifier
 
