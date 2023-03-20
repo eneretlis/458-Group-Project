@@ -838,8 +838,7 @@ ConstantDefinitions :           % Process named constant definitions
                 oValuePop
                 oSymbolTblEnter
                 oSymbolStkPop
-            | *:
-                >
+            |*:
         ];
 
 ConstantValue :         % push the value and type of the constant value
@@ -909,7 +908,6 @@ TypeDefinitions :       % process named type definitions
                 oSymbolTblEnter
                 oSymbolStkPop
             | *:
-                >
         ];
 
 TypeBody :
