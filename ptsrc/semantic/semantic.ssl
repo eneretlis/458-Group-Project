@@ -1847,8 +1847,6 @@ StringLiteral :
         .tLiteralString
         oEmitValue
         oValuePop
-
-        oValuePushStringLength
         oEmitValue
         oValuePop;
 
@@ -2183,7 +2181,12 @@ ConstantOperand :
                 .tLiteralString
                 oEmitValue
         ]
-        oValuePop;
+        oValuePop
+        [ oTypeStkChooseKind
+            | tpString:
+              .tFetchString
+            | *:
+        ];
 
 VariableOperand :
         % The Variable rule has placed the address of the variable on the
