@@ -1593,7 +1593,8 @@ DoStmt :
         @Statement
         {[
             |sBreakIf:
-                tDoBreakIf
+                .tDoBreakIf
+                >
             | *:
                 @Statement
         ]}
