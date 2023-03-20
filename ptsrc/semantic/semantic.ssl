@@ -132,8 +132,6 @@ Output :
         tIfEnd
         tCaseBegin
         tWhileBegin
-        tRepeatBegin
-        tRepeatControl
         tCallBegin
         tParmEnd
         tProcedureEnd
@@ -164,7 +162,6 @@ Output :
         tCaseEnd
         tWhileTest
         tWhileEnd
-        tRepeatTest
         tSkipProc
         tCallEnd
         tLineNumber
