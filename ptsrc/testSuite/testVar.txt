@@ -1,3 +1,3 @@
-Purpose:
+Purpose: Confirm that variable declarations are correctly handled by the semantic analyzer.
 Expected:
 Actual:
