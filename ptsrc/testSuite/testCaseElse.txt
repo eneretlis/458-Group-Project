@@ -1,0 +1,4 @@
+Purpose: To test the new else clause in the case statement 
+Expected: 
+Actual:
+Success:
