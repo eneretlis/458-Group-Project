@@ -132,8 +132,6 @@ Output :
         tIfEnd
         tCaseBegin
         tWhileBegin
-        tRepeatBegin
-        tRepeatControl
         tCallBegin
         tParmEnd
         tProcedureEnd
@@ -142,6 +140,7 @@ Output :
         tTrapBegin
         tWriteEnd
         tReadEnd
+        tDoBegin
 
         % Compound T-codes - T-code operations that take an operand
         tLiteralAddress
@@ -159,12 +158,14 @@ Output :
         tCaseEnd
         tWhileTest
         tWhileEnd
-        tRepeatTest
         tSkipProc
         tCallEnd
         tLineNumber
         tTrap
-        lastCompoundTcode = tTrap
+        tDoEnd
+        tDoTest
+        tDoBreakIf
+        lastCompoundTcode = tDoBreakIf
 
         % End of file marker T-code
         tEndOfFile
@@ -788,7 +789,7 @@ ProgramParameter :
 Block :
         % The parser has flagged phase errors, but has emitted out-of-phase
         % definitions with the intent of providing better error repair.
-
+        sBegin
         {[
             | sProcedure:
                 @ProcedureDefinition
@@ -798,14 +799,26 @@ Block :
                 @TypeDefinitions
             | sVar:
                 @VariableDeclarations
+             | sAssignmentStmt:
+                @AssignmentStmt
+            | sCallStmt:
+                @CallStmt
+            | sIfStmt:
+                @IfStmt
+            | sWhileStmt:
+                @WhileStmt
+            | sCaseStmt:
+                @CaseStmt
+            | sRepeatStmt:
+                @DoStmt
+            | sNullStmt:
             | *:
                 >
         ]}
-        sBegin
-        @BeginStmt;
+        sEnd;
 
 ConstantDefinitions :           % Process named constant definitions
-        {[
+        [
             | sIdentifier:
                 oSymbolStkPushLocalIdentifier
                 [ oSymbolStkChooseKind
@@ -827,7 +840,7 @@ ConstantDefinitions :           % Process named constant definitions
                 oSymbolStkPop
             | *:
                 >
-        ]};
+        ];
 
 ConstantValue :         % push the value and type of the constant value
         [
@@ -873,7 +886,7 @@ ConstantValue :         % push the value and type of the constant value
         ];
 
 TypeDefinitions :       % process named type definitions
-        {[
+        [
             | sIdentifier:
                 oSymbolStkPushLocalIdentifier
                 [ oSymbolStkChooseKind
@@ -897,7 +910,7 @@ TypeDefinitions :       % process named type definitions
                 oSymbolStkPop
             | *:
                 >
-        ]};
+        ];
 
 TypeBody :
         % Accept a type specification and push a Type Stack entry for it.
@@ -1083,6 +1096,7 @@ VariableDeclarations :
         {[
             | sIdentifier:
                 oSymbolStkPushLocalIdentifier
+                oCountIncrement
 
                 % Check not previously defined
                 [ oSymbolStkChooseKind
@@ -1091,16 +1105,17 @@ VariableDeclarations :
                         #eMultiplyDefined
                         % The new definition will obscure the old one
                 ]
-
-                % Accepts a type specification and pushes its type to the Type Stack.
-                % Creates type table entries for the type and any new subtypes as necessary.
-                @TypeBody
-                @EnterVariableAttributes
-                oTypeStkPop
-                oSymbolStkPop
-            | *:
+            |* : 
                 >
-        ]};
+        ]}
+
+        % Accepts a type specification and pushes its type to the Type Stack.
+        % Creates type table entries for the type and any new subtypes as necessary.
+        @TypeBody
+        @EnterVariableAttributes
+        oTypeStkPop
+        oSymbolStkPop
+        ;
 
 EnterVariableAttributes :
         % Enter the type on top of the Type Stack as the type of 
@@ -1342,23 +1357,11 @@ ProcedurePrologue :
         oCountPop;
 
 Statement :
-        [
-            | sAssignmentStmt:
-                @AssignmentStmt
-            | sCallStmt:
-                @CallStmt
-            | sBegin:
-                @BeginStmt
-            | sIfStmt:
-                @IfStmt
-            | sWhileStmt:
-                @WhileStmt
-            | sCaseStmt:
-                @CaseStmt
-            | sRepeatStmt:
-                @RepeatStmt
-            | sNullStmt:
-        ];
+        % Push a new scope
+        oSymbolTblPushScope
+        @Block
+        % Pop the scope
+        oSymbolTblPopScope;
 
 AssignmentStmt :
         sIdentifier  oSymbolStkPushIdentifier
@@ -1556,6 +1559,13 @@ IfStmt :
                 oFixSwap                % false branch back on top
                 oFixPopForwardBranch
                 @Statement
+            | sElsif:
+                .tIfMerge
+                oFixPushForwardBranch
+                oEmitNullAddress                % true branch
+                oFixSwap                % false branch back on top
+                oFixPopForwardBranch
+                @IfStmt
             | *:
         ]
         .tIfEnd
@@ -1574,19 +1584,25 @@ WhileStmt :
         oFixPopTargetAddress
         oFixPopForwardBranch;
 
-RepeatStmt :
-        .tRepeatBegin
+DoStmt :
+        .tDoBegin
         oFixPushTargetAddress           % top-of-loop branch target
+        @BooleanControlExpression
+        .tDoTest
+        oFixPushForwardBranch
+        oEmitNullAddress                % exit branch
+        oFixSwap                % top-of-loop target back on top
+        @Statement
         {[
-            | sRepeatEnd:
-                >
+            |sBreakIf:
+                tDoBreakIf
             | *:
                 @Statement
         ]}
-        .tRepeatControl
-        @BooleanControlExpression
-        .tRepeatTest
-        oFixPopTargetAddress;
+        .tDoEnd
+        oFixPopTargetAddress
+        oFixPopForwardBranch;
+
 
 CaseStmt :
         .tCaseBegin
