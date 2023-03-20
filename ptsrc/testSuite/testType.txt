@@ -1,0 +1,4 @@
+Purpose: To test if the type definition is working as excpected
+Expected:
+Actual:
+Success:
