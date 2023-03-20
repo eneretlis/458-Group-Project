@@ -818,7 +818,7 @@ Block :
                 @WhileStmt
             | sCaseStmt:
                 @CaseStmt
-            | sRepeatStmt:
+            | sDoStmt:
                 @DoStmt
             | sModule:
                 @ModuleDefinition
@@ -1650,20 +1650,14 @@ WhileStmt :
 DoStmt :
         .tDoBegin
         oFixPushTargetAddress           % top-of-loop branch target
+        @Statement
+        sBreakIf .tDoBreakIf
         @BooleanControlExpression
         .tDoTest
         oFixPushForwardBranch
         oEmitNullAddress                % exit branch
         oFixSwap                % top-of-loop target back on top
         @Statement
-        {[
-            |sBreakIf:
-                .tDoBreakIf
-                >
-            | *:
-                @Statement
-                >
-        ]}
         .tDoEnd
         oFixPopTargetAddress
         oFixPopForwardBranch;
