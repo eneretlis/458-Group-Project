@@ -1646,7 +1646,7 @@ WhileStmt :
         %@BooleanControlExpression
         %.tRepeatTest
         %oFixPopTargetAddress;
-%%     
+%%
 DoStmt :
         .tDoBegin
         oFixPushTargetAddress           % top-of-loop branch target
@@ -1692,7 +1692,7 @@ CaseStmt :
             | *:
                 @CaseAlternative
         ]}
-        
+
         % emit merge branches for case alternatives
         {[ oCountChoose         % number of case alternatives
             | zero:
@@ -1763,9 +1763,9 @@ CaseAlternative :
         oEmitNullAddress                % merge branch at end of statement
         oFixSwap                        % keep case select branch on top
         oCountIncrement;
-        
+
 CaseElse:
-    %adding this to address case else 
+    %adding this to address case else
     .tCaseElse
     @Statement
     .tCaseMerge
@@ -1923,7 +1923,15 @@ BinaryOperator :
                 ]
                 @CompareEqualityOperandTypes
             | sNE:
-                .tNE
+                [ oTypeStkChooseKind
+                    | tpInteger:
+                        .tNE
+                    | tpString:
+                        .tStringEqual
+                        .tNot
+                    | *:
+                        >>
+                ]
                 @CompareEqualityOperandTypes
             | sGT:
                 .tGT
