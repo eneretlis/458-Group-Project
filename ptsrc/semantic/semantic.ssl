@@ -1845,6 +1845,7 @@ StringLiteral :
         % The value of a packed array is its address.
 
         .tLiteralString
+        oValuePushStringLength
         oEmitValue
         oValuePop
         oEmitValue
