@@ -158,7 +158,6 @@ Output :
         tCaseEnd
         tWhileTest
         tWhileEnd
-        tDoTest
         tSkipProc
         tCallEnd
         tLineNumber
