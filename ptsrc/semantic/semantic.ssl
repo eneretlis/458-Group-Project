@@ -1959,8 +1959,10 @@ BinaryOperator :
                 @CompareOperandAndResultTypes
             | sIndex:
                 .tIndex
-                oTypeStkPush(tpInteger)
+                oTypeStkPush(tpString)
                 @CompareOperandAndResultTypes
+                oTypeStkPop
+                oTypeStkPush(tpInteger)
             | *:
                 >>
         ]
@@ -1970,6 +1972,13 @@ BinaryOperator :
 TernaryOperator:
         [
             | sSubstring:
+                [oTypeStkChooseKind
+                    | tpString:
+                    | *:
+                        #eTypeMismatch
+                ]
+                oTypeStkPop
+                oTypeStkPush(tpString)
                 .tSubstring
         ];
 
