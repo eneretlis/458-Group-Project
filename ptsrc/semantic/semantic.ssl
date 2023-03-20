@@ -1755,12 +1755,14 @@ StringLiteral :
         % The value of a packed array is its address.
 
         .tLiteralString
-        oValuePushStringLength
         oEmitValue
         oValuePop
 
-        oEmitString
+        oValuePushStringLength
+        oEmitValue
         oValuePop;
+
+
 
 
 UnaryOperator :
