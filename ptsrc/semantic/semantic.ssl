@@ -2053,13 +2053,6 @@ CompareRelationalOperandTypes :
                     | *:
                         #eOperandOperatorTypeMismatch
                 ]
-            | tpString:
-                oTypeStkPop
-                [ oTypeStkChooseKind
-                    | tpString:
-                    | *:
-                        #eOperandOperatorTypeMismatch
-                ]
             | *:
                 #eOperandOperatorTypeMismatch
                 oTypeStkPop
