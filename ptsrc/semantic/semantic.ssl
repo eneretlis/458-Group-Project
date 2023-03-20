@@ -1632,21 +1632,21 @@ WhileStmt :
         .tWhileEnd
         oFixPopTargetAddress
         oFixPopForwardBranch;
-
-RepeatStmt :
-        .tRepeatBegin
-        oFixPushTargetAddress           % top-of-loop branch target
-        {[
-            | sRepeatEnd:
-                >
-            | *:
-                @Statement
-        ]}
-        .tRepeatControl
-        @BooleanControlExpression
-        .tRepeatTest
-        oFixPopTargetAddress;
-        
+%
+%RepeatStmt :
+        %.tRepeatBegin
+        %oFixPushTargetAddress           % top-of-loop branch target
+        %{[
+        %    | sRepeatEnd:
+        %        >
+        %    | *:
+        %        @Statement
+        %]}
+        %.tRepeatControl
+        %@BooleanControlExpression
+        %.tRepeatTest
+        %oFixPopTargetAddress;
+%%     
 DoStmt :
         .tDoBegin
         oFixPushTargetAddress           % top-of-loop branch target
