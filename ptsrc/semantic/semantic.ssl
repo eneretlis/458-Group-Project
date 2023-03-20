@@ -1607,6 +1607,13 @@ IfStmt :
                 oFixSwap                % false branch back on top
                 oFixPopForwardBranch
                 @Statement
+            | sElsif:
+                .tIfMerge
+                oFixPushForwardBranch
+                oEmitNullAddress                % true branch
+                oFixSwap                % false branch back on top
+                oFixPopForwardBranch
+                @IfStmt
             | *:
         ]
         .tIfEnd
