@@ -1,2 +1,2 @@
 using output
-littleString = "Hello Mom";
+const littleString = "Hello Mom";
