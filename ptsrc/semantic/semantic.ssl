@@ -147,6 +147,7 @@ Output :
         tLength
         tIndex
         tStringEqual
+        tCaseElse
 
         % Compound T-codes - T-code operations that take an operand
         tLiteralAddress
@@ -1647,13 +1648,21 @@ CaseStmt :
         oEmitNullAddress        % address of case branch table
         {[
             | sCaseEnd:
+                .tCaseEnd
+                oFixPopForwardBranch
+                oEmitCaseBranchTable
+                >
+            | sElse:
+                .tCaseEnd
+                oFixPopForwardBranch
+                oEmitCaseBranchTable
+                @CaseElse
+                sCaseEnd
                 >
             | *:
                 @CaseAlternative
         ]}
-        .tCaseEnd
-        oFixPopForwardBranch
-        oEmitCaseBranchTable
+        
         % emit merge branches for case alternatives
         {[ oCountChoose         % number of case alternatives
             | zero:
@@ -1724,6 +1733,16 @@ CaseAlternative :
         oEmitNullAddress                % merge branch at end of statement
         oFixSwap                        % keep case select branch on top
         oCountIncrement;
+        
+CaseElse:
+    %adding this to address case else 
+    .tCaseElse
+    @Statement
+    .tCaseMerge
+    oFixPushForwardBranch
+    oEmitNullAddress                % merge branch at end of statement
+    oFixSwap                        % keep case select branch on top
+    oCountIncrement;
 
 Expression :
         % Expressions have been converted to postfix form by the
