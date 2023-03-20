@@ -1,0 +1,4 @@
+using output
+"string1" == "string1"
+
+"string1" == "string2"
