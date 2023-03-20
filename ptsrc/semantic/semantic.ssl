@@ -148,6 +148,7 @@ Output :
         tIndex
         tStringEqual
         tCaseElse
+        tDoBegin
 
         % Compound T-codes - T-code operations that take an operand
         tLiteralAddress
@@ -168,7 +169,10 @@ Output :
         tCallEnd
         tLineNumber
         tTrap
-        lastCompoundTcode = tTrap
+        tDoEnd
+        tDoTest
+        tDoBreakIf
+        lastCompoundTcode = tDoBreakIf
 
         % End of file marker T-code
         tEndOfFile
@@ -1645,6 +1649,27 @@ RepeatStmt :
         @BooleanControlExpression
         .tRepeatTest
         oFixPopTargetAddress;
+        
+DoStmt :
+        .tDoBegin
+        oFixPushTargetAddress           % top-of-loop branch target
+        @BooleanControlExpression
+        .tDoTest
+        oFixPushForwardBranch
+        oEmitNullAddress                % exit branch
+        oFixSwap                % top-of-loop target back on top
+        @Statement
+        {[
+            |sBreakIf:
+                .tDoBreakIf
+                >
+            | *:
+                @Statement
+                >
+        ]}
+        .tDoEnd
+        oFixPopTargetAddress
+        oFixPopForwardBranch;
 
 CaseStmt :
         .tCaseBegin
