@@ -829,7 +829,7 @@ Block :
 
 
 ConstantDefinitions :           % Process named constant definitions
-        {[
+        [
             | sIdentifier:
                 oSymbolStkPushLocalIdentifier
                 [ oSymbolStkChooseKind
@@ -850,8 +850,7 @@ ConstantDefinitions :           % Process named constant definitions
                 oSymbolTblEnter
                 oSymbolStkPop
             | *:
-                >
-        ]};
+        ];
 
 ConstantValue :         % push the value and type of the constant value
         [
@@ -897,7 +896,7 @@ ConstantValue :         % push the value and type of the constant value
         ];
 
 TypeDefinitions :       % process named type definitions
-        {[
+        [
             | sIdentifier:
                 oSymbolStkPushLocalIdentifier
                 [ oSymbolStkChooseKind
@@ -920,8 +919,7 @@ TypeDefinitions :       % process named type definitions
                 oSymbolTblEnter
                 oSymbolStkPop
             | *:
-                >
-        ]};
+        ];
 
 TypeBody :
         % Accept a type specification and push a Type Stack entry for it.
@@ -1388,7 +1386,7 @@ Statement :
         @Block
         % Pop the scope
         oSymbolTblPopScope;
-        
+
 AssignmentStmt :
         sIdentifier  oSymbolStkPushIdentifier
 
