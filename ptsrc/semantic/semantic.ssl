@@ -818,29 +818,25 @@ Block :
         sEnd;
 
 ConstantDefinitions :           % Process named constant definitions
-        [
-            | sIdentifier:
-                oSymbolStkPushLocalIdentifier
-                [ oSymbolStkChooseKind
-                    | syUndefined:
-                    | syExternal:
-                        % A program parameter must be declared as a file variable
-                        #eExternalDeclare
-                    | *:
-                        #eMultiplyDefined
-                        % The new definition will now obscure the old one
-                ]
-                oSymbolStkSetKind(syConstant)
-                @ConstantValue
-                oSymbolStkEnterTypeReference
-                oTypeStkPop
-                oSymbolStkEnterValue
-                oValuePop
-                oSymbolTblEnter
-                oSymbolStkPop
-            | *:
-                >
-        ];
+            sIdentifier:
+            oSymbolStkPushLocalIdentifier
+            [ oSymbolStkChooseKind
+                | syUndefined:
+                | syExternal:
+                    % A program parameter must be declared as a file variable
+                    #eExternalDeclare
+                | *:
+                    #eMultiplyDefined
+                    % The new definition will now obscure the old one
+            ]
+            oSymbolStkSetKind(syConstant)
+            @ConstantValue
+            oSymbolStkEnterTypeReference
+            oSymbolStkEnterValue
+            oValuePop
+            oTypeStkPop
+            oSymbolTblEnter
+            oSymbolStkPop;
 
 ConstantValue :         % push the value and type of the constant value
         [
