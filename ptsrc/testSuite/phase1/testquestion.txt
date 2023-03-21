@@ -1,5 +1,0 @@
-Purpose: Ensure that the correct token is emitted when the ? character is scanned
-Expected Output: The scanner recognizes the question mark character and the pQuestion token is emitted 
-Actual Output(success): 
- .pQuestion
- .pEndFile

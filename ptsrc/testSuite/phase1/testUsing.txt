@@ -1,5 +1,0 @@
-Purpose: Ensure that the correct token is emitted when the using keyword is scanned
-Expected Output: The scanner recognizes the identifier and emits a pIdentifier token which is screened to pUsing
-Actual Output (success):
- .pIdentifier (screened to pUsing)
- .pEndFile

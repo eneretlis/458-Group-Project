@@ -6,11 +6,11 @@
    Author:  Alan Rosselet
 
    Abstract:
-     The semantic analysis pass builds the symbol and type tables.
-     It enforces context sensitive syntax restrictions such as "declaration before use".
-     It performs type checking between assignment L and R values, between expression
-     operands and operators, between formal and actual parameters.
-     It assigns runtime addresses to data objects.
+     The semantic analysis pass builds the symbol and type tables.  
+     It enforces context sensitive syntax restrictions such as "declaration before use".  
+     It performs type checking between assignment L and R values, between expression 
+     operands and operators, between formal and actual parameters.  
+     It assigns runtime addresses to data objects.  
      It emits a stream of PT pseudo code, tCode, to implement the program.
 
    Input Files
@@ -56,81 +56,79 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
         oSymbolTblUpdate = 15;
         oSymbolTblPushScope = 16;
         oSymbolTblPopScope = 17;
-        oSymbolTblStripScope = 18;
-        oSymbolTblMergeScope = 19;
-        oSymbolTblPreserveParameters = 20;
-        oSymbolTblLookupExternal = 21; { >>14 }
-        oSymbolStkPush = 22; { (17) }
-        oSymbolStkPushIdentifier = 23;
-        oSymbolStkPushLocalIdentifier = 24;
-        oSymbolStkPushStandardVariable = 25; { (19) }
-        oSymbolStkPushFormalParameter = 26;
-        oSymbolStkSetKind = 27; { (17) }
-        oSymbolStkEnterValue = 28;
-        oSymbolStkEnterStringValue = 29;
-        oSymbolStkEnterDataAddress = 30;
-        oSymbolStkEnterTypeReference = 31;
-        oSymbolStkChooseKind = 32; { >>17 }
-        oSymbolStkChooseStandardFile = 33; { >>19 }
-        oSymbolStkChooseStandardRoutine = 34; { >>18 }
-        oSymbolStkPop = 35;
-        oTypeTblEnter = 36;
-        oTypeTblUpdate = 37;
-        oTypeStkPush = 38; { (20) }
-        oTypeStkPushSymbol = 39;
-        oTypeStkPushComponent = 40;
-        oTypeStkSetKind = 41; { (20) }
-        oTypeStkSetRecursionFlag = 42; { (14) }
-        oTypeStkChooseRecursionFlag = 43; { >>14 }
-        oTypeStkLinkToStandardType = 44; { (16) }
-        oTypeStkEnterBounds = 45;
-        oTypeStkVerifyBounds = 46; { >>14 }
-        oTypeStkEnterParameterCount = 47;
-        oTypeStkCompareParameterCount = 48; { >>14 }
-        oTypeStkEnterComponentReference = 49;
-        oTypeStkChooseKind = 50; { >>20 }
-        oTypeStkChooseTypeReference = 51; { >>14 }
-        oTypeStkCompareNames = 52; { >>14 }
-        oTypeStkSwap = 53;
-        oTypeStkPop = 54;
-        oEmitNullAddress = 55;
-        oEmitValue = 56;
-        oEmitString = 57;
-        oEmitDataAddress = 58;
-        oEmitTrapKind = 59; { (21) }
-        oEmitCaseBranchTable = 60;
-        oAllocateAlignOnWord = 61;
-        oAllocateVariable = 62;
-        oAllocateVarParameter = 63;
-        oAllocateDescriptor = 64;
-        oValuePush = 65; { (13) }
-        oValuePushInteger = 66;
-        oValuePushString = 67;
-        oValuePushStringLength = 68;
-        oValuePushSymbol = 69;
-        oValuePushCount = 70;
-        oValuePushTypeStkLowerBound = 71;
-        oValuePushTypeStkUpperBound = 72;
-        oValuePushCodeAddress = 73;
-        oValueNegate = 74;
-        oValueChoose = 75; { >>13 }
-        oValuePop = 76;
-        oCasePushDisplay = 77;
-        oCasePopDisplay = 78;
-        oCaseLookupLabel = 79; { >>14 }
-        oCasePushLabel = 80;
-        oCountPush = 81; { (13) }
-        oCountPushValue = 82;
-        oCountPop = 83;
-        oCountIncrement = 84;
-        oCountDecrement = 85;
-        oCountChoose = 86; { >>13 }
-        oFixPushForwardBranch = 87;
-        oFixPopForwardBranch = 88;
-        oFixPushTargetAddress = 89;
-        oFixPopTargetAddress = 90;
-        oFixPopAndEnterValue = 91;
-        oFixSwap = 92;
+        oSymbolTblPreserveParameters = 18;
+        oSymbolTblLookupExternal = 19; { >>14 }
+        oSymbolStkPush = 20; { (17) }
+        oSymbolStkPushIdentifier = 21;
+        oSymbolStkPushLocalIdentifier = 22;
+        oSymbolStkPushStandardVariable = 23; { (19) }
+        oSymbolStkPushFormalParameter = 24;
+        oSymbolStkSetKind = 25; { (17) }
+        oSymbolStkEnterValue = 26;
+        oSymbolStkEnterStringValue = 27;
+        oSymbolStkEnterDataAddress = 28;
+        oSymbolStkEnterTypeReference = 29;
+        oSymbolStkChooseKind = 30; { >>17 }
+        oSymbolStkChooseStandardFile = 31; { >>19 }
+        oSymbolStkChooseStandardRoutine = 32; { >>18 }
+        oSymbolStkPop = 33;
+        oTypeTblEnter = 34;
+        oTypeTblUpdate = 35;
+        oTypeStkPush = 36; { (20) }
+        oTypeStkPushSymbol = 37;
+        oTypeStkPushComponent = 38;
+        oTypeStkSetKind = 39; { (20) }
+        oTypeStkSetRecursionFlag = 40; { (14) }
+        oTypeStkChooseRecursionFlag = 41; { >>14 }
+        oTypeStkLinkToStandardType = 42; { (16) }
+        oTypeStkEnterBounds = 43;
+        oTypeStkVerifyBounds = 44; { >>14 }
+        oTypeStkEnterParameterCount = 45;
+        oTypeStkCompareParameterCount = 46; { >>14 }
+        oTypeStkEnterComponentReference = 47;
+        oTypeStkChooseKind = 48; { >>20 }
+        oTypeStkChooseTypeReference = 49; { >>14 }
+        oTypeStkCompareNames = 50; { >>14 }
+        oTypeStkSwap = 51;
+        oTypeStkPop = 52;
+        oEmitNullAddress = 53;
+        oEmitValue = 54;
+        oEmitString = 55;
+        oEmitDataAddress = 56;
+        oEmitTrapKind = 57; { (21) }
+        oEmitCaseBranchTable = 58;
+        oAllocateAlignOnWord = 59;
+        oAllocateVariable = 60;
+        oAllocateVarParameter = 61;
+        oAllocateDescriptor = 62;
+        oValuePush = 63; { (13) }
+        oValuePushInteger = 64;
+        oValuePushChar = 65;
+        oValuePushStringLength = 66;
+        oValuePushSymbol = 67;
+        oValuePushCount = 68;
+        oValuePushTypeStkLowerBound = 69;
+        oValuePushTypeStkUpperBound = 70;
+        oValuePushCodeAddress = 71;
+        oValueNegate = 72;
+        oValueChoose = 73; { >>13 }
+        oValuePop = 74;
+        oCasePushDisplay = 75;
+        oCasePopDisplay = 76;
+        oCaseLookupLabel = 77; { >>14 }
+        oCasePushLabel = 78;
+        oCountPush = 79; { (13) }
+        oCountPushValue = 80;
+        oCountPop = 81;
+        oCountIncrement = 82;
+        oCountDecrement = 83;
+        oCountChoose = 84; { >>13 }
+        oFixPushForwardBranch = 85;
+        oFixPopForwardBranch = 86;
+        oFixPushTargetAddress = 87;
+        oFixPopTargetAddress = 88;
+        oFixPopAndEnterValue = 89;
+        oFixSwap = 90;
 
         { Input Tokens }
         sIdentifier = 0;
@@ -164,37 +162,28 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
         sIfStmt = 25;
         sThen = 26;
         sElse = 27;
-        sElsif = 28;
-        sDo = 29;
-        sWhileStmt = 30;
-        sRepeatStmt = 31;
-        sRepeatEnd = 32;
-        sEq = 33;
-        sNE = 34;
-        sLT = 35;
-        sLE = 36;
-        sGT = 37;
-        sGE = 38;
-        sAdd = 39;
-        sSubtract = 40;
-        sMultiply = 41;
-        sDivide = 42;
-        sModulus = 43;
-        sInfixOr = 44;
-        sOr = 45;
-        sInfixAnd = 46;
-        sAnd = 47;
-        sNot = 48;
-        sNewLine = 49;
-        sEndOfFile = 50;
-        sPublic = 51;
-        sModule = 52;
-        sDoStmt = 53;
-        sBreakIf = 54;
-        sSubstring = 55;
-        sLength = 56;
-        sIndex = 57;
-        lastSemanticToken = 57;
+        sWhileStmt = 28;
+        sRepeatStmt = 29;
+        sRepeatEnd = 30;
+        sEq = 31;
+        sNE = 32;
+        sLT = 33;
+        sLE = 34;
+        sGT = 35;
+        sGE = 36;
+        sAdd = 37;
+        sSubtract = 38;
+        sMultiply = 39;
+        sDivide = 40;
+        sModulus = 41;
+        sInfixOr = 42;
+        sOr = 43;
+        sInfixAnd = 44;
+        sAnd = 45;
+        sNot = 46;
+        sNewLine = 47;
+        sEndOfFile = 48;
+        lastSemanticToken = 48;
 
         { Output Tokens }
         tMultiply = 0;
@@ -222,21 +211,21 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
         tVarParm = 21;
         tFetchAddress = 22;
         tFetchInteger = 23;
-        tFetchString = 24;
+        tFetchChar = 24;
         tFetchBoolean = 25;
         tAssignBegin = 26;
         tAssignAddress = 27;
         tAssignInteger = 28;
-        tAssignString = 29;
+        tAssignChar = 29;
         tAssignBoolean = 30;
         tStoreAddress = 31;
         tStoreInteger = 32;
-        tStoreString = 33;
+        tStoreChar = 33;
         tStoreBoolean = 34;
         tSubscriptBegin = 35;
         tSubscriptAddress = 36;
         tSubscriptInteger = 37;
-        tSubscriptString = 38;
+        tSubscriptChar = 38;
         tSubscriptBoolean = 39;
         tArrayDescriptor = 40;
         tFileDescriptor = 41;
@@ -245,44 +234,39 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
         tIfEnd = 44;
         tCaseBegin = 45;
         tWhileBegin = 46;
-        tCallBegin = 47;
-        tParmEnd = 48;
-        tProcedureEnd = 49;
-        tWriteBegin = 50;
-        tReadBegin = 51;
-        tTrapBegin = 52;
-        tWriteEnd = 53;
-        tReadEnd = 54;
-        tConcatenate = 55;
-        tSubstring = 56;
-        tLength = 57;
-        tIndex = 58;
-        tStringEqual = 59;
-        tCaseElse = 60;
-        tDoBegin = 61;
-        tLiteralAddress = 62;
-        firstCompoundTcode = 62;
-        tLiteralInteger = 63;
-        tLiteralString = 64;
-        tLiteralBoolean = 65;
-        tStringData = 66;
-        tIfThen = 67;
-        tIfMerge = 68;
-        tCaseSelect = 69;
-        tCaseMerge = 70;
-        tCaseEnd = 71;
-        tWhileTest = 72;
-        tWhileEnd = 73;
-        tSkipProc = 74;
-        tCallEnd = 75;
-        tLineNumber = 76;
-        tTrap = 77;
-        tDoEnd = 78;
-        tDoTest = 79;
-        tDoBreakIf = 80;
-        lastCompoundTcode = 80;
-        tEndOfFile = 81;
-        lastTcode = 81;
+        tRepeatBegin = 47;
+        tRepeatControl = 48;
+        tCallBegin = 49;
+        tParmEnd = 50;
+        tProcedureEnd = 51;
+        tWriteBegin = 52;
+        tReadBegin = 53;
+        tTrapBegin = 54;
+        tWriteEnd = 55;
+        tReadEnd = 56;
+        tLiteralAddress = 57;
+        firstCompoundTcode = 57;
+        tLiteralInteger = 58;
+        tLiteralChar = 59;
+        tLiteralBoolean = 60;
+        tSkipString = 61;
+        tStringData = 62;
+        tLiteralString = 63;
+        tIfThen = 64;
+        tIfMerge = 65;
+        tCaseSelect = 66;
+        tCaseMerge = 67;
+        tCaseEnd = 68;
+        tWhileTest = 69;
+        tWhileEnd = 70;
+        tRepeatTest = 71;
+        tSkipProc = 72;
+        tCallEnd = 73;
+        tLineNumber = 74;
+        tTrap = 75;
+        lastCompoundTcode = 75;
+        tEndOfFile = 76;
+        lastTcode = 76;
 
         { Input/Output Tokens }
 
@@ -312,7 +296,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
         eTypeIdentifierReqd = 31;
         eIntegerExpnReqd = 32;
         eBooleanExpnReqd = 33;
-        eStringExpnReqd = 34;
+        eCharExpnReqd = 34;
         eArrayVarReqd = 35;
         eVariableReqd = 36;
         eDuplicateLabel = 37;
@@ -336,7 +320,6 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
         ten = 10;
         byteSize = 1;
         wordSize = 4;
-        stringSize = 1024;
         { Type 14 }
         no = 0;
         yes = 1;
@@ -344,7 +327,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
         firstPredeclaredId = 1;
         firstPredeclaredType = 1;
         pidInteger = 1;
-        pidString = 2;
+        pidChar = 2;
         pidBoolean = 3;
         pidText = 4;
         lastPredeclaredType = 4;
@@ -368,7 +351,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
         lastSpecialId = 19;
         { Type 16 }
         stdInteger = 0;
-        stdString = 1;
+        stdChar = 1;
         stdBoolean = 2;
         stdText = 3;
         { Type 17 }
@@ -377,12 +360,10 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
         syVariable = 2;
         syVarParameter = 3;
         syProcedure = 4;
-        syModule = 5;
-        syPublicProcedure = 6;
-        syFunction = 7;
-        syExternal = 8;
-        syExpression = 9;
-        syUndefined = 10;
+        syFunction = 5;
+        syExternal = 6;
+        syExpression = 7;
+        syUndefined = 8;
         { Type 18 }
         rtReset = 1;
         rtRewrite = 2;
@@ -402,12 +383,13 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
         stdNull = 2;
         { Type 20 }
         tpInteger = 0;
-        tpString = 1;
+        tpChar = 1;
         tpBoolean = 2;
         tpSubrange = 3;
         tpArray = 4;
-        tpFile = 5;
-        tpNull = 6;
+        tpString = 5;
+        tpFile = 6;
+        tpNull = 7;
         { Type 21 }
         trHalt = 0;
         trReset = 1;
@@ -416,11 +398,12 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
         trReadln = 4;
         trWrite = 5;
         trWriteln = 6;
-        trWriteString = 109;
+        trWriteString = 7;
         trWriteInteger = 8;
-        trReadInteger = 9;
-        trReadString = 108;
-        trAssign = 11;
+        trWriteChar = 9;
+        trReadInteger = 10;
+        trReadChar = 11;
+        trAssign = 12;
 
         { S/SL Rule Table Addresses } {
         Program = 0;
@@ -433,20 +416,20 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
         VariableDeclarations = 616;
         BeginStmt = 1123;
         ConstantValue = 187;
-        SymbolStkPushDefaultIntegerConstant = 3779;
+        SymbolStkPushDefaultIntegerConstant = 3812;
         StringLiteral = 1727;
         TypeBody = 310;
         IndexType = 348;
         ComponentType = 383;
         SimpleType = 409;
         TypeTblEnterIfNew = 338;
-        ValuePushValuePlusOne = 3770;
+        ValuePushValuePlusOne = 3803;
         SubrangeUpperBound = 554;
         EnterVariableAttributes = 647;
         ProcedureHeading = 833;
         ProcedureParameterType = 879;
         ProcedurePrologue = 942;
-        CountPushCopy = 3775;
+        CountPushCopy = 3808;
         EmitStore = 1096;
         Statement = 987;
         AssignmentStmt = 1041;
@@ -455,54 +438,52 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
         WhileStmt = 1407;
         CaseStmt = 1448;
         RepeatStmt = 1424;
-        Variable = 2170;
+        Variable = 2187;
         Expression = 1598;
-        CompareAndSwapTypes = 1959;
+        CompareAndSwapTypes = 1961;
         EmitAssign = 1069;
-        OpenProcedure = 2563;
-        AssignProcedure = 2594;
-        WriteProcedure = 2701;
-        WritelnProcedure = 3164;
-        ReadProcedure = 3222;
-        ReadlnProcedure = 3584;
+        OpenProcedure = 2587;
+        AssignProcedure = 2618;
+        WriteProcedure = 2725;
+        WritelnProcedure = 3197;
+        ReadProcedure = 3255;
+        ReadlnProcedure = 3617;
         ActualParameters = 1270;
-        FlushActuals = 3850;
+        FlushActuals = 3883;
         VarActual = 1338;
-        BooleanControlExpression = 3755;
-        CaseSelectorExpression = 3738;
+        BooleanControlExpression = 3788;
+        CaseSelectorExpression = 3771;
         CaseAlternative = 1494;
         Operand = 1626;
-        UnaryOperator = 1782;
-        BinaryOperator = 1814;
-        FlushExpn = 3829;
-        ConstantOperand = 2281;
-        VariableOperand = 2313;
-        FunctionOperand = 2340;
-        SymbolStkPushDefaultIntegerVariable = 3812;
-        FileOperand = 2538;
-        CompareOperandAndResultTypes = 2044;
-        CompareEqualityOperandTypes = 2105;
-        CompareRelationalOperandTypes = 2055;
-        VariableExtension = 2212;
-        StandardFunctionActual = 2443;
-        FileVariable = 3642;
-        WriteText = 2968;
-        WriteBinary = 3080;
-        WriteStandardExpnList = 2922;
-        TextFileVariable = 3683;
-        ReadTextParameterList = 3352;
-        ReadBinaryParameterList = 3418;
-        ReadText = 3484;
-        ReadBinary = 3513;
-        SymbolStkPushDefaultStringConstant = 3795;
+        UnaryOperator = 1784;
+        BinaryOperator = 1816;
+        FlushExpn = 3862;
+        ConstantOperand = 2298;
+        VariableOperand = 2337;
+        FunctionOperand = 2364;
+        SymbolStkPushDefaultIntegerVariable = 3845;
+        FileOperand = 2562;
+        CompareOperandAndResultTypes = 2061;
+        CompareEqualityOperandTypes = 2122;
+        CompareRelationalOperandTypes = 2072;
+        VariableExtension = 2229;
+        StandardFunctionActual = 2467;
+        FileVariable = 3675;
+        WriteText = 2992;
+        WriteBinary = 3113;
+        WriteStandardExpnList = 2946;
+        TextFileVariable = 3716;
+        ReadTextParameterList = 3385;
+        ReadBinaryParameterList = 3451;
+        ReadText = 3517;
+        ReadBinary = 3546;
+        SymbolStkPushDefaultCharConstant = 3828;
         }
 
         { S/SL Table Parameters }
-        sslTblSize = 3869;
+        sslTblSize = 3902;
         minSslTableValue = -32767;
         maxSslTableValue = 32767;
-
-
 
 { ===== End of contents of semantic.def }
 
@@ -610,7 +591,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
         typeStkSize = 60;
         caseDisplaySize = 8;            { case nesting limit }
         caseStackSize = 256;            { limits number of labels in a case }
-        { Case max range limits the difference between the smallest and largest label values
+        { Case max range limits the difference between the smallest and largest label values 
           (i.e. the size of case branching tables. }
         caseMaxRange = 256;
         valueStackSize = 14;
@@ -626,8 +607,8 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
         undefined = minInteger;
 
         { Parser generated identifier table indices }
-        standardInputNameIndex = pidInput;
-        standardOutputNameIndex = pidOutput;
+        standardInputNameIndex = pidInput;      
+        standardOutputNameIndex = pidOutput;    
 
     type
         InputTokens = firstSemanticToken .. lastSemanticToken;
@@ -647,7 +628,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
 
     var
         { The Syntax/Semantic Table;
-          The S/SL table file produced by the S/SL Processor for the pass is read
+          The S/SL table file produced by the S/SL Processor for the pass is read 
           into this array during initialization. }
         sslTable: array [0 .. sslTableSize] of minSslTableValue .. maxSslTableValue;
         semanticSsl: file of integer;
@@ -666,23 +647,23 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
 
         { The S/SL Rule Call Stack:
           The Rule Call Stack implements Syntax/Semantic Language rule call and return.
-          Each time an oCall operation is executed, the table return address is pushed
-          onto the Rule Call Stack.  When an oReturn is executed, the return address is
-          popped from the stack.  An oReturn executed when the Rule Call Stack is empty
+          Each time an oCall operation is executed, the table return address is pushed 
+          onto the Rule Call Stack.  When an oReturn is executed, the return address is 
+          popped from the stack.  An oReturn executed when the Rule Call Stack is empty 
           terminates table execution. }
         sslStack: array [1 .. sslStackSize] of 0 .. sslTableSize;
         sslTop:   0 .. sslStackSize  { initially 0 };
 
         { Choice Match Flag:
-          Set by the Choice Handler to indicate whether a match was made or the otherwise
-          path was taken.  Set to true if a match was made and false otherwise.
-          This flag is used in input choices to indicate whether the choice input token
+          Set by the Choice Handler to indicate whether a match was made or the otherwise 
+          path was taken.  Set to true if a match was made and false otherwise.  
+          This flag is used in input choices to indicate whether the choice input token 
           should be accepted or not. }
         choiceTagMatched: Boolean;
 
         { Parameterized And Choice Semantic Operation Values:
-          These are used to hold the decoded parameter value to a parameterized semantic
-          operation and the result value returned by a choice semantic operation or
+          These are used to hold the decoded parameter value to a parameterized semantic 
+          operation and the result value returned by a choice semantic operation or 
           rule respectively. }
         parameterValue: integer;
         resultValue:    integer;
@@ -700,8 +681,8 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
         nextInputToken: InputTokens;
 
         { The Compound Input Token Buffer;
-          When a compound input token is accepted from the input stream,
-          its associated value is saved in the compound token buffer for use by
+          When a compound input token is accepted from the input stream, 
+          its associated value is saved in the compound token buffer for use by 
           the Semantic Mechanisms of the pass. }
         compoundToken: InputTokens;               { Last compound input token accepted }
         compoundTokenValue: integer;              { Its associated value }
@@ -791,10 +772,10 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
 
         { Predefined type table entries }
         standardIntegerTypeRef: TypeTblReference;
-        standardStringTypeRef:    TypeTblReference;
+        standardCharTypeRef:    TypeTblReference;
         standardBooleanTypeRef: TypeTblReference;
         standardTextTypeRef:    TypeTblReference;
-
+        
         { UNIX argument file identifiers, for gpc compatibility }
         {==
         NsemanticSsl, NparseStream, Ntemp, NtCode, Noptions: array [1 .. 50] of char;
@@ -932,8 +913,8 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
 
 
     procedure Initialize;
-        { Enter predefined identifiers into the symbol and type tables,
-          initialize the semantic data structures, open the input and output streams,
+        { Enter predefined identifiers into the symbol and type tables, 
+          initialize the semantic data structures, open the input and output streams, 
           and read the options file. }
         var
             c: char;
@@ -984,11 +965,11 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                     i := i + 1;
                 end;
 
-            { Initialize symbol and type table entries for the predeclared identifiers.
-              The parser has assigned the predeclared identifiers to the first entries
-              in the semantic pass identifier table.  Use this knowledge to link the
-              identifier and symbol table entries for predeclared identifiers.
-              The order of the predeclared identifiers in the parser's stdIdentifier
+            { Initialize symbol and type table entries for the predeclared identifiers. 
+              The parser has assigned the predeclared identifiers to the first entries 
+              in the semantic pass identifier table.  Use this knowledge to link the 
+              identifier and symbol table entries for predeclared identifiers.  
+              The order of the predeclared identifiers in the parser's stdIdentifier 
               file must exactly match the order here. }
 
             { Initialize the identifier table }
@@ -1008,23 +989,23 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                     i := i + 1;
                 end;
 
-            { Enter standard identifiers in the symbol and type tables.
-              The symbol and type table entries for predefined identifiers have
+            { Enter standard identifiers in the symbol and type tables. 
+              The symbol and type table entries for predefined identifiers have 
               the same table index as the identifier itself. }
 
             { integer }
             symbolTblKind[pidInteger] := syType;
             symbolTblTypeTblLink[pidInteger] := pidInteger;
             typeTblKind[pidInteger] := tpInteger;
-            { This index is used by the semantic mechanisms to link to predefined type integer;
+            { This index is used by the semantic mechanisms to link to predefined type integer; 
               similarly for char, Boolean and text. }
             standardIntegerTypeRef := pidInteger;
 
-            { string }
-            symbolTblKind[pidString] := syType;
-            symbolTblTypeTblLink[pidString] := pidString;
-            typeTblKind[pidString] := tpString;
-            standardStringTypeRef := pidString;
+            { char }
+            symbolTblKind[pidChar] := syType;
+            symbolTblTypeTblLink[pidChar] := pidChar;
+            typeTblKind[pidChar] := tpChar;
+            standardCharTypeRef := pidChar;
 
             { Boolean }
             symbolTblKind[pidBoolean] := syType;
@@ -1036,7 +1017,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
             symbolTblKind[pidText] := syType;
             symbolTblTypeTblLink[pidText] := pidText;
             typeTblKind[pidText] := tpFile;
-            typeTblComponentLink[pidText] := standardStringTypeRef;
+            typeTblComponentLink[pidText] := standardCharTypeRef;
             standardTextTypeRef := pidText;
 
             { true (1) }
@@ -1049,7 +1030,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
             symbolTblValue[pidFalse] := 0;
             symbolTblTypeTblLink[pidFalse] := standardBooleanTypeRef;
 
-            { Standard routines are distinguished from user routines by negative value fields;
+            { Standard routines are distinguished from user routines by negative value fields; 
               a user defined routine has its code address in this field. }
 
             { reset }
@@ -1171,8 +1152,8 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                     write('integer type expression required');
                 eBooleanExpnReqd:
                     write('Boolean type expression required');
-                eStringExpnReqd:
-                    write('str type expression required');
+                eCharExpnReqd:
+                    write('char type expression required');
                 eArrayVarReqd:
                     write('array variable required');
                 eVariableReqd:
@@ -1268,8 +1249,8 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
 
 
     procedure AcceptInputToken;
-        { This procedure provides the interface to the previous pass;
-          it is reponsible for handling all input including line number indicators
+        { This procedure provides the interface to the previous pass;  
+          it is reponsible for handling all input including line number indicators 
           and the values and text associated with input tokens. }
         var
             acceptedToken: InputTokens;
@@ -1322,7 +1303,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
             { Trace Input }
             if tracing then
                 begin
-                    write ('Input token accepted ', acceptedToken: 1, ';  Line ', lineNumber: 1,
+                    write ('Input token accepted ', acceptedToken: 1, ';  Line ', lineNumber: 1, 
                         ';  Next input token ', nextInputToken: 1);
                     writeln;
                 end;
@@ -1333,7 +1314,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
     { Semantic Mechanism Operation Routines }
 
     procedure SymbolStkPush(kind: SymbolKinds);
-        { If the symbol stack is not full push an entry of the parameter kind,
+        { If the symbol stack is not full push an entry of the parameter kind, 
           otherwise report an error. }
 
         begin
@@ -1353,15 +1334,15 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
 
 
     procedure SymbolStkPushIdentifier(symbolRef: SymbolTblReference);
-        { If the symbol stack is not full, push an entry with the attributes of
-          the symbol table entry specified by the parameter and the last accepted
+        { If the symbol stack is not full, push an entry with the attributes of 
+          the symbol table entry specified by the parameter and the last accepted 
           identifier name, otherwise report an error. }
 
         begin
             if symbolStkTop < symbolStkSize then
                 begin
                     symbolStkTop := symbolStkTop + 1;
-                    { The last compound token accepted must have been the identifier
+                    { The last compound token accepted must have been the identifier 
                       that we're pushing now. }
                     symbolStkIdentTblRef[symbolStkTop] := compoundTokenValue;
                     symbolStkSymbolTblRef[symbolStkTop] := symbolRef;
@@ -1377,7 +1358,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
 
 
     procedure TypeStkPush(kind: TypeKinds);
-        { If the type stack is not full push an entry of the parameter kind,
+        { If the type stack is not full push an entry of the parameter kind, 
           otherwise report an error. }
 
         begin
@@ -1397,7 +1378,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
 
 
     procedure TypeStkPushTypeTbl(typeRef: TypeTblReference);
-        { If the type stack is not full, push an entry with the attributes of
+        { If the type stack is not full, push an entry with the attributes of 
           the type table entry specified by the parameter, otherwise report an error. }
 
         begin
@@ -1419,7 +1400,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
 
     procedure TypeStkCopy(src: TypeStkReference;
                           dst: TypeStkReference);
-        { Copy the type stack entry specified by the src parameter to the type stack entry
+        { Copy the type stack entry specified by the src parameter to the type stack entry 
           specified by the dst parameter. }
 
         begin
@@ -1447,8 +1428,8 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
 
 
     procedure EmitCaseBranchTable;
-        { Determine the minimum and maximum label values that occur in the case statement.
-          If the range of label values is greater than is allowed report an error,
+        { Determine the minimum and maximum label values that occur in the case statement.  
+          If the range of label values is greater than is allowed report an error, 
           otherwise emit the minimum and maximum values followed by the case branch table. }
 
         var
@@ -1504,8 +1485,8 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
 
 
     procedure SslSyntaxError;
-        { A syntax error in the semantic token stream implies a compiler failure.
-          Either the parser is generating an invalid stream or the semantic analyzer
+        { A syntax error in the semantic token stream implies a compiler failure.  
+          Either the parser is generating an invalid stream or the semantic analyzer 
           expects an invalid stream. }
         begin
             write ('### Semantic pass S/SL program failure:  syntax error in semantic token stream');
@@ -1520,7 +1501,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
 
     procedure SslTrace;
         begin
-            write ('Table index ', sslPointer-1: 1, ';  Operation ', operation: 1,
+            write ('Table index ', sslPointer-1: 1, ';  Operation ', operation: 1, 
                 ';  Argument ', sslTable[sslPointer]: 1);
             writeln;
         end  { SslTrace };
@@ -1546,11 +1527,11 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
 
 
     procedure SslChoice (choiceTag: integer);
-        { This procedure performs both input and semantic choices.
-          It sequentially tests each alternative value against the tag value,
-          and when a match is found, performs a branch to the corresponding alternative path.
-          If none of the alternative values matches the tag value, sslTable interpretation
-          proceeds to the operation immediately following the list of alternatives
+        { This procedure performs both input and semantic choices.  
+          It sequentially tests each alternative value against the tag value, 
+          and when a match is found, performs a branch to the corresponding alternative path.  
+          If none of the alternative values matches the tag value, sslTable interpretation 
+          proceeds to the operation immediately following the list of alternatives 
           (normally the otherwise path).  The flag choiceTagMatched is set to true
           if a match is found and false otherwise. }
 
@@ -1711,7 +1692,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                       **** }
 
                     oSymbolTblEnter:
-                        { Create a symbol table entry with the attributes of the top symbol stack
+                        { Create a symbol table entry with the attributes of the top symbol stack 
                           entry and link it to the top symbol stack entry. }
 
                         if symbolTblTop < symbolTblSize then
@@ -1719,7 +1700,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                                 symbolTblTop := symbolTblTop + 1;
                                 symbolTblKind[symbolTblTop] := symbolStkKind[symbolStkTop];
                                 symbolTblValue[symbolTblTop] := symbolStkValue[symbolStkTop];
-                                symbolTblTypeTblLink[symbolTblTop] :=
+                                symbolTblTypeTblLink[symbolTblTop] := 
                                     symbolStkTypeTblLink[symbolStkTop];
                                 symbolStkSymbolTblRef[symbolStkTop] := symbolTblTop;
 
@@ -1727,7 +1708,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                                 link := symbolStkIdentTblRef[symbolStkTop];
 
                                 if link > 0 then
-                                    { This is a normal identifier, not a dummy identifier generated
+                                    { This is a normal identifier, not a dummy identifier generated 
                                       by the parser's syntax error recovery procedure. }
                                     begin
                                         symbolTblIdentLink[symbolTblTop] := identSymbolTblRef[link];
@@ -1738,7 +1719,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                             Error(eSymbolTblOvfl);
 
                     oSymbolTblUpdate:
-                        { Copy the attributes of the top symbol stack entry to
+                        { Copy the attributes of the top symbol stack entry to 
                           the symbol table entry it references. }
 
                         begin
@@ -1750,7 +1731,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                         end;
 
                     oSymbolTblPushScope:
-                        { Push the lexic level stack with pointers to
+                        { Push the lexic level stack with pointers to 
                           the symbol and type stack tops. }
 
                         if lexicLevelStackTop < lexicLevelStackSize then
@@ -1763,20 +1744,20 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                             Error(eLexicLevelStackOvfl);
 
                     oSymbolTblPopScope:
-                        { Pop the lexic level stack, remove local entries from the type table,
+                        { Pop the lexic level stack, remove local entries from the type table, 
                           remove local entries but leave parameter entries on the symbol stack. }
 
                         begin
                             Assert((lexicLevelStackTop >= 1), assert31);
                             i := symbolTblTop;
-                            { Set the identifier table pointer to the identifier entry in the
+                            { Set the identifier table pointer to the identifier entry in the 
                               closest enclosing scope if there is one. }
                             while i > symbolTblDisplay[lexicLevelStackTop] do
                                 begin
                                     link := symbolTblIdentLink[i];
 
                                     if link <> null then
-                                        { This is not a dummy identifier generated by
+                                        { This is not a dummy identifier generated by 
                                           the parser's syntax error recovery procedure. }
                                         begin
                                             while link > 0 do
@@ -1794,39 +1775,6 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                             lexicLevelStackTop := lexicLevelStackTop - 1;
                         end;
 
-                    oSymbolTblStripScope:
-                        { Pop the lexic level stack, remove local entries from the type table,
-                          remove local entries but leave parameter entries on the symbol stack.
-                          But do not decrement lexical levels nor change symbolTblTop, typeTableTop. }
-
-                        begin
-                            Assert((lexicLevelStackTop >= 1), assert31);
-                            i := symbolTblTop;
-                            { Set the identifier table pointer to the identifier entry in the
-                              closest enclosing scope if there is one. }
-                            while i > symbolTblDisplay[lexicLevelStackTop] do
-                                begin
-                                    link := symbolTblIdentLink[i];
-
-                                    if link <> null then
-                                        { This is not a dummy identifier generated by
-                                          the parser's syntax error recovery procedure. }
-                                        begin
-                                            while link > 0 do
-                                                link := symbolTblIdentLink[link];
-                                            identSymbolTblRef[-link] := symbolTblIdentLink[i];
-                                        end;
-
-                                    i := i - 1
-                                end;
-                        end;
-
-                    oSymbolTblMergeScope:
-                        begin
-                            Assert((lexicLevelStackTop >= 1), assert31);
-                            lexicLevelStackTop := lexicLevelStackTop - 1;
-                        end;
-
                     oSymbolTblPreserveParameters:
                         { Restore procedure parameter entries to the symbol table }
                         begin
@@ -1836,7 +1784,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                         end ;
 
                     oSymbolTblLookupExternal:
-                        { Return yes if the symbol table contains an undeclared
+                        { Return yes if the symbol table contains an undeclared 
                           external file name (program parameter), otherwise return no. }
                         begin
                             resultValue := no;
@@ -1865,14 +1813,14 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                         SymbolStkPush(parameterValue);
 
                     oSymbolStkPushIdentifier:
-                        { If the last accepted identifier has a symbol table entry,
+                        { If the last accepted identifier has a symbol table entry, 
                           push the symbol stack using the attributes of that symbol table entry,
                           otherwise push an undefined symbol. }
                         begin
                             Assert((compoundToken = sIdentifier), assert2);
 
                             if compoundTokenValue < 0 then
-                                { This identifier was generated by the parser's
+                                { This identifier was generated by the parser's 
                                   error repair mechanism. }
                                 SymbolStkPush(syUndefined)
                             else if identSymbolTblRef[compoundTokenValue] > 0 then
@@ -1887,14 +1835,14 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                         end;
 
                     oSymbolStkPushLocalIdentifier:
-                        { Special case of PushIdentifier with the symbol table lookup
+                        { Special case of PushIdentifier with the symbol table lookup 
                           restricted to the local scope. }
                         begin
                             Assert((compoundToken = sIdentifier), assert23);
 
                             if compoundTokenValue < 0 then
                                 SymbolStkPush(syUndefined)
-                            else if identSymbolTblRef[compoundTokenValue] >
+                            else if identSymbolTblRef[compoundTokenValue] > 
                                     symbolTblDisplay[lexicLevelStackTop] then
                                 SymbolStkPushIdentifier(identSymbolTblRef [compoundTokenValue])
                             else
@@ -1905,9 +1853,9 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                         end;
 
                     oSymbolStkPushStandardVariable:
-                        { If the parameter standard variable (input or output) was listed
-                          in the program parameter list and is visible in the local scope
-                          then push the symbol stack using the standard variable's
+                        { If the parameter standard variable (input or output) was listed 
+                          in the program parameter list and is visible in the local scope 
+                          then push the symbol stack using the standard variable's 
                           symbol table attributes, otherwise push an undefined symbol. }
                         if parameterValue = stdInput then
                             begin
@@ -1939,11 +1887,11 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                             end;
 
                     oSymbolStkPushFormalParameter:
-                        { The top symbol is a procedure.  Push the procedure's i'th
+                        { The top symbol is a procedure.  Push the procedure's i'th 
                           formal parameter, where i is the value of the top count stack entry. }
                         begin
                             Assert((symbolStkKind[symbolStkTop] = syProcedure), assert24);
-                            SymbolStkPushIdentifier(symbolStkSymbolTblRef [symbolStkTop] +
+                            SymbolStkPushIdentifier(symbolStkSymbolTblRef [symbolStkTop] + 
                                 countStack[countStackTop]);
                         end;
 
@@ -1955,7 +1903,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                         symbolStkValue[symbolStkTop] := valueStack[valueStackTop];
 
                     oSymbolStkEnterStringValue:
-                        { Set the top entry's value field from the first character
+                        { Set the top entry's value field from the first character 
                           of the last accepted literal string. }
                         begin
                             Assert((compoundToken = sStringLiteral), assert25);
@@ -1963,7 +1911,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                         end;
 
                     oSymbolStkEnterDataAddress:
-                        { Set the top entry's value field to the offset of the next data object
+                        { Set the top entry's value field to the offset of the next data object 
                           to be allocated in the data area. }
                         symbolStkValue[symbolStkTop] := dataAreaEnd;
 
@@ -1986,7 +1934,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                             resultValue := stdNull;
 
                     oSymbolStkChooseStandardRoutine:
-                        { Standard routines are distinguished from user defined routines by their
+                        { Standard routines are distinguished from user defined routines by their 
                           negative value fields. }
                         begin
                             Assert((symbolStkKind[symbolStkTop] = syProcedure) or
@@ -2009,7 +1957,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                       **** }
 
                     oTypeTblEnter:
-                        { Create a type table entry with the attributes of the top type stack entry
+                        { Create a type table entry with the attributes of the top type stack entry 
                           and link it to the top type stack entry. }
 
                         if typeTblTop < typeTblSize then
@@ -2018,7 +1966,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                                 typeTblKind[typeTblTop] := typeStkKind[typeStkTop];
                                 typeTblLowerBound[typeTblTop] := typeStkLowerBound[typeStkTop];
                                 typeTblUpperBound[typeTblTop] := typeStkUpperBound[typeStkTop];
-                                typeTblComponentLink[typeTblTop] :=
+                                typeTblComponentLink[typeTblTop] := 
                                     typeStkComponentLink[typeStkTop];
                                 typeStkTypeTblRef[typeStkTop] := typeTblTop
                             end
@@ -2026,7 +1974,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                             Error(eTypeTblOvfl);
 
                     oTypeTblUpdate:
-                        { Copy the top type stack entry attributes to the type table entry
+                        { Copy the top type stack entry attributes to the type table entry 
                           it references. }
                         begin
                             Assert((typeStkTypeTblRef[typeStkTop] <> null), assert8);
@@ -2047,7 +1995,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                         TypeStkPush(parameterValue);
 
                     oTypeStkPushSymbol:
-                        { If the top symbol stack entry is linked to a type table entry,
+                        { If the top symbol stack entry is linked to a type table entry, 
                           push a copy of the type entry, otherwise push a null type. }
                         if symbolStkTypeTblLink[symbolStkTop] <> null then
                             TypeStkPushTypeTbl(symbolStkTypeTblLink[symbolStkTop])
@@ -2055,7 +2003,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                             TypeStkPush(tpNull);
 
                     oTypeStkPushComponent:
-                        { If the top type stack entry is linked to a component type table entry
+                        { If the top type stack entry is linked to a component type table entry 
                           push a copy of the component type entry, otherwise push a null type. }
                         if typeStkComponentLink[typeStkTop] <> null then
                             TypeStkPushTypeTbl(typeStkComponentLink[typeStkTop])
@@ -2073,14 +2021,14 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                         resultValue := typeStkUpperBound[typeStkTop];
 
                     oTypeStkLinkToStandardType:
-                        { Set the top entry's component link field to point to
+                        { Set the top entry's component link field to point to 
                           a standard type table entry. }
                         begin
                             case parameterValue of
                                 stdInteger:
                                     typeStkTypeTblRef[typeStkTop] := standardIntegerTypeRef;
-                                stdString:
-                                    typeStkTypeTblRef[typeStkTop] := standardStringTypeRef;
+                                stdChar:
+                                    typeStkTypeTblRef[typeStkTop] := standardCharTypeRef;
                                 stdBoolean:
                                     typeStkTypeTblRef[typeStkTop] := standardBooleanTypeRef;
                                 stdText:
@@ -2089,7 +2037,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                         end;
 
                     oTypeStkEnterBounds:
-                        { Set the upper and lower bound fields from the top and
+                        { Set the upper and lower bound fields from the top and 
                           second value stack entries (respectively). }
                         begin
                             Assert((valueStackTop >= 2), assert10);
@@ -2098,7 +2046,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                         end;
 
                     oTypeStkVerifyBounds:
-                        { Return yes if the upper bound field is >= the lower bound field,
+                        { Return yes if the upper bound field is >= the lower bound field, 
                           otherwise return no }
                         if typeStkUpperBound[typeStkTop] >= typeStkLowerBound[typeStkTop] then
                             resultValue := yes
@@ -2113,7 +2061,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                         end;
 
                     oTypeStkCompareParameterCount:
-                        { Return yes if the parameter count field matches the top count,
+                        { Return yes if the parameter count field matches the top count, 
                           otherwise return no. }
                         begin
                             Assert((symbolStkKind[symbolStkTop] = syProcedure), assert29);
@@ -2124,7 +2072,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                         end;
 
                     oTypeStkEnterComponentReference:
-                        { Set the second entry's component link to point to the top entry's
+                        { Set the second entry's component link to point to the top entry's 
                           type table entry. }
                         begin
                             Assert((typeStkTop >= 2), assert11);
@@ -2136,7 +2084,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                         resultValue := typeStkKind[typeStkTop];
 
                     oTypeStkChooseTypeReference:
-                        { Return yes if the top entry has an associated type table entry,
+                        { Return yes if the top entry has an associated type table entry, 
                           otherwise return no. }
                         if typeStkTypeTblRef[typeStkTop] <> null then
                             resultValue := yes
@@ -2144,7 +2092,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                             resultValue := no;
 
                     oTypeStkCompareNames:
-                        { Return yes if the top 2 entries have the same type table entry
+                        { Return yes if the top 2 entries have the same type table entry 
                           (ie were declared with the same type name), otherwise return no. }
                         begin
                             Assert((typeStkTop >= 2), assert13);
@@ -2226,8 +2174,8 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                       **** }
 
                     oFixPushTargetAddress:
-                        { Push the address of the next instruction to be emitted to the code area.
-                          This address will serve as the target of a later backward branch
+                        { Push the address of the next instruction to be emitted to the code area.  
+                          This address will serve as the target of a later backward branch 
                           instruction. }
                         if fixStackTop < fixStackSize then
                             begin
@@ -2238,7 +2186,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                             Error(eFixStackOvfl);
 
                     oFixPushForwardBranch:
-                        { Save the address of a forward branch instruction operand which will be
+                        { Save the address of a forward branch instruction operand which will be 
                           patched when its target becomes known. }
                         begin
                             if patchTableTop < patchTableSize then
@@ -2252,8 +2200,8 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                             if fixStackTop < fixStackSize then
                                 begin
                                     fixStackTop := fixStackTop + 1;
-                                    { Save a pointer to the patch table slot which corresponds to
-                                      this fix stack entry, so its target can be filled in when
+                                    { Save a pointer to the patch table slot which corresponds to 
+                                      this fix stack entry, so its target can be filled in when 
                                       this fix is popped. }
                                     fixStack[fixStackTop] := patchTableTop;
                                 end
@@ -2270,9 +2218,9 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                         end;
 
                     oFixPopForwardBranch:
-                        { Set the target field of a previously emitted forward branch instruction
-                          to the address of the next instruction to be emitted to the code area.
-                          The fix is made indirectly through a patch table since the code area
+                        { Set the target field of a previously emitted forward branch instruction 
+                          to the address of the next instruction to be emitted to the code area.  
+                          The fix is made indirectly through a patch table since the code area 
                           is stored as a sequential access output file. }
                         begin
                             Assert((fixStackTop >= 1), assert33);
@@ -2281,8 +2229,8 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                         end;
 
                     oFixPopAndEnterValue:
-                        { Set the target field of a previously emitted forward branch instruction
-                          to the top value stack entry.  The fix is made indirectly through
+                        { Set the target field of a previously emitted forward branch instruction 
+                          to the top value stack entry.  The fix is made indirectly through 
                           a patch table since the code area is stored as a sequential access file. }
                         begin
                             Assert((fixStackTop >= 1), assert48);
@@ -2318,7 +2266,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                             ValueStackPush(compoundTokenValue);
                         end;
 
-                    oValuePushString:
+                    oValuePushChar:
                         { Push the value of the last string token to be accepted }
                         begin
                             Assert((compoundToken = sStringLiteral), assert37);
@@ -2375,7 +2323,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                       **** }
 
                     oAllocateAlignOnWord:
-                        { Set the data area end pointer so that the next variable is emitted
+                        { Set the data area end pointer so that the next variable is emitted 
                           on a word boundary }
                         begin
                             byteOffset := dataAreaEnd mod wordSize;
@@ -2385,17 +2333,17 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                         end;
 
                     oAllocateVariable:
-                        { Based on the structure and component entries on top of the type stack
+                        { Based on the structure and component entries on top of the type stack 
                           (structure on top). }
                         case typeStkKind[typeStkTop] of
                             tpInteger, tpSubrange:
                                 dataAreaEnd := dataAreaEnd + wordSize;
-                            tpString, tpBoolean:
-                                dataAreaEnd := dataAreaEnd + stringSize;
+                            tpChar, tpBoolean:
+                                dataAreaEnd := dataAreaEnd + byteSize;
                             tpArray:
                                 begin
                                     assert (typeStkComponentLink[typeStkTop] <> null, assert59);
-                                    size := typeStkUpperBound[typeStkTop] -
+                                    size := typeStkUpperBound[typeStkTop] - 
                                         typeStkLowerBound[typeStkTop] + 1;
                                     kind := typeTblKind[typeStkComponentLink[typeStkTop]];
                                     if (kind = tpInteger) or (kind = tpSubrange) then
@@ -2406,8 +2354,8 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                         end;
 
                     oAllocateVarParameter, oAllocateDescriptor:
-                        { A variable parameter is allocated space for an address.
-                          An array descriptor is allocated space for an array index bound value.
+                        { A variable parameter is allocated space for an address.  
+                          An array descriptor is allocated space for an array index bound value.  
                           A file descriptor is allocated space for the integer value by which
                           the file is referenced within the tCode. }
                         dataAreaEnd := dataAreaEnd + wordSize;
@@ -2418,8 +2366,8 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                       **** }
 
                     oCasePushDisplay:
-                        { The case display marks the boundary between the label sets of nested
-                          cases.  A case display entry points to the last label processed in the
+                        { The case display marks the boundary between the label sets of nested 
+                          cases.  A case display entry points to the last label processed in the 
                           case statement surrounding the case statement currently being processed. }
                         if caseDisplayTop < caseDisplaySize then
                             begin
@@ -2438,11 +2386,11 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                         end;
 
                     oCasePushLabel:
-                        { Push a label value from the value stack and set its address
+                        { Push a label value from the value stack and set its address 
                           to the code area address of the next statement to be emitted. }
                         if caseStackTop < caseStackSize then
                             begin
-                                caseStackTop := caseStackTop + 1;
+                                caseStackTop := caseStackTop + 1;               
                                 Assert((valueStackTop >= 1), assert41);
                                 caseLabelStack[caseStackTop] := valueStack[valueStackTop];
                                 caseAddressStack[caseStackTop] := codeAreaEnd;
@@ -2451,7 +2399,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                             Error(eCaseStackOvfl);
 
                     oCaseLookupLabel:
-                        { Return yes if the top value is already in the label stack for the current
+                        { Return yes if the top value is already in the label stack for the current 
                           case statement, otherwise return no. }
                         begin
                             resultValue := no;
@@ -2477,7 +2425,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                       **** }
 
                     oEmitNullAddress:
-                        { Special undefined value allows a consistency check to be made
+                        { Special undefined value allows a consistency check to be made 
                           when the address is patched. }
                         EmitOutputToken(undefined);
 
@@ -2520,7 +2468,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
 
 
     procedure Finalize;
-        { Backpatch the t-code file, adding a header which includes an executable indicator flag,
+        { Backpatch the t-code file, adding a header which includes an executable indicator flag, 
           code area size and data area size. }
         var
             codeRef:      integer;
@@ -2575,7 +2523,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
             { Verify that the final state of the semantic mechanism data
               structures is legal if the table walker terminated normally. }
             if not sslabort then
-                { The Symbol Stack, Type Stack, Symbol and Type Display, Count Stack, Value Stack,
+                { The Symbol Stack, Type Stack, Symbol and Type Display, Count Stack, Value Stack, 
                   Fix Address Stack, Case Stack and Case Display must be empty. }
                 begin
                     Assert(symbolStkTop = 0, assert49);
@@ -2592,8 +2540,8 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
 
     { Main program SemanticAnalysis }
     begin
-        { N.B. We assume that the invoker of the semantic pass (e.g. ptc command) has insured
-          that the input token stream coming from the parser is legal (i.e. the parser did not
+        { N.B. We assume that the invoker of the semantic pass (e.g. ptc command) has insured 
+          that the input token stream coming from the parser is legal (i.e. the parser did not 
           abort translation).  If the stream is illegal it will be empty. }
         Initialize;
         SslWalker;

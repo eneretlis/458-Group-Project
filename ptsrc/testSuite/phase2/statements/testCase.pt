@@ -1,9 +1,0 @@
-using output
-case i
-    when 42 then
-        val x = 42
-    when 43 then
-        val x = 43
-    else
-        val x = 0
-end

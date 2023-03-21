@@ -1,3 +1,0 @@
-Purpose: Confirm that modules are handled correctly by the semantic analyzer
-Expected:
-Actual:

@@ -9,26 +9,41 @@ div
 mod
 or
 and
+%% REMOVED
+%%not
 then
 else
 of
 end
+%% REMOVED
+%until
 do
 array
 file
+%% REMOVED
+%program
+%const
 var
 type
+%% REMOVED
+%procedure
+%begin
 if
 case
 while
+%% REMOVED
+%repeat
+
+%% ADDED
 using
 val
 def
+unless
+elsif
 break
 when
 module
-unless
-elsif
+return
 
 % End of keywords
 
@@ -38,6 +53,9 @@ elsif
 
 % Predeclared type names
 integer
+%% REMOVED
+%char
+%% ADDED
 string
 boolean
 text

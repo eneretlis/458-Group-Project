@@ -9,40 +9,33 @@ div
 mod
 or
 and
-%% REMOVED
-%%not
+%not (remove old keyword)
 then
 else
 of
 end
-%% REMOVED
-%until
+% until (remove old keyword)
 do
 array
 file
-%% REMOVED
-%program
-%const
+% program (remove old keyword)
+% const (remove old keyword)
 var
 type
-%% REMOVED
-%procedure
-%begin
+% procedure (remove old keyword)
+% begin (remove old keyword)
 if
 case
 while
-%% REMOVED
-%repeat
-
-%% ADDED
-using
-val
-def
-unless
-elsif
-break
-when
-module
+% repeat (remove old keyword)
+using % (add new Quby keyword)
+val % (add new Quby keyword)
+def % (add new Quby keyword)
+break % (add new Quby keyword)
+when % (add new Quby keyword)
+module % (add new Quby keyword)
+unless % (add new Quby keyword)
+elsif % (add new Quby keyword)
 
 % End of keywords
 
@@ -52,12 +45,8 @@ module
 
 % Predeclared type names
 integer
-%% ADDED
-string
-%%
-%% REMOVED
-%char
-%%
+% char (remove old predefined identifier)
+string % (add new Quby predefined identifier)
 boolean
 text
 
