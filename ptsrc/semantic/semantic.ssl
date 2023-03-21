@@ -830,7 +830,7 @@ Block :
 
 
 ConstantDefinitions :           % Process named constant definitions
-        sIdentifier:
+        sIdentifier
         oSymbolStkPushLocalIdentifier
         [ oSymbolStkChooseKind
             | syUndefined:
@@ -894,7 +894,7 @@ ConstantValue :         % push the value and type of the constant value
         ];
 
 TypeDefinitions :       % process named type definitions
-            sIdentifier:
+            sIdentifier
             oSymbolStkPushLocalIdentifier
             [ oSymbolStkChooseKind
                 | syUndefined:
