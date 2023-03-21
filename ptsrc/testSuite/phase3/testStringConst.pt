@@ -2,5 +2,5 @@ using output
 
 var a: string
 a = "Yehaw"
-a = "Yehaw" & 1..2
+a = "Yehaw" $ 1..2
 a = "Yehaw" + " Cowboy"
