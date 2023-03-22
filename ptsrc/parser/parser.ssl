@@ -360,7 +360,6 @@ IfStmt :
             | 'else':
                 .sElse
                 @Block
-                >
             | 'elsif':
                 .sElse
                 .sBegin
