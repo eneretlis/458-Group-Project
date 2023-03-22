@@ -1,0 +1,7 @@
+using output
+
+val x = 10
+
+val y = "xyz"
+
+val z = false
