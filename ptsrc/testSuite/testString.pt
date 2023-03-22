@@ -1,5 +1,10 @@
 using output
 
-val x = (#"Test")
-val y = "Testing123" $ 1..3
-val z = "Testing123" ? "est"
+var x : integer
+var y : string
+var z : integer
+
+
+x = (#"Test")
+y = "Testing123" $ 1..3
+z = "Testing123" ? "est"
