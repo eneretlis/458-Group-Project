@@ -830,7 +830,7 @@ Block :
 
 
 ConstantDefinitions :           % Process named constant definitions
-        sIdentifier:
+        sIdentifier
         oSymbolStkPushLocalIdentifier
         [ oSymbolStkChooseKind
             | syUndefined:
@@ -890,11 +890,20 @@ ConstantValue :         % push the value and type of the constant value
                 ]
                 oSymbolStkPop
             | sStringLiteral:
+                .tAssignBegin
+                .tLiteralAddress
+                oAllocateAlignOnWord
+                oSymbolStkEnterDataAddress
+                oEmitDataAddress
+                oAllocateVariable
+                oTypeStkPop
                 @StringLiteral  % pushes type and value, enters address
+                oSymbolStkSetKind(syVariable)
+                .tAssignString
         ];
 
 TypeDefinitions :       % process named type definitions
-            sIdentifier:
+            sIdentifier
             oSymbolStkPushLocalIdentifier
             [ oSymbolStkChooseKind
                 | syUndefined:
@@ -1814,10 +1823,10 @@ Operand :
                 oEmitValue
                 oValuePop
             | sStringLiteral:
-                oValuePushString
+                % oValuePushString
                 oSymbolStkPush(syExpression)
                 oTypeStkPush(tpString)
-                oTypeStkLinkToStandardType(stdString)
+                % oTypeStkLinkToStandardType(stdString)
                 @StringLiteral  % pushes type and value
 
             | sFile:
