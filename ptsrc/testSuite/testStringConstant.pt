@@ -1,7 +1,9 @@
 using output
 
-val x = 10
+var x : integer
+var y : string
+var z : boolean
 
-val y = "xyz"
-
-val z = false
+x = 10
+y = "xyz"
+z = false
