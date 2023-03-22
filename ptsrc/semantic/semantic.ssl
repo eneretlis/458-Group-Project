@@ -1606,7 +1606,7 @@ IfStmt :
         [
             | sElse:
                 [
-                    | sIf: %elsif statement
+                    | sIfStmt: %elsif statement
                         .tIfMerge
                         oFixPushForwardBranch
                         oEmitNullAddress                % true branch
