@@ -1,0 +1,12 @@
+Purpose: Test that string constants is handled correctly by semantic analyzer.
+Expected:
+line 2221: subscript out of range
+   .tFileDescriptor
+   .tLiteralInteger
+   oEmitValue
+   % value emitted 2
+   .tFileBind
+   .tLiteralAddress
+   oEmitDataAddress
+   % value emitted 0
+   .tStoreInteger

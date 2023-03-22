@@ -1,0 +1,10 @@
+using output
+
+var x : integer
+var y : string
+var z : integer
+
+
+x = (#"Test")
+y = "Testing123" $ 1..3
+z = "Testing123" ? "est"

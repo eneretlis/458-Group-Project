@@ -1,0 +1,9 @@
+using output
+
+var x : integer
+var y : string
+var z : boolean
+
+x = 10
+y = "xyz"
+z = false

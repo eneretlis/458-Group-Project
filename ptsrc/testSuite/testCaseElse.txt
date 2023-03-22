@@ -1,0 +1,20 @@
+Purpose: To test the new else clause in the case statement 
+Actual:(fail, error occurs)
+.tFileDescriptor
+   .tLiteralInteger
+   oEmitValue
+   % value emitted 2
+   .tFileBind
+   .tLiteralAddress
+   oEmitDataAddress
+   % value emitted 0
+   .tStoreInteger
+   .tCaseBegin
+       .tLiteralInteger
+       oEmitValue
+       % value emitted 12
+   .tCaseSelect
+   oEmitNullAddress
+   % value emitted -32767
+### Semantic pass S/SL program failure:  syntax error in semantic token stream
+### Semantic assertion 3 failed: 

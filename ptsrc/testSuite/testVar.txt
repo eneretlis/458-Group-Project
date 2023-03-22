@@ -1,0 +1,22 @@
+Purpose: Confirm that variable declarations are correctly handled by the semantic analyzer.
+Expected:
+   .tFileDescriptor
+   .tLiteralInteger
+   oEmitValue
+   % value emitted 2
+   .tFileBind
+   .tLiteralAddress
+   oEmitDataAddress
+   % value emitted 0
+   .tStoreInteger
+Actual: (success, just getting warning about subscript out of range that we couldn't resolve.)
+line 2215: subscript out of range
+   .tFileDescriptor
+   .tLiteralInteger
+   oEmitValue
+   % value emitted 2
+   .tFileBind
+   .tLiteralAddress
+   oEmitDataAddress
+   % value emitted 0
+   .tStoreInteger

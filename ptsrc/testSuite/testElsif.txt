@@ -1,0 +1,2 @@
+Purpose: Test the fuctionality of elsif cmmand
+Actual: Failed
