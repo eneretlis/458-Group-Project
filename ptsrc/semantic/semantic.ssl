@@ -1106,6 +1106,7 @@ SubrangeUpperBound :
         ];
 
 VariableDeclarations :
+        oCountPush(one)
         sIdentifier
         oSymbolStkPushLocalIdentifier
         [ oSymbolStkChooseKind
