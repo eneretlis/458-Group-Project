@@ -1,6 +1,6 @@
 using output
 
-var w = "Testing" + "123"
-var x = #"Test"
-var y = "Testing123" $ 1..3
-var z = "Testing123" ? "est"
+val w = "Testing" + "123"
+val x = #"Test"
+val y = "Testing123" $ 1..3
+val z = "Testing123" ? "est"
