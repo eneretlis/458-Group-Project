@@ -1,0 +1,2 @@
+Purpose: Check if string equality feature is working correctly.
+Actual: Failed

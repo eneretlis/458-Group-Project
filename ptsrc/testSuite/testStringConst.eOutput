@@ -1,0 +1,14 @@
+line 2390: subscript out of range
+   .tFileDescriptor
+   .tLiteralInteger
+   oEmitValue
+   % value emitted 2
+   .tFileBind
+   .tLiteralAddress
+   oEmitDataAddress
+   % value emitted 0
+   .tStoreInteger
+    .tAssignBegin
+    .tLiteralAddress
+    oEmitDataAddress
+    % value emitted 4
