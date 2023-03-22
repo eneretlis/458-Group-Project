@@ -1,6 +1,5 @@
 using output
-var i : integer
-i = 12
+val i = 12
 case i
     when 42 then
         val x = 42
