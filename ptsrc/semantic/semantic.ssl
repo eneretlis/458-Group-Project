@@ -1605,19 +1605,23 @@ IfStmt :
         @Statement
         [
             | sElse:
-                .tIfMerge
-                oFixPushForwardBranch
-                oEmitNullAddress                % true branch
-                oFixSwap                % false branch back on top
-                oFixPopForwardBranch
-                @Statement
-            | sElsif:
-                .tIfMerge
-                oFixPushForwardBranch
-                oEmitNullAddress                % true branch
-                oFixSwap                % false branch back on top
-                oFixPopForwardBranch
-                @IfStmt
+                [
+                    | sIf: %elsif statement
+                        .tIfMerge
+                        oFixPushForwardBranch
+                        oEmitNullAddress                % true branch
+                        oFixSwap                % false branch back on top
+                        oFixPopForwardBranch
+                        @IfStmt
+                    | * :
+                        .tIfMerge
+                        oFixPushForwardBranch
+                        oEmitNullAddress                % true branch
+                        oFixSwap                % false branch back on top
+                        oFixPopForwardBranch
+                        @Statement
+
+                ]
             | *:
         ]
         .tIfEnd
