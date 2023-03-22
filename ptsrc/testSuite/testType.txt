@@ -1,4 +1,16 @@
 Purpose: To test if the type definition is working as excpected
-Expected:
-Actual:
-Success:
+Expected: Same as below.
+Actual:(success)
+.tFileDescriptor
+   .tLiteralInteger
+   oEmitValue
+   % value emitted 2
+   .tFileBind
+   .tLiteralAddress
+   oEmitDataAddress
+   % value emitted 0
+   .tStoreInteger
+ .tTrapBegin
+ .tTrap
+ oEmitTrapKind(trHalt)
+ % value emitted 0
