@@ -1,6 +1,34 @@
-Purpose: Test that definition of strings is handled correctly by semantic analyzer.
+Purpose: Test that string constants is handled correctly by semantic analyzer.
 Expected:
+line 2221: subscript out of range
+@Program
+ ?sProgram (sProgram)
+ oSymbolStkPush(syProcedure)
+ oSymbolTblPushScope
+ oCountPush(three)
+ [ (sIdentifier)
+ | *:
+ @ProgramParameter
+  ?sIdentifier (sIdentifier)
+  oSymbolStkPushLocalIdentifier
+  [ oSymbolStkChooseKind (syUndefined)
+  | syUndefined:
+  [ oSymbolStkChooseStandardFile (stdOutput)
+  | stdOutput:
+  oSymbolStkSetKind(syVariable)
+  oTypeStkPush(tpFile)
+  oTypeStkLinkToStandardType(stdText)
+  oSymbolStkEnterTypeReference
+  oValuePush(two)
+  ] or >
+  @AllocateVar
+   [ oSymbolStkChooseKind (syVariable)
+   | *:
+   [ oTypeStkChooseKind (tpFile)
+   | tpFile:
    .tFileDescriptor
+   oAllocateAlignOnWord
+   oSymbolStkEnterDataAddress
    .tLiteralInteger
    oEmitValue
    % value emitted 2
@@ -9,22 +37,56 @@ Expected:
    oEmitDataAddress
    % value emitted 0
    .tStoreInteger
-    .tAssignBegin
-    .tLiteralAddress
-    oEmitDataAddress
-    % value emitted 4
-Actual: (success, can't resolve subscript out of range warning)
-line 2390: subscript out of range
-   .tFileDescriptor
-   .tLiteralInteger
-   oEmitValue
-   % value emitted 2
-   .tFileBind
-   .tLiteralAddress
-   oEmitDataAddress
-   % value emitted 0
-   .tStoreInteger
-    .tAssignBegin
-    .tLiteralAddress
-    oEmitDataAddress
-    % value emitted 4
+   oAllocateDescriptor
+   ] or >
+   >>
+  ;AllocateVar
+  oSymbolTblEnter
+  ] or >
+  oSymbolStkPop
+  oTypeStkPop
+  oValuePop
+  >>
+ ;ProgramParameter
+ }
+ [ (sParmEnd)
+ | sParmEnd:
+ ] or >
+ oCountPop
+ @Block
+  ?sBegin (sBegin)
+  [ (sVar)
+  | sVar:
+  @VariableDeclarations
+   ?sIdentifier (sIdentifier)
+   oSymbolStkPushLocalIdentifier
+   [ oSymbolStkChooseKind (syUndefined)
+   | syUndefined:
+   ] or >
+   [ (sIdentifier)
+   | *:
+   ] or >
+   @TypeBody
+    [ (sIdentifier)
+    | *:
+    @SimpleType
+     [ (sIdentifier)
+     | sIdentifier:
+     oSymbolStkPushIdentifier
+     [ (sVar)
+     | *:
+     [ oSymbolStkChooseKind (syType)
+     | syType:
+     oTypeStkPushSymbol
+     ] or >
+     oSymbolStkPop
+     ] or >
+     >>
+    ;SimpleType
+    @TypeTblEnterIfNew
+     [ oTypeStkChooseTypeReference (yes)
+     | *:
+     >>
+    ;TypeTblEnterIfNew
+    >>
+   ;TypeBody
