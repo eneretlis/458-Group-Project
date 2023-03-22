@@ -356,20 +356,17 @@ IfStmt :
         .sExpnEnd
         'then'  .sThen
         @Block
-        {[
+        [
             | 'else':
                 .sElse
                 @Block
-                >
             | 'elsif':
-                .sElsif
-                @Expression
-                .sExpnEnd
-                'then' .sThen
-                @Block
+                .sElse
+                .sBegin
+                @IfStmt
+                .sEnd
             | *:
-                >
-        ]};
+        ];
 
 UnlessStmt :
         .sIfStmt

@@ -1605,19 +1605,23 @@ IfStmt :
         @Statement
         [
             | sElse:
-                .tIfMerge
-                oFixPushForwardBranch
-                oEmitNullAddress                % true branch
-                oFixSwap                % false branch back on top
-                oFixPopForwardBranch
-                @Statement
-            | sElsif:
-                .tIfMerge
-                oFixPushForwardBranch
-                oEmitNullAddress                % true branch
-                oFixSwap                % false branch back on top
-                oFixPopForwardBranch
-                @IfStmt
+                [
+                    | sIfStmt: %elsif statement
+                        .tIfMerge
+                        oFixPushForwardBranch
+                        oEmitNullAddress                % true branch
+                        oFixSwap                % false branch back on top
+                        oFixPopForwardBranch
+                        @IfStmt
+                    | * :
+                        .tIfMerge
+                        oFixPushForwardBranch
+                        oEmitNullAddress                % true branch
+                        oFixSwap                % false branch back on top
+                        oFixPopForwardBranch
+                        @Statement
+
+                ]
             | *:
         ]
         .tIfEnd
@@ -1768,7 +1772,7 @@ CaseElse:
     .tCaseMerge
     oFixPushForwardBranch
     oEmitNullAddress                % merge branch at end of statement
-    oFixSwap                        % keep case select branch on top
+    %oFixSwap                        % keep case select branch on top
     oCountIncrement;
 
 Expression :

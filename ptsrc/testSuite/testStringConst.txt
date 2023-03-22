@@ -1,0 +1,30 @@
+Purpose: Test that definition of strings is handled correctly by semantic analyzer.
+Expected:
+   .tFileDescriptor
+   .tLiteralInteger
+   oEmitValue
+   % value emitted 2
+   .tFileBind
+   .tLiteralAddress
+   oEmitDataAddress
+   % value emitted 0
+   .tStoreInteger
+    .tAssignBegin
+    .tLiteralAddress
+    oEmitDataAddress
+    % value emitted 4
+Actual: (success, can't resolve subscript out of range warning)
+line 2390: subscript out of range
+   .tFileDescriptor
+   .tLiteralInteger
+   oEmitValue
+   % value emitted 2
+   .tFileBind
+   .tLiteralAddress
+   oEmitDataAddress
+   % value emitted 0
+   .tStoreInteger
+    .tAssignBegin
+    .tLiteralAddress
+    oEmitDataAddress
+    % value emitted 4
